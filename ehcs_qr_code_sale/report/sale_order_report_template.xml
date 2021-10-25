@@ -1,0 +1,27 @@
+<odoo>
+    <template id="sale_order_report_template" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//h2" position="replace">
+
+           <div style="width:700px; height:110px;float:left;">
+               <div style="width:600px;float:left;">
+                   <h2>
+                        <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                            <span t-if="doc.state not in ['draft','sent']">Order # </span>
+                            <span t-if="doc.state in ['draft','sent']">Quotation # </span>
+                        </t>
+                        <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                            <span>Pro-Forma Invoice # </span>
+                        </t>
+                        <span t-field="doc.name"/>
+                    </h2>
+               </div>
+               <t t-if="doc.qr_in_report == True">
+                   <div style="width:100px;height:100px;float:left;">
+                       <span t-field="doc.qr_image" t-field-options='{"widget": "image"}' />
+                   </div>
+               </t>
+           </div>
+
+        </xpath>
+    </template>
+</odoo>

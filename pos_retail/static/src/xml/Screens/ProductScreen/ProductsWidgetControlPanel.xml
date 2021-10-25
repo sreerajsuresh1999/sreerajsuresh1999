@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductsWidgetControlPanel" t-inherit="point_of_sale.ProductsWidgetControlPanel"
+       t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('breadcrumbs')]" position="after">
+            <button class="button show-buttons"
+                    t-if="!env.isMobile"
+                    t-att-class="{highlight: state.showAllCategory}"
+                    t-on-click="trigger('show-categories')">
+                <t t-if="!state.showAllCategory">
+                    <i class="fa fa-th"/>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-times"/>
+                </t>
+            </button>
+            <HomeCategoryBreadcrumb
+                    t-if="env.isMobile"
+                    subcategories="props.subcategories"
+                    t-att-class="{highlight: rootCategoryNotSelected}"
+                    currentCat="props.breadcrumbs[props.breadcrumbs.length - 1]"/>
+            <NavigationCategory t-if="!env.isMobile"/>
+            <ProductBrands t-if="!env.isMobile and env.pos.productBrands and env.pos.productBrands.length != 0"/>
+            <ProductSaleCategories
+                    t-if="!env.isMobile and env.pos.product_categories and env.pos.product_categories.length != 0 and env.pos.config.display_filter_product_categories"/>
+            <span t-if="env.isShowKeyBoard">
+                <i class="fa fa-keyboard-o"/>
+                (S) : focus to Search Box -
+                (ESC) : Clear Search -
+                (Arrow Left/Right) : Select Product -
+                (Enter) : Add selected Product to cart -
+            </span>
+            <span t-if="env.isShowKeyBoard">
+                <i class="fa fa-keyboard-o"/>
+                ( H ) : Show all Product Filter
+            </span>
+            <t t-if="!env.isMobile">
+                <SearchBar displayClearSearch="true" config="searchBarConfig"
+                           placeholder="'Search Products ...'"/>
+            </t>
+            <t t-else="">
+                <SearchBar displayClearSearch="true" config="searchBarConfig" placeholder="'Search Products ...'"/>
+            </t>
+            <span class="breadcrumb right_button"
+                  style="float: right; margin-right: 10px">
+                <div class="with-badge" t-att-badge="props.countProductsToDisplay">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </div>
+            </span>
+            <span class="breadcrumb right_button"
+                  style="float: right"
+                  t-att-class="{'highlight': state.activeExtendFilter}"
+                  t-on-click="showExtendSearch"
+                  t-if="!env.isMobile">
+                <i class="fa fa-filter"/>
+            </span>
+            <t t-if="state.activeExtendFilter and !env.isMobile">
+                <ProductSelectionAttribute/>
+                <ProductSelectionAttributeValue product_attribute_values="env.pos.product_attribute_values"/>
+                <ProductModelFilter/>
+                <ProductSexFilter/>
+                <ProductCollegeFilter/>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('search-box')]" position="attributes">
+            <attribute name="t-att-class">{ oe_hidden: true}</attribute>
+        </xpath>
+        <xpath expr="//CategorySimpleButton" position="replace"/>
+        <xpath expr="//div[hasclass('categories')]" position="replace">
+            <t t-if="props.subcategories.length > 0 and env.pos.config.iface_display_categ_images and !env.isMobile">
+                <div class="categories">
+                    <div class="category-list-scroller">
+                        <div class="category-list">
+                            <t t-if="state.showAllCategory">
+                                <t t-foreach="props.subcategories" t-as="category" t-key="category.id">
+                                    <CategoryButton category="category"/>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('products-widget-control')]" position="inside">
+            <div class="categories"
+                 t-if="props.subcategories.length > 0 and !env.pos.config.iface_display_categ_images and !env.isMobile"
+                 t-att-class="{ oe_hidden: state.activeExtendFilter}">
+                <div class="category-list-scroller">
+                    <div class="category-list">
+                        <t t-if="props.subcategories.length > 0 and !env.pos.config.iface_display_categ_images and !env.isMobile and state.showAllCategory">
+                            <t t-foreach="props.subcategories" t-as="category" t-key="category.id">
+                                <CategorySimpleButton category="category"/>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div class="breadcrumbs" t-if="state.showAllCategory">
+                <t t-if="!env.isMobile">
+                    <t t-foreach="props.breadcrumbs" t-as="category" t-key="category.id">
+                        <CategoryBreadcrumb category="category"/>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('categories')]" position="attributes">
+            <attribute name="t-att-class">{ oe_hidden: state.activeExtendFilter}</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('breadcrumbs')]" position="replace"/>
+    </t>
+
+</templates>

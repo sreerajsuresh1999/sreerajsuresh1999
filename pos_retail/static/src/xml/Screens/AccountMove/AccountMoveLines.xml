@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AccountMoveLines" owl="1">
+        <div class="orders">
+            <div class="header-row">
+                <div class="col start">Name</div>
+                <div class="col end" t-if="!env.isMobile">Qty</div>
+                <div class="col end" t-if="!env.isMobile">Disc</div>
+                <div class="col end" t-if="!env.isMobile">Price</div>
+                <div class="col end">Credit</div>
+                <div class="col end">Debit</div>
+                <div class="col end" t-if="!env.isMobile">Balance</div>
+                <div class="col end" t-if="!env.isMobile">Sub Total</div>
+                <div class="col end" t-if="!env.isMobile">Price Total</div>
+            </div>
+            <t t-foreach='MoveLines' t-as='moveLine' t-key="moveLine.id">
+                <div class="order-row pointer">
+                    <div class="col">
+                        <t t-esc="env.pos.generate_wrapped_name(moveLine.name)[0]"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="moveLine.quantity"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="moveLine.discount"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="env.pos.format_currency(moveLine.price_unit)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(moveLine.credit)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(moveLine.debit)"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="env.pos.format_currency(moveLine.balance)"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="env.pos.format_currency(moveLine.price_subtotal)"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="env.pos.format_currency(moveLine.price_total)"></t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

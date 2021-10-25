@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="QrCodeOrderScreen" owl="1">
+        <div class="ticket-screen screen">
+            <div class="screen-content">
+                <div class="controls">
+                    <div class="buttons">
+                        <button class="highlight" t-on-click="trigger('close-screen')">
+                            <i class="fa fa-backward"></i>
+                            <t t-if="!env.isMobile"> Back</t>
+                        </button>
+                        <button t-on-click="clearSearch">
+                            <i class="fa fa-refresh "></i>
+                            <t t-if="!env.isMobile"> Clear Search</t>
+                        </button>
+                        <button t-on-click="clearScreen">
+                            <i class="fa fa-trash "></i>
+                            <t t-if="!env.isMobile"> Clear Screen</t>
+                        </button>
+                        <button t-on-click="clearOrdersDone">
+                            <i class="fa fa-refresh"></i>
+                            <t t-if="!env.isMobile"> Remove Orders Done</t>
+                        </button>
+                    </div>
+                    <SearchBar t-if="!state.detailIsShown" config="searchBarConfig" placeholder="'Search Orders...'"/>
+                </div>
+                <div t-if="state.detailIsShown" class="client-details-contents subwindow-container-fix"
+                     style="height: unset; position: unset">
+                    <QrCodeOrderDetail order="order"
+                                       t-if="state.detailIsShown"
+                                       t-on-actionRemove="actionRemove"
+                                       t-on-actionConfirm="actionConfirm"
+                                       t-on-actionCancel="actionCancel"
+                                       t-on-actionResetDraft="actionResetDraft"
+                                       t-props="state.editModeProps"/>
+                    <!-- TODO: when props change, SaleOrderDetail will change, It reason we call t-props
+                    -->
+                </div>
+                <div class="orders">
+                    <div class="header-row">
+                        <div class="col start">Receipt Name</div>
+                        <div t-if="!env.isMobile" class="col end">Notes</div>
+                        <div t-if="!env.isMobile" class="col end">Ean13</div>
+                        <div t-if="!env.isMobile" class="col end">Floor</div>
+                        <div t-if="!env.isMobile" class="col end">Table</div>
+                        <div t-if="!env.isMobile" class="col end">Guests Number</div>
+                        <div t-if="!env.isMobile" class="col end">Created Time</div>
+                        <div t-if="!env.isMobile" class="col end">Total Items</div>
+                        <div class="col end">Total</div>
+                        <div class="col start">State</div>
+                    </div>
+                    <t t-foreach="getOrders" t-as="order"
+                       t-key="order.uid">
+                        <QrCodeOrderRow order="order"
+                                        t-att-class="{highlight: order == state.selectedOrder}"
+                                        selectedOrder="state.selectedOrder"
+                                        detailIsShown="state.detailIsShown"
+                                        t-on-click-order="clickOrder"/> <!-- matching to (1) of PosOrderRow-->
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

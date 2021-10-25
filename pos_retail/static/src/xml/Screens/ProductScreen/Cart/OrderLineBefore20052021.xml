@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+    <!--        <xpath expr="//li[hasclass('orderline')]" position="attributes">-->
+        <!--            <attribute name="t-on-mouseout">_onMouseLeave</attribute>-->
+        <!--        </xpath>-->
+        <xpath expr="//span[hasclass('price')]" position="replace"/>
+        <xpath expr="//span[hasclass('product-name')]" position="inside">
+                <t t-if="env.pos.config.display_image_orderline and !env.isMobile and props.line.has_image()">
+                    <img class='orderline_image' t-att-src="props.line.get_line_image()"/>
+                </t>
+            </xpath>
+        <xpath expr="//span[hasclass('product-name')]" position="before">
+            <span class="line_number">
+                <t t-if="state.screen == 'Products'">
+                    <t t-esc="props.line.get_number_of_order()"/>.
+                </t>
+                <t t-else="">
+                    x <t t-esc="env.pos.format_currency_no_symbol(props.line.get_quantity_str())"/>
+                </t>
+            </span>
+        </xpath>
+        <xpath expr="//span[hasclass('product-name')]" position="after">
+            <span class="price">
+                <t t-esc="env.pos.format_currency(props.line.get_display_price())"/>
+                <i t-on-click.stop="removeLine"
+                   class="oe_link_icon fa fa-trash oe_icon line-icon"
+                   style="color: red; float: right; padding: 0px; margin-right: 0px"
+                   aria-label="Remove Line"
+                   role="img"
+                   t-if="env.pos.config.allow_remove_line"
+                   title="Remove Line"
+                />
+                <t t-if="env.pos.config.display_sale_price_within_tax and props.line.product.taxes_id and props.line.product.taxes_id.length != 0">
+                    <span class="tax-line">Taxes Included: <t
+                            t-esc="env.pos.format_currency_no_symbol(props.line.get_tax())"/></span>
+                </t>
+                <t t-if="env.pos.config.display_amount_discount and props.line.discount">
+                    <span class="tax-line">
+                        Disc Amount: <t t-esc="env.pos.format_currency(props.line.get_price_discount())"/>
+                    </span>
+                </t>
+                <t t-if="props.line.price_extra">
+                    <span class="tax-line">
+                        Disc Value: <t t-esc="env.pos.format_currency(props.line.price_extra)"/>
+                    </span>
+                </t>
+            </span>
+        <span class="orderline-quantity" t-if="state.screen == 'Products'">
+                <i t-on-click.stop="sendInput('+')"
+                   class="oe_link_icon fa fa-plus oe_icon line-icon"
+                   aria-label="Up Qty 1"
+                   role="img"
+                   title="Up Qty 1"
+                   style="margin-left: 0px"
+                   t-if="!env.pos.config.validate_quantity_change and env.pos.config.allow_qty"
+                />
+            <span>  x  </span>
+            <t t-esc="props.line.get_quantity_str()"/>
+
+            <t t-if="props.line.get_unit().name != 'Units'">
+                    <t t-esc="props.line.get_unit().name"/>
+                </t>
+            <span>   </span>
+            <i t-on-click.stop="sendInput('-')"
+               style="margin-left: 10px"
+               class="oe_link_icon fa fa-minus oe_icon line-icon"
+               aria-label="Down Qty 1"
+               role="img"
+               t-if="!env.pos.config.validate_quantity_change and env.pos.config.allow_qty"
+               title="Down Qty 1"
+            />
+            <span t-if="!env.isMobile" style="color: black; font-size: 11px; color: gray">
+                    <i class="fa fa-keyboard-o"/>
+                (+ | - | del)
+                </span>
+            <i t-on-click.stop="showSuggestProduct"
+               class="oe_link_icon fa fa-question-circle-o oe_icon line-icon"
+               t-att-class="{'oe_hidden': getSuggestionNotActive,}"
+               aria-label="Suggestion buy more items with this Product"
+               role="img"
+               title="Suggestion buy more items with this Product"
+            />
+            <i t-on-click.stop="showBundlePackItems"
+               class="oe_link_icon fa fa-list oe_icon line-icon"
+               t-att-class="{'oe_hidden': !isBundlePackProduct,}"
+               aria-label="Set Bundle Pack Items"
+               role="img"
+               title="Set Bundle Pack Items"
+            />
+            <i t-on-click.stop="showProductPackaging"
+               class="oe_link_icon fa fa-clone oe_icon line-icon"
+               t-att-class="{'oe_hidden': !hasProductPackaging,}"
+               aria-label="Set Packaging"
+               role="img"
+               title="Set Packaging"
+            />
+            <i t-on-click.stop="updateStockEachLocation"
+               t-if="canBeUpdateStock"
+               class="oe_link_icon fa fa-fw fa-cubes oe_icon line-icon"
+               aria-label="Update Stock On Hand"
+               role="img"
+               t-on-mouseover="_onMouseEnter"
+               title="Update Stock On Hand"
+            />
+            <i t-on-click.stop="setUnit"
+               class="oe_link_icon fa fa-info-circle oe_icon line-icon"
+               t-att-class="{'oe_hidden': !hasMultiUnit,}"
+               aria-label="Set Unit Of Measure"
+               role="img"
+               title="Set Unit Of Measure"
+            />
+            <i t-on-click.stop="setMultiVariant"
+               class="oe_link_icon fa fa-cutlery oe_icon line-icon"
+               t-att-class="{'oe_hidden': !hasMultiVariant,}"
+               aria-label="Set Variant and Attribute"
+               role="img"
+               title="Set Variant and Attribute"
+            />
+            <i t-on-click.stop="setSeller"
+               class="oe_link_icon fa fa-user oe_icon line-icon"
+               t-att-class="{'oe_hidden': !displaySetSeller,}"
+               aria-label="Set User"
+               role="img"
+               title="Set User"
+            />
+            <i t-on-click.stop="showAllLots"
+               t-if="props.line.get_product().tracking!=='none'"
+               class="oe_link_icon fa fa-list oe_icon line-icon"
+               t-att-class="{'oe_green': props.line.has_valid_product_lot(), 'oe_red': !props.line.has_valid_product_lot()}"
+               aria-label="List all Lots and Select One"
+               role="img"
+               title="List all Lots and Select One"
+            />
+            <i t-on-click.stop="produceProduct"
+               t-if="props.line.is_has_bom()"
+               class="oe_link_icon fa fa-wrench oe_icon line-icon"
+               aria-label="Produce Product"
+               role="img"
+               title="Produce Product"
+            />
+            <i t-on-click.stop="downloadGiftCards"
+               t-if="props.line.coupon_ids"
+               class="oe_link_icon fa fa-gift oe_icon line-icon"
+               aria-label="Download Gift Cards"
+               role="img"
+               title="Download Gift Cards"
+            >
+                        <span class="line-notification"><t t-esc="props.line.coupon_ids.length"/></span>
+                    </i>
+            <i t-on-click.stop="modifiersAttributes"
+               t-if="isHasAttributes"
+               class="oe_link_icon fa fa-cogs oe_icon line-icon"
+               aria-label="Re-Modifiers Attributes and Values"
+               role="img"
+               title="Re-Modifiers Attributes and Values"
+            />
+            <span t-on-click.stop="setAddons"
+                  t-if="props.line.product.addon"
+                  aria-label="Change Addons Items"
+                  title="Change Addons Items"
+                  class="with-badge" t-att-badge="getTotalAddonsItems">
+                    <i class="oe_link_icon fa fa-sitemap oe_icon line-icon" aria-hidden="true"></i>
+                </span>
+            <span t-on-click.stop="changeVariant"
+                  t-if="allowChangeVariant"
+                  aria-label="Change Variants"
+                  title="Change Variants"
+                  class="with-badge" t-att-badge="countVariants">
+                    <i class="oe_link_icon fa fa-sitemap oe_icon line-icon" aria-hidden="true"></i>
+                </span>
+            <i t-on-click.stop="setTags"
+               t-if="env.pos.tags and env.pos.tags.length != 0"
+               class="oe_link_icon fa fa-tags oe_icon line-icon"
+               aria-label="Set Tags"
+               role="img"
+               title="Set Tags"
+            />
+            <i t-on-click.stop="setNotes"
+               t-if="env.pos.config.module_pos_restaurant"
+               class="oe_link_icon fa fa-edit oe_icon line-icon"
+               aria-label="Set Notes"
+               role="img"
+               title="Set Notes"
+            />
+            <t t-if="env.pos.config.display_onhand and props.line.product['type'] == 'product'">
+                    <ProductOnHand product="props.line.product"/>
+                </t>
+            </span>
+        </xpath>
+    <xpath expr="//em" position="replace">
+            <em t-if="!env.isMobile">
+                <t t-esc="props.line.get_quantity_str()"/>
+            </em>
+        </xpath>
+    <xpath expr="//ul[hasclass('info-list')]" position="replace">
+            <ul class="info-list"
+                t-if="state.screen == 'Products' and props.line.selected and env.pos.config.manual_input_cart">
+                <tr>
+                    <td class="row" style="width: 30%; text-align:center"
+                        t-att-class="{'disabled-mode': !env.pos.config.allow_qty}">
+                        <span class="label" style="color: #6EC89B; width: 100%; display: inline-block">Quantity</span>
+                        <div>
+                            <input class="form-control edit-line-box"
+                                   type="number"
+                                   placeholder="Quantity"
+                                   t-att-value="props.line.quantity"
+                                   t-on-change="OnChangeQty"
+                            />
+                        </div>
+                    </td>
+                    <td class="row" style="text-align:center; width: 30%"
+                        t-att-class="{'disabled-mode': !env.pos.config.allow_discount}">
+                        <span class="label" style="color: #6EC89B">Discount (%)</span>
+                        <input class="form-control edit-line-box"
+                               type="number"
+                               placeholder="Discount"
+                               t-att-value="props.line.discount"
+                               t-on-change="OnChangeDiscount"
+                        />
+                    </td>
+                    <td class="row" style="text-align:center; width: 40%"
+                        t-att-class="{'disabled-mode': !env.pos.config.allow_price}">
+                        <span class="label" style="color: #6EC89B">Price / 1 Item</span>
+                        <input class="form-control edit-line-box"
+                               type="number"
+                               t-att-value="props.line.price"
+                               placeholder="Price Unit"
+                               t-on-change="OnChangePrice"
+                        />
+                    </td>
+                </tr>
+                <div style="margin-left: 2px">
+                    <textarea class="form-control orderline-input"
+                              rows="4"
+                              cols="50"
+                              type="text"
+                              style="margin-left: 0px; width: 90%"
+                              placeholder="Type A Notes"
+                              t-on-change="OnChangeNote">
+                        <t t-esc="props.line.get_line_note()"/>
+                    </textarea>
+                </div>
+            </ul>
+        <div class="line_extend"
+             t-if="!env.session.restaurant_order and !env.isMobile and state.screen == 'Products'">
+                <t t-if="props.line.get_note()">
+                    <li class="info orderline-note">
+                        <i class="fa fa-tag" role="img" aria-label="Note" title="Note"/>
+                        <t t-esc="props.line.get_note()"/>
+                    </li>
+                </t>
+            <t t-if="getDiscountExtra">
+                    <li class="info">
+                        Discount Extra: <t t-esc="getDiscountExtra"/>
+                        %
+                    </li>
+                </t>
+            <t t-if="getPriceExtra">
+                    <li class="info">
+                        Price Extra: <t t-esc="env.pos.format_currency_no_symbol(getPriceExtra, 'Product Price')"/>
+                    </li>
+                </t>
+            <t t-if="props.line.plus_point > 0">
+                    <li class="info alert_line">
+                        Plus Points: <t t-esc="props.line.plus_point.toFixed(2)"/>
+                    </li>
+                </t>
+            <t t-if="props.line.redeem_point > 0">
+                    <li class="info">
+                        Redeem Points: <t t-esc="props.line.redeem_point"/>
+                    </li>
+                </t>
+            <t t-if="props.line.promotion_reason">
+                    <li class='info alert_line'>
+                        Promotion: <t t-esc="props.line.promotion_reason"/>
+                    </li>
+                </t>
+            <t t-if="props.line.promotion_amount">
+                    <li class='info alert_line'>
+                        Promotion Amount: <t t-esc="env.pos.format_currency_no_symbol(props.line.promotion_amount)"/>
+                    </li>
+                </t>
+            <t t-if="props.line.promotion_discount">
+                    <li class='info alert_line'>
+                        Promotion Disc: <t t-esc="props.line.promotion_discount"/>
+                        %
+                    </li>
+                </t>
+            <t t-if="env.pos.config.display_tax_orderline and props.line.get_tax()">
+                    <li class="info">
+                        <t t-set="taxes" t-value="props.line.get_taxes()"/>
+                        <t t-foreach="taxes || []" t-as="tax" t-key="tax.id">
+                            <t t-esc="tax.name"/>
+                        </t>
+                    </li>
+                </t>
+            <li class="info" t-if="env.pos.config.display_margin">
+                    With Margin
+                    <t t-esc="props.line.get_margin().toFixed(2)"/>%
+                </li>
+            <ul class='info' t-if="props.line.get_sale_person()">
+                    User: <t t-esc="props.line.get_sale_person().name"/>
+                </ul>
+            <t t-if="props.line.combo_items and props.line.combo_items.length > 0">
+                    <li class='info info-label'>
+                        Combo Bundle/Package: (Update Quantity items)
+                        <span t-on-click.stop="editBundlePackItems"
+                              aria-label="Change Quantities of Bundle Pack Items"
+                              title="Change Quantities of Bundle Pack Items"
+                              class="with-badge" t-att-badge="props.line.combo_items.length">
+                            <i class="oe_link_icon fa fa-edit oe_icon line-icon" aria-hidden="true"></i>
+                        </span>
+                    </li>
+                <t t-foreach="props.line.combo_items" t-as="combo_item" t-key="combo_item.product_id[0]">
+                        <t t-if="combo_item.quantity > 0">
+                            <li class='info'>
+                                + <t t-esc="combo_item.quantity * props.line['quantity']"/>
+                                <span> </span>
+                                <t t-esc="env.pos.generate_wrapped_name(combo_item.product_id[1])[0]"/>
+                                <t t-if="combo_item.lot_number">
+                                    Lot/Serial number : <t t-esc="combo_item.lot_number"/>
+                                </t>
+                                <t t-if="combo_item.use_date">
+                                    Expired Date of Lot: <t t-esc="combo_item.use_date"/>
+                                </t>
+                                <t t-if="combo_item.price_extra">
+                                    Price Extra: <t t-esc="env.pos.format_currency_no_symbol(combo_item.price_extra)"/>
+                                </t>
+                            </li>
+                        </t>
+                    </t>
+                </t>
+            <t t-if="props.line.addons and props.line.addons.length > 0">
+                    <li class='info info-label'>
+                        Add-ons:
+                    </li>
+                <t t-foreach="props.line.addons" t-as="addon" t-key="addon.id">
+                        <li class='info'>
+                            + <t t-esc="props.line.quantity"/>
+                            |
+                            <t t-esc="addon.name"/>
+                            with price
+                            <t t-esc="env.pos.format_currency_no_symbol(addon.get_price(addon, env.pos._get_active_pricelist(), props.line.quantity))"/>
+                        </li>
+                    </t>
+                </t>
+            <t t-if="props.line.tags and props.line.tags.length > 0">
+                    <li class='info'>
+                        Tags/Notes added:
+                        <t t-foreach="props.line.tags" t-as="tag" t-key="tag.id">
+                            <span><i class="fa fa-tag"/>
+                                <t t-esc="tag.name"/></span>
+                        </t>
+                    </li>
+                </t>
+            <t t-if="props.line.get_bom_lines().length > 0">
+                    <ul class='info'>
+                    Bill Of Material:
+                    </ul>
+                <t t-foreach="props.line.get_bom_lines()" t-as="bom_line" t-key="bom_line.id">
+                        <ul class='info'>
+                            + <t t-esc="bom_line.quantity"/>
+                            /
+                            <t t-esc="bom_line.bom_line.product_id[1]"/>
+                        </ul>
+                    </t>
+                </t>
+            <t t-if="props.line.variants and props.line.variants.length > 0">
+                    <ul class='info'>
+                    Attributes and Values:
+                    </ul>
+                <t t-foreach="props.line.variants" t-as="v" t-key="v.id">
+                        <ul class='info'>
+                            + <t t-esc="v.quantity"/>
+                            <span> </span>
+                            <t t-esc="v.attribute_id[1]"/>
+                            <span> / </span>
+                            <t t-esc="v.value_id[1]"/>
+                            with Price:
+                            <t t-esc="env.pos.format_currency_no_symbol(v.price_extra)"/>
+                        </ul>
+                    </t>
+                </t>
+            <t t-if="props.line.mrp_production_name">
+                    <ul class='info'>
+                    MRP Order: <t t-esc="props.line.mrp_production_name"/>
+                    </ul>
+                <ul class='info'>
+                    MRP State : <t t-esc="props.line.mrp_production_state"/>
+                    </ul>
+                </t>
+            <ul class="info"
+                t-if="env.pos.config.sync_multi_session and env.pos.config.display_person_add_line and props.line.session_info">
+                    <t t-esc="props.line.session_info.user.name"/>
+                added at
+                <t t-esc="props.line.session_info.date"/>
+                </ul>
+            <!--                <t t-if="env.pos.price_each_qty_by_product_tmpl_id[props.line.product.product_tmpl_id]">-->
+            <!--                    <ul class='info'>-->
+            <!--                    Price each quantities:-->
+            <!--                    </ul>-->
+            <!--                    <t t-foreach="env.pos.price_each_qty_by_product_tmpl_id[props.line.product.product_tmpl_id]"-->
+            <!--                       t-as="item" t-key="item.id">-->
+            <!--                        <ul class='info'>-->
+            <!--                            Bigger than <t t-esc="item.quantity"/>-->
+            <!--                            items-->
+            <!--                            <span> <t t-esc="env.pos.format_currency_no_symbol(item.price_unit)"/> </span>-->
+            <!--                        </ul>-->
+            <!--                    </t>-->
+            <!--                </t>-->
+            <t t-if="props.line.packaging">
+                    <ul class='info'>
+                    Packaging : <t t-esc="props.line.packaging.name"/>
+                    </ul>
+                </t>
+            <t t-if="env.pos.config.sync_multi_session and env.pos.config.send_order_to_kitchen and props.line.order_time">
+                    <ul class="info">
+                        Time add to Cart: <t t-esc="props.line.order_time"/>
+                    </ul>
+                </t>
+            <ul class="info line-state"
+                t-if="env.pos.config.sync_multi_session and env.pos.config.screen_type != 'kitchen' and props.line.kitchen_notes">
+                    Transaction Logs: <t t-esc="props.line.kitchen_notes"/>
+                </ul>
+            <ul class="info line-state"
+                t-if="env.pos.config.sync_multi_session and env.pos.config.screen_type != 'kitchen' and props.line.state">
+                    State: <t t-esc="props.line.state"/>
+                </ul>
+            <t t-if="props.line.cancel_reason">
+                    <li class='info'>
+                        Cancel Reason: <t t-esc="props.line.cancel_reason"/>
+                    </li>
+                </t>
+            <t t-if="props.line.coupon_program_name">
+                <li class="info alert_line">
+                    Promotion/Coupon: <t t-esc="props.line.coupon_program_name"/>
+                </li>
+            </t>
+            <!-- odoo have set it -->
+            <!--            <t t-if="props.line.note">-->
+            <!--                <li class='info alert_line'>-->
+            <!--                    Note: <t t-esc="props.line.note"/>-->
+            <!--                </li>-->
+            <!--            </t>-->
+            </div>
+            <t t-if="state.showStockInformation and state.screen == 'Products'">
+                <StockInformation product="props.line.product"/>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

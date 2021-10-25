@@ -1,0 +1,12 @@
+<odoo>
+    <record id="stock_warehouse_inherit" model="ir.ui.view">
+        <field name="name">stock.warehouse.inherited</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="facility_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductDetail" owl="1">
+        <div class="debug-widget tooltip-box" id="tooltip-box" style="cursor: pointer">
+            <div class="content">
+                <ul>
+                    <ul>
+                        <li class="button tooltip-line" style="font-weight: 600; font-size: 18px">
+                            <t t-esc="props.product.display_name"/>
+                        </li>
+                        <li class="button tooltip-line" style="font-weight: 900; font-size: 16px; color: #6EC89B">
+                            <i class="fa fa-caret-right"></i> Price: <t t-esc="props.price"/>
+                        </li>
+                        <li class="button tooltip-line" style="font-weight: 900; font-size: 16px; color: #6EC89B" t-if="env.pos.config.display_cost_price">
+                            <i class="fa fa-caret-right"></i> Cost: <t t-esc="env.pos.format_currency(props.product.standard_price)"/>
+                        </li>
+                        <t t-if="env.pos.config.display_onhand and props.product.qty_available &gt; 0 or props.product.qty_available &lt; 0">
+                            <li class="button tooltip-line" style="font-weight: 900; font-size: 16px; color: #6EC89B">
+                                <span class="value">
+                                    <i class="fa fa-caret-right"></i> Stock:
+                                    <span class="notification" t-if="props.product.qty_available &lt; 0" style="background:red">
+                                        <t t-esc="props.product.qty_available.toFixed(0)"/>
+                                    </span>
+                                    <span class="notification" t-if="props.product.qty_available &gt; 0">
+                                        <t t-esc="props.product.qty_available.toFixed(0)"/>
+                                    </span>
+                                </span>
+                            </li>
+                        </t>
+                        <t t-if="props.product.default_code">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Internal Ref: <t t-esc="props.product.default_code"/></li>
+                        </t>
+                        <t t-if="props.product.barcode">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Barcode: <t t-esc="props.product.barcode"/></li>
+                        </t>
+                        <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Unit: <t t-esc="props.product.uom_id[1]"/></li>
+
+                        <t t-if="props.product.volume">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Volume: <t t-esc="props.product.volume"/></li>
+                        </t>
+                        <t t-if="props.product.weight">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Weight: <t t-esc="props.product.weight"/></li>
+                        </t>
+                        <t t-if="props.product.last_bought_date">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i>Last bought date: <t t-esc="props.product.last_bought_date"/></li>
+                        </t>
+                        <t t-if="props.product.last_price">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i>Last bought price: <t t-esc="env.pos.format_currency(props.product.last_price)"/></li>
+                        </t>
+                        <t t-if="props.product.last_order_name">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i>Last bought order: <t t-esc="props.product.last_order_name"/></li>
+                        </t>
+                    </ul>
+                    <ul>
+                        <t t-if="props.product.description_sale">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Description for Customers: <t t-esc="props.product.description_sale"/></li>
+                        </t>
+                        <t t-if="props.product.description_pickingout">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Description for Delivery Orders: <t t-esc="props.product.description_pickingout"/></li>
+                        </t>
+                        <t t-if="props.product.description_pickingin">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Description for Receptions: <t t-esc="props.product.description_pickingin"/></li>
+                        </t>
+                        <t t-if="props.product.description_picking">
+                            <li class="button tooltip-line"><i class="fa fa-caret-right"></i> Description for Internal Transfers: <t t-esc="props.product.description_picking"/></li>
+                        </t>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </t>
+
+</templates>

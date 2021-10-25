@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductBrands" owl="1">
+        <div class="navigation product-brands">
+            <ul>
+                <li class="has-sub">
+                    <a style="font-weight: 900; font-size: 13px" href="#" t-on-click="setBrand(0)">
+                        <t t-if="state.selectedbrandId == 0">
+                            <i class="fa fa-list"/>
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-arrow-left"/>
+                        </t>
+                        <span>  </span>
+                        <t t-esc="state.selectedBrand"/>
+                    </a>
+                    <ul>
+                        <t t-foreach='env.pos.productBrands' t-as='brand' t-key="brand.id">
+                            <li>
+                                <a href="#" t-on-click="setBrand(brand.id)" style="font-weight: 900; font-size: 11px">
+                                    <img class='orderline_image' t-att-src="'data:image/png;base64,' + brand.logo" style="float: left;height: 30px;width: 30px;border-radius: 55%;vertical-align: top;margin-top: 0px;"/>
+                                    <span>    </span>
+                                    <t t-esc="brand['name']" style="float: right"/>
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </t>
+
+</templates>

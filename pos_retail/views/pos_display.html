@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <title class="origin">{{ title or "Odoo's IoTBox" }}</title>
+        <script class="origin" type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>
+        <link class="origin" rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/web/static/lib/fontawesome/css/font-awesome.css"/>
+        <script type="text/javascript" class="origin">
+            var display_identifier = '{{ display_identifier }}';
+            {{ cust_js|safe }}
+        </script>
+        <style class="origin">
+            html, body {
+                height: 100%;
+            }
+        </style>
+        <style>
+            body {
+                background: linear-gradient(to right bottom, #77717e, #17a2b8);
+                height: 100vh;
+            }
+            .pos-display-status {
+                padding: 10px 20px;
+                background: rgba(0, 0, 0, 0.17);
+                border: 1px solid rgba(0, 0, 0, 0.06);
+                box-shadow: 1px 1px 0px 0px rgba(60, 60, 60, 0.4);
+                color: #fff;
+                border-radius: 8px;
+                width: 500px;
+                position: absolute;
+                right: 20px;
+                bottom: 20px;
+            }
+            .info-text {
+                font-size: 15px;
+            }
+            .table-pos-info {
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="text-center pt-5">
+                <img style="width: 150px;" src="/pos_retail/static/description/app_logo.png">
+                <p class="mt-3" style="color: #fff;font-size: 30px;">POS Client Facing Screen</p>
+            </div>
+            <div class="pos-display-status">
+            <h4 class="text-center mb-3">Welcome to Shop</h4>
+            <div class="error-message alert alert-danger mb-2 d-none" role="alert" />
+            </div>
+        </div>
+    </body>
+</html>

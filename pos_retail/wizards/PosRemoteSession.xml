@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+        <record id="pos_remote_session" model="ir.ui.view">
+            <field name="name">Remote sessions</field>
+            <field name="model">pos.remote.session</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Remote session">
+                    <group>
+                        <field name="action"/>
+                    </group>
+                     <group string="Messages to Sessions">
+                        <field name="message" nolabel="1"/>
+                    </group>
+                    <group string="POS Configs Assigned">
+                        <field name="config_ids" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="send_notifications" class="oe_highlight" string="Send Request"
+                                type="object"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

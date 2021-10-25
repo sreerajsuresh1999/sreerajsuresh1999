@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AccountMoveRow" owl="1">
+        <t t-set="move" t-value="props.move"/>
+
+        <tr class="receipt-line"
+            t-on-mouseover.stop="_autoSyncBackend"
+            t-on-click="trigger('click-move', {move: props.move})">
+            <td style="text-align: center">
+                <t t-esc="props.number"/>
+            </td>
+            <td style="text-align: center">
+                <span class="product-line-name">
+                    <t t-esc="move.name"/>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <t t-if="move.partner_id">
+                    <t t-esc="move.partner_id[1]"/>
+                </t>
+                <t t-else="">
+                    N/A
+                </t>
+            </td>
+            <td style="text-align: center">
+                <t t-if="move.invoice_date_due">
+                    <t t-esc="move.invoice_date_due"/>
+                </t>
+                <t t-else="">
+                    N/A
+                </t>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(move.amount_residual)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(move.amount_tax)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(move.amount_total)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-if="move.state == 'draft'">Draft</t>
+                <t t-if="move.state == 'posted'">Posted</t>
+                <t t-if="move.state == 'cancel'">Cancelled</t>
+            </td>
+        </tr>
+    </t>
+</templates>

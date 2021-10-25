@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NameWrapped">
+        <t t-foreach="change.name_wrapped.slice(1)" t-as="wrapped_line">
+            <div>
+                <span class="pos-receipt-right-align" t-esc="wrapped_line"/>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="ChangeLine">
+        <line>
+            <left width='20'>
+                <value><t t-esc="change.qty" /></value>
+                <t t-if="change.uom">
+                    <t t-esc="change.uom['name']"/>
+                </t>
+            </left>
+            <right><t t-esc="change.name_wrapped[0]" /></right>
+        </line>
+        <t t-call="NameWrapped"/>
+        <t t-if="change.note">
+            <line size="normal">
+                <left>NOTE</left>
+                <right>...</right>
+            </line>
+            <div>
+                <span font='c' bold='off' line-ratio='0.4' indent='1' width='30'>
+                    ---<t t-esc="change.note"/>
+                </span>
+            </div>
+            <line></line>
+        </t>
+        <t t-if="change.tags">
+            <line indent="2" size="normal">
+                <left width='40'>Tags</left>
+            </line>
+            <t t-foreach="change.tags" t-as="tag">
+                <line indent="3" size="normal">
+                    <left><t t-esc="tag.name"/></left>
+                </line>
+            </t>
+        </t>
+        <t t-if="change.variants">
+            <line indent="2" size="normal">
+                <left width='40'>Variants</left>
+            </line>
+            <t t-foreach="change.variants" t-as="variant">
+                <line indent="3" size="normal">
+                    <left>
+                        + <t t-esc="variant.quantity"/>
+                        <t t-esc="variant.attribute_id[1]"/>
+                    </left>
+                    <right>
+                        <t t-esc="variant.value_id[1]"/>
+                    </right>
+                </line>
+            </t>
+        </t>
+        <t t-if="change.combo_items">
+            <line indent="2" size="normal">
+                <left width='40'>Combo Items</left>
+            </line>
+            <t t-foreach="change.combo_items" t-as="combo">
+                <line indent="3" size="normal">
+                    <left>
+                        + <t t-esc="combo.quantity"/>
+                    </left>
+                    <right>
+                        <t t-esc="combo.product_id[1]"/>
+                    </right>
+                </line>
+            </t>
+        </t>
+        <div size="normal">--------------------------------</div>
+    </t>
+
+    <t t-name="KitchenReceiptXml">
+        <receipt
+                align='center'
+                width='40'
+                size='double-height'
+                line-ratio='0.4'
+                value-decimals='3'
+                value-thousands-separator=''
+                value-autoint='on'
+        >
+            <div size='normal'><t t-esc="changes.name" /></div>
+            <div size='normal'>Requested by: <t t-esc="changes.user" /></div>
+            <div size='normal'>Request Number: <t t-esc="changes.ticket_number" /></div>
+            <div size='normal'>Guest number: <t t-esc="changes.customer_count" /></div>
+            <div size='normal' t-if="changes.guest_name">Guest name: <t t-esc="changes.guest_name" /></div>
+            <div size='normal' t-if="changes.guest_number">Guest no: <t t-esc="changes.guest_number" /></div>
+            <t t-if="changes.floor || changes.table">
+                <br/>
+                <div>
+                    <span><t t-esc="changes.floor" /></span>
+                    /
+                    <span bold='on' size='double'><t t-esc="changes.table"/></span>
+                </div>
+            </t>
+            <t t-if="changes.note">
+                <br/>
+                <div>
+                    <span>NOTES: </span>
+                    <span bold='on' size='double'><t t-esc="changes.note" /></span>
+                </div>
+            </t>
+            <br/>
+            <t t-if="changes.cancelled.length > 0">
+                <div color='red'>
+                    <div bold='on' size='double'>CANCELLED <span bold='off'
+                                                                 size='double-height'><t t-esc='changes.time.hours' />
+                        :
+                        <t t-esc='changes.time.minutes'/></span> </div>
+                    <br/>
+                    <t t-foreach="changes.cancelled" t-as="change">
+                        <t t-call="ChangeLine"/>
+                    </t>
+                    <br/>
+                </div>
+            </t>
+            <t t-if="changes.new.length > 0">
+                <div bold='on' size='double'>NEW <span bold='off' size='double-height'><t t-esc='changes.time.hours' />
+                    :
+                    <t t-esc='changes.time.minutes'/></span> </div>
+                <br/>
+                <t t-foreach="changes.new" t-as="change">
+                    <t t-call="ChangeLine"/>
+                </t>
+                <br/>
+            </t>
+        </receipt>
+    </t>
+
+</templates>

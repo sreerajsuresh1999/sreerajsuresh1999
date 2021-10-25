@@ -1,0 +1,41 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="barcode_rule_return_order" model="barcode.rule">
+            <field name="name">Return order</field>
+            <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+            <field name="sequence">101</field>
+            <field name="type">order</field>
+            <field name="encoding">ean13</field>
+            <field name="pattern">.*</field>
+        </record>
+
+        <record id="barcode_rule_fast_order_number" model="barcode.rule">
+            <field name="name">Fast order number</field>
+            <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+            <field name="sequence">103</field>
+            <field name="type">fast_order_number</field>
+            <field name="encoding">any</field>
+            <field name="pattern">777.*</field>
+        </record>
+
+        <record id="barcode_rule_return_product" model="barcode.rule">
+            <field name="name">Return Products</field>
+            <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+            <field name="sequence">104</field>
+            <field name="type">return_products</field>
+            <field name="encoding">any</field>
+            <field name="pattern">.*</field>
+        </record>
+
+        <record id="barcode_rule_restaurant_order" model="barcode.rule">
+            <field name="name">Scan Restaurant Order</field>
+            <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+            <field name="sequence">105</field>
+            <field name="type">restaurant_order</field>
+            <field name="encoding">ean13</field>
+            <field name="pattern">.*</field>
+        </record>
+
+    </data>
+</odoo>

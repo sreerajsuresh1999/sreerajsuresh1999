@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="QrCodeOrderRow" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <div class="order-row pointer" t-on-click="trigger('click-order', {order: props.order})">
+            <div class="col start">
+                <t t-esc="order.name"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-if="order.note">
+                    <t t-esc="order.note"/>
+                </t>
+                <t t-else="">
+                    N/A
+                </t>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.ean13"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.floor"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.table"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.customer_count"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.created_time"/>
+            </div>
+            <div class="col end" t-if="!env.isMobile">
+                <t t-esc="order.lines.length"/>
+            </div>
+            <div class="col end">
+                <t t-esc="env.pos.format_currency(order.amount_total)"/>
+            </div>
+            <div class="col start" t-att-class="{warning_box: order.state == 'Waiting'}">
+                <t t-esc="order.state"/>
+            </div>
+        </div>
+
+    </t>
+</templates>

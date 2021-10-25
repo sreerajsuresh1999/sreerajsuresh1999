@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+
+        <menuitem id="menu_master_data"
+                  name="Retail Operations"
+                  sequence="10"
+                  parent="point_of_sale.menu_point_root"
+                  groups="point_of_sale.group_pos_manager"/>
+
+            <menuitem id="menu_product_variant"
+                  name="Variants Value"
+                  parent="menu_master_data"
+                  sequence="7"
+                  groups="point_of_sale.group_pos_manager"/>
+
+            <menuitem id="menu_product_operation"
+                  name="Products Setting"
+                  parent="menu_master_data"
+                  sequence="8"
+                  groups="point_of_sale.group_pos_manager"/>
+
+                <record id="product_attribute_value_action" model="ir.actions.act_window">
+                    <field name="name">Product Variant Values</field>
+                    <field name="res_model">product.template.attribute.value</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+                <menuitem id="menu_variants_action"
+                          sequence="14"
+                          parent="menu_product_operation"
+                          action="product_attribute_value_action"/>
+
+                <menuitem id="retail_pos_menu_products_attribute_action"
+                          action="product.attribute_action"
+                          parent="menu_product_operation"
+                          groups="product.group_product_variant"
+                          sequence="15"/>
+
+        <menuitem id="menu_clients"
+                  name="Clients"
+                  parent="point_of_sale.menu_point_root"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <menuitem id="menu_promotion_voucher_discount"
+                  name="Promotions/Vouchers &amp; Discounts"
+                  parent="point_of_sale.menu_point_root"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <menuitem id="menu_sale_coupon"
+                  sequence="11"
+                  name="Sale Coupons"
+                  parent="point_of_sale.menu_point_root"
+                  groups="point_of_sale.group_pos_manager"/>
+
+                <menuitem
+                    id="menu_coupon_type_config"
+                    action="coupon.coupon_program_action_coupon_program"
+                    parent="menu_sale_coupon"
+                    name="Coupon Programs"
+                    sequence="1"
+                />
+
+                <menuitem
+                    id="menu_promotion_type_config"
+                    action="coupon.coupon_program_action_promo_program"
+                    parent="menu_sale_coupon"
+                    name="Promotion Programs"
+                    sequence="2"
+                />
+
+
+        <menuitem id="menu_catalog_pricelists"
+                  name="Pricelists"
+                  parent="menu_clients"
+                  action="product.product_pricelist_action2"
+                  sequence="1"
+                  groups="product.group_sale_pricelist"/>
+        <menuitem id="menu_action_partner_form"
+                  name="Customers"
+                  sequence="3"
+                  parent="menu_clients"
+                  action="base.action_partner_form"/>
+        <menuitem id="menu_action_partner_supplier_form"
+                  name="Vendors"
+                  parent="menu_clients"
+                  sequence="4"
+                  action="base.action_partner_supplier_form"/>
+
+        <menuitem id="menu_pos_database"
+                  name="Database"
+                  parent="menu_master_data"
+                  sequence="100"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+    </data>
+</odoo>

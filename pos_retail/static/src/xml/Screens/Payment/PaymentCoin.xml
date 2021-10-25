@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PaymentCoin" owl="1">
+        <button class="mode-button"
+                t-on-click="trigger('click-coin', props.paymentCoin)">
+            <i class="fa fa-money"/>
+            <span class="payment-name">
+                <t t-esc="props.paymentCoin.name" />
+            </span>
+        </button>
+    </t>
+
+</templates>

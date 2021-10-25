@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NetworkPrinterStatus" owl="1">
+        <div class="oe_status" t-on-click="onClick">
+            <span t-if="state.msg" class="js_msg">
+                <t t-esc="state.msg" />
+                <span> </span>
+            </span>
+            <div t-if="state.status === 'connected'" class="js_connected oe_icon oe_green">
+                <i class="fa fa-print" aria-label="Printers Network Connected"
+                   title="Printers Network Connected"/>
+            </div>
+            <div t-if="state.status === 'connecting'" class="js_connecting oe_icon">
+                <i class="fa fa-fw fa-spin fa-spinner" aria-label="Printers Network Connecting"
+                   title="Printers Network Connecting"/>
+            </div>
+            <div t-if="state.status === 'disconnected'" class="js_disconnected oe_icon oe_red">
+                <i class="fa fa-print" aria-label="Printers Network Disconnected"
+                   title="Printers Network Disconnected"/>
+            </div>
+            <div t-if="state.status === 'error'" class="js_error oe_icon oe_red">
+                <i class="fa fa-print" aria-label="Printers Network Error"
+                   title="Printers Network Error"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

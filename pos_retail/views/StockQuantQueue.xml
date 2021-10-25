@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="stock_quant_queue_form" model="ir.ui.view">
+            <field name="name">stock.quant.queue.form</field>
+            <field name="model">stock.quant.queue</field>
+            <field name="arch" type="xml">
+                <form string="Stock Quant Queue">
+                    <header>
+                        <button name="autoUpdateStock"
+                                string="Uopdate Stock Quants"
+                                type="object"
+                                class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="quant_id"/>
+                            </group>
+                            <group>
+                                <field name="datas"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_quant_queue_tree" model="ir.ui.view">
+            <field name="name">stock.quant.queue.tree</field>
+            <field name="model">stock.quant.queue</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Quant Queue">
+                    <field name="product_id"/>
+                    <field name="quant_id"/>
+                    <field name="datas"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_quant_queue_search" model="ir.ui.view">
+            <field name="name">stock.quant.queue.filter</field>
+            <field name="model">stock.quant.queue</field>
+            <field name="arch" type="xml">
+                <search string="Stock Quant Queues">
+                    <field name="product_id"/>
+                    <field name="quant_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_stock_quant_queue">
+            <field name="name">Stock Quant Queues</field>
+            <field name="res_model">stock.quant.queue</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_stock_quant_queue"
+                  action="action_stock_quant_queue"
+                  parent="menu_master_data"
+                  sequence="150"
+        />
+
+    </data>
+</odoo>

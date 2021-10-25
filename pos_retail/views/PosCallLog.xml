@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_call_log_form" model="ir.ui.view">
+            <field name="name">pos.call.log.form</field>
+            <field name="model">pos.call.log</field>
+            <field name="arch" type="xml">
+                <form string="Log">
+                    <header>
+                        <button name="refresh_logs"
+                                string="Reinstall Datas"
+                                type="object"
+                                groups="point_of_sale.group_pos_manager" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="min_id"/>
+                                <field name="max_id"/>
+                                <field name="call_domain"/>
+                                <field name="write_date"/>
+                            </group>
+                            <group>
+                                <field name="call_model"/>
+                                <field name="call_fields"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="call_results"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_call_log_tree" model="ir.ui.view">
+            <field name="name">pos.call.log.tree</field>
+            <field name="model">pos.call.log</field>
+            <field name="arch" type="xml">
+                <tree string="Logs">
+                    <field name="write_date"/>
+                    <field name="call_model"/>
+                    <field name="min_id"/>
+                    <field name="max_id"/>
+                    <field name="call_domain"/>
+                    <field name="call_fields"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_call_log_search" model="ir.ui.view">
+            <field name="name">pos.call.log.filter</field>
+            <field name="model">pos.call.log</field>
+            <field name="arch" type="xml">
+                <search string="Logs">
+                    <field name="call_model"/>
+                    <field name="min_id"/>
+                    <field name="max_id"/>
+                    <field name="call_domain"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_call_log">
+            <field name="name">POS Product, Partner Datas</field>
+            <field name="res_model">pos.call.log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_call_log"
+                  action="action_pos_call_log"
+                  parent="menu_pos_database"
+                  sequence="2"
+        />
+
+    </data>
+</odoo>

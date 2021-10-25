@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="KitchenRequestItem">
+        <div class="pos-receipt">
+            <div class="pos-receipt-title">
+                Kitchen Ticket No
+                <t t-esc='order.ticket_number'/>
+            </div>
+            <br/>
+            <br/>
+            <div>
+                <t t-esc="change.qty"/>
+                <span> x </span>
+                <span class="pos-receipt-right-align">
+                    <t t-if="change.category">
+                        <t t-esc="change.category"/>
+                        <span> / </span>
+                    </t>
+                    <t t-foreach="change.name_wrapped" t-as="wrapped_line">
+                        <t t-esc="wrapped_line"/>
+                    </t>
+                </span>
+            </div>
+            <t t-if="change.combo_items">
+                <t t-foreach="change.combo_items" t-as="combo_item">
+                    <div class="combo_item">
+                        <t t-esc="combo_item.quantity"/>
+                        <span> x </span>
+                        <span t-esc="combo_item.product_id[1]"/>
+                    </div>
+                    <t t-if="combo_item.modifiers">
+                        <t t-foreach="combo_item.modifiers" t-as="modifier" t-key="modifier">
+                            <div class="combo_item">
+                                <span> - </span>
+                                <t t-esc="modifier"/>
+                                <span> : </span>
+                                <t t-esc="combo_item.modifiers[modifier]"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+            <t t-if="change.modifiers">
+                <t t-foreach="change.modifiers" t-as="modifier">
+                    <div class="combo_item">
+                        <span> - </span>
+                        <t t-esc="modifier"/>
+                        <span> : </span>
+                        <t t-esc="change.modifiers[modifier]"/>
+                    </div>
+                </t>
+            </t>
+            <t t-if="change.note">
+                <div>
+                    NOTE
+                    <span class="pos-receipt-right-align">...</span>
+                </div>
+                <div><span class="pos-receipt-left-padding">--- <t t-esc="change.note"/></span></div>
+            </t>
+        </div>
+    </t>
+
+</templates>

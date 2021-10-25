@@ -1,0 +1,56 @@
+<section class="container">
+  <div class="row">
+    <h3 class="m-5">Module provides following methods in Backend side:</h3>
+    <ul>
+      <li class="pb-2">
+        Broadcasting a message to all opened POSes:
+        <code>self.env['pos.config].send_to_all_poses(channel_name, message)</code>
+      </li>
+      <li class="pb-2">
+        Broadcasting a message to the POSes in <code>pos_set</code> :
+        <code>pos_set._send_to_channel(channel_name, message)</code>
+      </li>
+      <li class="pb-2">
+        Sending a message to a specific POS:
+        <code>_send_to_channel_by_id(self, dbname, pos_id, channel_name)</code>
+      </li>
+    </ul>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    POS will get notification only if it's subscribed to the specified
+    <code>channel_name</code>.
+  </div>
+  <div class="row">
+    <h3 class="m-5">Methods for the Client side:</h3>
+  </div>
+
+  <ul>
+    <li class="pb-2">
+      Creating additional Bus to sync data with another Sync Server:
+      <code>add_bus(key, sync_server)</code>
+    </li>
+  </ul>
+  <div class="alert alert-primary" role="alert">
+    If you connect with your regular Odoo server, you shall not using
+    <code>add_bus</code>
+  </div>
+  <ul>
+    <li class="py-2">
+      Subscribing to a specific channel:
+      <code>add_channel_callback: function(channel_name, callback, thisArg)</code>
+    </li>
+  </ul>
+</section>
+
+<section class="container">
+  <div class="row m-5">
+    <p class="display-4 text-primary">
+      Special thanks to
+      <a
+        href="https://www.odoo.com/partners/est-pos-ou-1700274?country_id=63"
+        class="text-success"
+        >EST-POS O&#220;</a
+      >
+    </p>
+  </div>
+</section>

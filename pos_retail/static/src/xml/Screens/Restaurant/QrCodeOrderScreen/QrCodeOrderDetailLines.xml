@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="QrCodeOrderDetailLines" owl="1">
+        <div class="orders">
+            <div class="header-row">
+                <div class="col start">Name</div>
+                <div class="col end">Created Time</div>
+                <div class="col end">Quantity</div>
+                <div class="col end">Price</div>
+                <div class="col end">Price Subtotal</div>
+                <div class="col end">Price Total</div>
+            </div>
+            <t t-foreach='getOrderLines' t-as='orderLine' t-key="orderLine.id">
+                <div class="order-row pointer">
+                    <div class="col start">
+                        <t t-esc="orderLine.full_product_name"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="orderLine.creation_time"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency_no_symbol(orderLine.qty)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(orderLine.price_unit)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(orderLine.price_subtotal)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(orderLine.price_subtotal_incl)"></t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

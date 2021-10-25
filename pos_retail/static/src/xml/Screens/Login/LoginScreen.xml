@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="LoginScreen" t-inherit="pos_hr.LoginScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('login-overlay')]" position="inside">
+            <div id="livestream_scanner">
+                <div id="interactive" class="viewport"></div>
+                <div class="error"></div>
+            </div>
+        </xpath>
+        <xpath expr="//button[hasclass('select-employee')]" position="replace">
+            <button class="login-button select-employee"
+                    t-on-click="selectCashier">
+                <i class="fa fa-users" style="font-size: 30px"/>
+                <span style="display: block;  padding: 5px; color: black">
+                    <i class="fa fa-keyboard-o"/>
+                    <span>  </span>
+                    Enter
+                </span>
+            </button>
+        </xpath>
+        <xpath expr="//button[hasclass('close-session')]" position="replace">
+            <button class="login-button close-session" t-on-click="closeSession">
+                <i class="fa fa-power-off" style="font-size: 30px"/>
+                <span style="display: block;  padding: 5px; color: black">
+                    <i class="fa fa-keyboard-o"/>
+                    <span>  </span>
+                    ESC
+                </span>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

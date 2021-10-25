@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="StockInformation" owl="1">
+        <span class="tooltip-table"
+              style="width: 100%; border: unset; padding: 0px; margin: 0px; background: rgb(209, 209, 209)">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="40%" style="padding-left: 5px; text-align: left">
+                            <u>Stock Location</u>
+                        </th>
+                        <th width="40%" style="padding-left: 5px; text-align: center">
+                            <u>Total Quantities Available</u>
+                        </th>
+                        <th width="10%" style="padding-left: 5px; text-align: center">
+                            <i t-on-click.stop="buildStock"
+                               class="oe_link_icon fa fa-sitemap oe_icon line-icon"
+                               aria-label="Show Stock another Location"
+                               role="img"
+                               title="Show Stock another Location"
+                            />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="stockDatas" t-as="stockLocation" t-key="stockLocation.id">
+                        <tr>
+                            <td style="padding-left: 5px; text-align: left; font-size: 13px">
+                                <t t-esc="stockLocation.location.display_name"/>
+                                <t t-if="stockLocation['currentStock']">
+                                    <span style="color:red; font-size: 13px">
+                                        (Selected Order Stock Location)
+                                    </span>
+                                </t>
+                            </td>
+                            <td style="padding-left: 5px; text-align: center">
+                                <t t-if="stockLocation.quantity &lt;=0">
+                                    <span style="color: red">
+                                        <t t-esc="stockLocation.quantity"/>
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span style="color: #6EC89B">
+                                        <t t-esc="stockLocation.quantity"/>
+                                    </span>
+                                </t>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </span>
+    </t>
+
+</templates>

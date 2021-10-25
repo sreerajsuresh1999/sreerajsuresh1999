@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ClientListScreen" t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('button')][3]" position="replace">
+            <div class="button save" t-if="state.detailIsShown" t-on-click="trigger('click-save')">
+                <t t-if="!env.isMobile">
+                    <i class="fa fa-floppy-o"/>
+                    <span> Save</span>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-floppy-o"/>
+                </t>
+            </div>
+        </xpath>
+
+<!--        <xpath expr="//div[hasclass('button')][1]" position="before">-->
+<!--            <span t-if="!state.detailIsShown and state.selectedClient" class="client-selected">-->
+<!--                <t t-esc="state.selectedClient.name"/>-->
+<!--                <span> </span>-->
+<!--                <i class="fa fa-hand-o-right"/>-->
+<!--            </span>-->
+<!--        </xpath>-->
+
+        <xpath expr="//div[hasclass('searchbox-client')]//input" position="attributes">
+            <attribute name="t-model">state.query</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('searchbox-client')]" position="after">
+            <div class="button save" t-on-click="trigger('clear-search')" t-if="!state.detailIsShown">
+                <t t-if="!env.isMobile">
+                    <i class="fa fa-refresh"/>
+                    <span> Clear Search</span>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-refresh"/>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//span[hasclass('search-clear-client')]" position="after">
+            <span class="shortcut-keyboard" t-if="!env.isMobile and env.isShowKeyBoard">
+                <i class="fa fa-keyboard-o"/>
+                (B or ESC): Back Screen -
+                (Arrow Up/Down): Up/Down Select Customer -
+                (Enter): Set/DeSelected Customer -
+                (Any another key): Auto focus to Search Box
+            </span>
+        </xpath>
+        <xpath expr="//div[hasclass('back')]" position="inside">
+            <t t-if="!env.isMobile">
+                <span>  </span>
+                <i class="fa fa-keyboard-o"/>B / ESC
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('next')]" position="inside">
+            <t t-if="!env.isMobile" style="color: #fff">
+                <span>  </span>
+                <i class="fa fa-keyboard-o"/>Enter
+            </t>
+        </xpath>
+        <xpath expr="//section[hasclass('list')]" position="replace">
+            <table class='summary-table' t-if="!state.detailIsShown and clients.length != 0">
+                <colgroup>
+                    <col width='3%'/>
+                    <col width='37%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                    <col width='5%'/>
+                </colgroup>
+                <tr class="receipt-line header">
+                    <td style="text-align: center">
+                        No.
+                    </td>
+                    <td style="text-align: center">
+                        Name
+                    </td>
+                    <td style="text-align: center">
+                        Address
+                    </td>
+                    <td style="text-align: center">
+                        Phone
+                    </td>
+                    <td style="text-align: center">
+                        Barcode
+                    </td>
+                    <td style="text-align: center">
+                        Child of
+                    </td>
+                    <td style="text-align: center">
+                        Type
+                    </td>
+                    <td style="text-align: center">
+                        Company Type
+                    </td>
+                    <td style="text-align: center">
+                        Loyalty Points
+                    </td>
+                    <td style="text-align: center">
+                        Credit Balance
+                    </td>
+                    <td style="text-align: center">
+                        Wallet Amount
+                    </td>
+                    <td style="text-align: center">
+                        Orders Count
+                    </td>
+                    <td style="text-align: center">
+                        Purchase Count
+                    </td>
+                </tr>
+                <t t-set="number" t-value="1"/>
+                <t t-foreach="clients" t-as="partner"
+                   t-key="partner.id">
+                    <ClientLine partner="partner"
+                                number="number"
+                                selectedClient="state.selectedClient"
+                                detailIsShown="state.detailIsShown"
+                                t-on-click-client="clickClient" />
+                    <t t-set="number" t-value="number +1"/>
+                </t>
+            </table>
+        </xpath>
+    </t>
+
+</templates>

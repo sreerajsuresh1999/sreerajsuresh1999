@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="KitchenScreen" owl="1">
+        <div class="ticket-screen screen" t-on-activate-edit-mode="activateEditMode">
+            <div class="screen-content">
+                <div class="controls">
+                    <div class="buttons">
+                        <button class="btn highlight" t-if="env.pos.config.screen_type != 'kitchen'" t-on-click="trigger('close-screen')">
+                            <i class="fa fa-chevron-left"></i>
+                            Back
+                        </button>
+                        <button class="btn" t-on-click="clearSearch" t-att-class="{highlight: getCountReceipts > 0}">
+                            All Tickets
+                            <span class="with-badge" t-att-badge="getCountReceipts">
+                                <i class="oe_link_icon fa fa-cutlery" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                        <button class="btn" t-on-click="pendingTickets" t-att-class="{highlight: getPendingTickets > 0}">
+                            Pending
+                            <span class="with-badge" t-att-badge="getPendingTickets">
+                                <i class="oe_link_icon fa fa-cutlery" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                        <button class="btn" t-on-click="takeAwayTickets" t-att-class="{highlight: getTakeAwayTickets > 0}">
+                            Take Away
+                            <span class="with-badge" t-att-badge="getTakeAwayTickets">
+                                <i class="oe_link_icon fa fa-cutlery" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                        <button class="btn" t-on-click="forceDoneAllReceipts">
+                            <t t-if="!env.isMobile"><i class="fa fa-check "/></t>
+                            <t t-else="">
+                                <i class="fa fa-check "/>
+                            </t>
+                            <span>Force Done</span>
+                        </button>
+                        <button class="btn" t-on-click="clearScreen">
+                            <t t-if="!env.isMobile"><i class="fa fa-trash "/></t>
+                            <t t-else="">
+                                <i class="fa fa-trash "/>
+                            </t>
+                            <span>Clear Screen</span>
+                        </button>
+                    </div>
+                    <SearchBar config="searchBarConfig" placeholder="'Search and Group By Tickets...'"/>
+                </div>
+                <div class="orders" style="flex-flow: unset">
+                    <div class="leftpane" style="flex-direction: unset">
+                        <t t-if="state.selectedOrder">
+                            <KitchenOrderSelected order="state.selectedOrder"
+                                                   t-on-click-deliveryAll="deliveryAll"
+                                                  t-on-click-setPriority="setPriority"
+                                                  t-on-click-transferItems="transferItems"
+                                                  t-on-click-doneLine="doneLine"
+                                                  t-on-click-deliverySelectedItems="deliverySelectedItems"
+                                                  t-on-click-cancelLine="cancelLine"
+                                                  t-on-click-setSelectedLine="setSelectedLine"/>
+                        </t>
+                    </div>
+                    <div class="rightpane">
+                        <div class='product-list lines-list' style="border-collapse: unset">
+                            <t t-set="number" t-value="0"/>
+                            <t t-foreach="orderList" t-as="order"
+                               t-key="order.uid + number">
+                                <t t-set="number" t-value="number + 1"/>
+                                <KitchenOrder order="order"
+                                              selectedOrder="state.selectedOrder"
+                                              t-on-click-deliveryAll="deliveryAll"
+                                              t-on-click-setPriority="setPriority"
+                                              t-on-click-transferItems="transferItems"
+                                              t-on-click-doneLine="doneLine"
+                                              t-on-click-deliverySelectedItems="deliverySelectedItems"
+                                              t-on-click-cancelLine="cancelLine"
+                                              t-on-click-setSelectedOrder="setSelectedOrder"
+                                              t-on-click-setSelectedLine="setSelectedLine"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

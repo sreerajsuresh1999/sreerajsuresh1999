@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PosPayments" owl="1">
+        <div class="orders">
+            <h4>Payments</h4>
+            <div class="header-row">
+                <div class="col start">Date</div>
+                <div class="col end">Payment Method</div>
+                <div class="col end">Amount</div>
+            </div>
+            <t t-foreach='props.order.payments' t-as='payment' t-key="payment.id">
+                <div class="order-row pointer">
+                    <div class="col start">
+                        <t t-esc="payment.payment_date"/>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="payment.payment_method_id[1]"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(payment.amount)"></t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

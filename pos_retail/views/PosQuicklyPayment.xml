@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_quickly_payment_from" model="ir.ui.view">
+            <field name="name">pos.quickly.payment.form</field>
+            <field name="model">pos.quickly.payment</field>
+            <field name="arch" type="xml">
+                <form string="Quickly Payment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="amount"/>
+                                <field name="type"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_quickly_payment_tree" model="ir.ui.view">
+            <field name="name">pos.quickly.payment.tree</field>
+            <field name="model">pos.quickly.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Quickly Payment">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_quickly_payment">
+            <field name="name">Quickly Payment</field>
+            <field name="res_model">pos.quickly.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_quickly_payment"
+                  action="action_pos_quickly_payment"
+                  parent="menu_master_data"
+                  sequence="14"
+        />
+
+    </data>
+</odoo>

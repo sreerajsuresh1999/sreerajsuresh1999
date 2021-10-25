@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RetailClientLine" owl="1">
+        <t t-set="partner" t-value="props.partner"/>
+        <tr t-attf-class="receipt-line {{highlight}}"
+            t-att-class="{oe_hidden: props.partner.removed}"
+            t-att-data-id="partner.id"
+            t-on-mouseover.stop="_autoSyncBackend"
+            t-on-click="trigger('click-client', {client: partner})">
+            <td>
+                <t t-esc="props.number" />
+                <button class="edit-client-button btn btn-warning"
+                    t-on-click.stop="trigger('set-customer-to-cart', {client: props.partner})" style="display: block">
+                    <i class="fa fa-sign-in"/>
+                    Set to Order
+                </button>
+<!--                <button t-if="highlight and env.pos.config.update_client"-->
+<!--                        class="edit-client-button"-->
+<!--                        t-on-click.stop="trigger('click-edit')">EDIT-->
+<!--                </button>-->
+                <button t-if="env.pos.config.update_client"
+                        class="edit-client-button"
+                        t-on-click.stop="editCustomer">EDIT
+                </button>
+                <button t-if="highlight and env.pos.config.update_client"
+                        class="edit-client-button"
+                        t-on-click.stop="changePricelist">
+                    <i class="fa fa-edit"/> Pricelist
+                </button>
+            </td>
+            <td>
+                <span class="product-line-name">
+                    <t t-esc="partner.name" />
+                </span>
+                <a t-if="highlight"
+                   t-on-click.stop="showMore"
+                   style="color: blue">
+                    <i class="fa fa-link"/>
+                </a>
+            </td>
+            <td>
+                <t t-esc="partner.address" />
+            </td>
+            <td>
+                <t t-esc="partner.phone || partner.mobile" />
+                <button class="edit-client-button" t-on-click="sendMessage(partner)"
+                        t-if="highlight and (partner.mobile || partner.phone) and env.pos.config.whatsapp_api and env.pos.config.whatsapp_token">
+                    <i class="fa fa-whatsapp"></i>
+                    Messages
+                </button>
+            </td>
+            <td>
+                <t t-esc="partner.barcode or 'N/A'"/>
+                <t t-if="partner.barcode and highlight">
+                    <button class="edit-client-button" t-on-click.stop="printBarcode">
+                        <i class="fa fa-print"/>
+                        Print Card
+                    </button>
+                </t>
+                <t t-else="">
+                    <button t-if="highlight" class="edit-client-button" t-on-click.stop="addBarcode">
+                        <i class="fa fa-plus"/>
+                        Add Barcode
+                    </button>
+                </t>
+                <t t-if="env.pos.config.archive_client">
+                    <button t-if="highlight" class="edit-client-button" t-on-click.stop="archiveClient">
+                        <i class="fa fa-trash"/>
+                        Move to Black List
+                    </button>
+                </t>
+            </td>
+            <td>
+                <t t-if="partner.parent_id">
+                    <t t-esc="partner.parent_id[1]"/>
+                </t>
+            </td>
+            <td>
+                <t t-if="partner.type">
+                    <t t-esc="partner.type"/>
+                </t>
+                <button class="edit-client-button" t-on-click.stop="trigger('show-reference-contact')"
+                        t-if="highlight and env.pos.db.partners_by_parent_id[partner.id] and env.pos.db.partners_by_parent_id[partner.id].length != 0">
+                    <i class="fa fa-users"/>
+                    Childs
+                    <span class="notification"><t t-esc="env.pos.db.partners_by_parent_id[partner.id].length"/></span>
+                </button>
+                <button class="edit-client-button"
+                        t-on-click="trigger('activate-edit-mode', { isNewClient: true, parent_id: partner.id })"
+                        t-if="highlight">
+                    <i class="fa fa-users"/>
+                </button>
+            </td>
+            <td>
+                <t t-if="partner.company_type">
+                    <t t-esc="partner.company_type"/>
+                </t>
+            </td>
+            <td>
+                <t t-esc="env.pos.format_currency_no_symbol(partner.pos_loyalty_point)"/>
+                <button class="edit-client-button" t-on-click.stop="reChargePoints()"
+                        t-if="highlight and env.pos.config.pos_loyalty_id">
+                    <i class="fa fa-edit"/>
+                    ReCharge
+                </button>
+            </td>
+            <td>
+                <t t-esc="env.pos.format_currency(partner.balance)"/>
+            </td>
+            <td>
+                <t t-esc="env.pos.format_currency(partner.wallet)"/>
+            </td>
+            <td>
+                <t t-esc="env.pos.format_currency_no_symbol(partner.pos_order_count)"/>
+            </td>
+            <td>
+                <t t-esc="env.pos.format_currency(partner.pos_total_amount)"/>
+                <button class="edit-client-button" t-on-click.stop="showPurchasedHistories()"
+                        t-if="highlight and env.pos.config.pos_orders_management and countOrdersByClient > 0">
+                    <i class="fa fa-shopping-cart"/>
+                    Purchased Histories (<t t-esc="env.pos.config.load_orders_type"/>)
+                    <span class="notification"><t t-esc="countOrdersByClient"/></span>
+                </button>
+            </td>
+        </tr>
+    </t>
+
+</templates>

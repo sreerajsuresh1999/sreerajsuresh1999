@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReportOrdersSummary">
+        <div class="pos-receipt">
+            <div class="pos-receipt-contact">
+                <h1>ORDERS SUMMARY REPORT</h1>
+            </div>
+            <div class="pos-receipt-contact">
+                <h1>State: <t t-esc="state"/></h1>
+            </div>
+            <t t-call="HeaderReport"/>
+            <div class="pos-receipt-contact">
+                <h5>SALE ORDERS</h5>
+            </div>
+            <div class='orderlines'>
+                <t t-set="orders_total" t-value="0"/>
+                <t t-foreach="order_report" t-as="order_state">
+                    <t t-if="(order_state == state and state != 'all') or (state == 'all')">
+                        <div class="receipt-line">
+                            <span class="amount_total">
+                                <t t-esc="order_state"/>
+                            </span>
+                            <div>--------------------</div>
+                            <t t-foreach="order_report[order_state]" t-as="order">
+                                <div class="receipt-line">
+                                    <span>
+                                        <t t-esc="order['order_date']"/>
+                                    </span>
+                                    <span class="pos-receipt-center-align">
+                                        <t t-esc="order['order_ref']"/>
+                                    </span>
+                                    <span class="pos-receipt-right-align">
+                                        <t t-esc="pos.format_currency(order['total'])"/>
+                                    </span>
+                                    <t t-set="orders_total" t-value="order['total'] + orders_total"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+                <div class="receipt-line">
+                    -----------------
+                    <span class="pos-receipt-right-align">
+                        -----------------
+                    </span>
+                </div>
+                <div class="receipt-line">
+                    <span class="amount_total">
+                        Total
+                    </span>
+                    <span class="pos-receipt-right-align amount_total">
+                        <t t-esc="pos.format_currency(orders_total)"/>
+                    </span>
+                </div>
+            </div>
+
+            <div class="pos-receipt-contact">
+                <h5>CATEGORIES DETAIL</h5>
+            </div>
+            <div class='orderlines'>
+                <t t-set="categories_total" t-value="0"/>
+                <t t-foreach="category_report" t-as="category_state">
+                    <t t-if="(category_state == state and state != 'all') or (state == 'all')">
+                        <div class="receipt-line">
+                            <span class="amount_total">
+                                State
+                            </span>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="category_state"/>
+                            </span>
+                            <div>--------------------</div>
+                            <t t-foreach="category_report[category_state]" t-as="category">
+                                <div class="receipt-line">
+                                    <span>
+                                        <t t-esc="category"/>
+                                    </span>
+                                    <span class="pos-receipt-center-align">
+                                        <t t-esc="category_report[category_state][category][0]"/>
+                                    </span>
+                                    <span class="pos-receipt-right-align">
+                                        <t t-esc="pos.format_currency(category_report[category_state][category][1])"/>
+                                    </span>
+                                    <t t-set="categories_total" t-value="category_report[category_state][category][1] + categories_total"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+                <div class="receipt-line">
+                    -----------------
+                    <span class="pos-receipt-right-align">
+                        -----------------
+                    </span>
+                </div>
+                <div class="receipt-line">
+                    <span class="amount_total">
+                        Total
+                    </span>
+                    <span class="pos-receipt-right-align amount_total">
+                        <t t-esc="pos.format_currency(categories_total)"/>
+                    </span>
+                </div>
+            </div>
+
+            <div class="pos-receipt-contact">
+                <h5>PAYMENTS DETAIL</h5>
+            </div>
+            <div class='orderlines'>
+                <t t-set="payments_total" t-value="0"/>
+                <t t-foreach="payment_report" t-as="payment_state">
+                    <t t-if="(payment_state == state and state != 'all') or (state == 'all')">
+                        <div class="receipt-line">
+                            <span class="amount_total">
+                                State
+                            </span>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="payment_state"/>
+                            </span>
+                            <div>--------------------</div>
+                            <t t-foreach="payment_report[payment_state]" t-as="payment_method">
+                                <div class="receipt-line">
+                                    <span>
+                                        <t t-esc="payment_method"/>
+                                    </span>
+                                    <span class="pos-receipt-right-align">
+                                        <t t-esc="pos.format_currency(payment_report[payment_state][payment_method])"/>
+                                    </span>
+                                    <t t-set="payments_total" t-value="payment_report[payment_state][payment_method] + payments_total"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+                <div class="receipt-line">
+                    -----------------
+                    <span class="pos-receipt-right-align">
+                        -----------------
+                    </span>
+                </div>
+                <div class="receipt-line">
+                    <span class="amount_total">
+                        Total
+                    </span>
+                    <span class="pos-receipt-right-align amount_total">
+                        <t t-esc="pos.format_currency(payments_total)"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ReportOrdersSummaryXml">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h5><t t-esc='pos.company.name' /></h5><br />
+            <t t-if="from_date and to_date">
+                <b>Start Date:</b><t t-esc="from_date" /><br/>
+                <b>End Date:</b><t t-esc="to_date" />
+                <b>State:</b><t t-esc="state" />
+                <br/><br/>
+            </t>
+            <t t-if="order_report">
+                <div><b>Order Summary</b></div>
+                <line>
+                    <left><b>Order Ref</b></left>
+                    <right><b>Total</b></right>
+                </line>
+                <line>
+                    <left>-----------------</left>
+                    <right>----------------</right>
+                </line>
+                <t t-set="order_total" t-value="0"/>
+                <t t-set="order_count" t-value="0"/>
+                <t t-foreach="order_report" t-as="order_state">
+                    <t t-if="(order_state == state and state != 'all') or (state == 'all')">
+                        <line>
+                            <left>State</left>
+                            <right><t t-esc="order_state"/></right>
+                        </line>
+                        <t t-foreach="order_report[order_state]" t-as="order">
+                            <line>
+                                <left><t t-esc="order['order_ref']" /></left>
+                            </line>
+                            <line indent="1">
+                                   <left font='b'><t t-esc="order['order_date']" /></left>
+                                   <right><t t-esc="pos.format_currency(order['total'])" /></right>
+                            </line>
+                            <t t-set="order_total" t-value="order_total + order['total']"/>
+                            <t t-set="order_count" t-value="order_count + 1"/>
+                        </t>
+                    </t>
+                </t>
+                <line>
+                    <left>Orders Count</left>
+                    <right><t t-esc="pos.format_currency_no_symbol(order_count)" /></right>
+                </line>
+                <line>
+                    <left>Total</left>
+                    <right><t t-esc="pos.format_currency(order_total)" /></right>
+                </line>
+            </t>
+            <br />
+            <div>
+                <b>Category Summary</b>
+            </div>
+            <line>
+                <left><b>Category</b></left>
+                <right><b>Total</b></right>
+            </line>
+            <line>
+                <left>-----------------</left>
+                <right>----------------</right>
+            </line>
+            <t t-set="categories_total" t-value="0"/>
+            <t t-foreach="category_report" t-as="category_state">
+                <t t-if="(category_state == state and state != 'all') or (state == 'all')">
+                    <line>
+                        <left><b>State</b></left>
+                        <right><b><t t-esc="category_state"/></b></right>
+                    </line>
+                    <t t-foreach="category_report[category_state]" t-as="category">
+                        <line>
+                            <left><t t-esc="category" /></left>
+                        </line>
+                        <line indent="1">
+                               <left font='b'><t t-esc="category_report[category_state][category][0]" /></left>
+                               <right><t t-esc="pos.format_currency(category_report[category_state][category][1])" /></right>
+                        </line>
+                        <t t-set="categories_total" t-value="category_report[category_state][category][1] + categories_total"/>
+                    </t>
+                </t>
+            </t>
+            <hr />
+            <line>
+                <left>Total</left>
+                <right><t t-esc="pos.format_currency(categories_total)" /></right>
+            </line>
+            <br />
+            <div>
+                <b>Payment Summary</b>
+            </div>
+            <line>
+                <left><b>Journal Name</b></left>
+                <right><b>Amount</b></right>
+            </line>
+            <line>
+                <left>-----------------</left>
+                <right>----------------</right>
+            </line>
+            <t t-set="payments_total" t-value="0"/>
+            <t t-foreach="payment_report" t-as="payment_state">
+                <t t-if="(order_state == state and state != 'all') or (state == 'all')">
+                    <line>
+                        <left>State</left>
+                        <right><t t-esc="payment_state"/></right>
+                    </line>
+                    <line>
+                        <left>-------------------</left>
+                    </line>
+                    <t t-foreach="payment_report[payment_state]" t-as="payment_method">
+                        <line>
+                            <left><t t-esc="payment_method" /></left>
+                            <right><t t-esc="pos.format_currency(payment_report[payment_state][payment_method])" /></right>
+                        </line>
+                        <t t-set="payments_total" t-value="payment_report[payment_state][payment_method] + payments_total"/>
+                    </t>
+                </t>
+            </t>
+            <hr />
+            <line>
+                <left>Total</left>
+                <right><t t-esc="pos.format_currency(payments_total)" /></right>
+            </line>
+            <br />
+        </receipt>
+    </t>
+    
+</templates>

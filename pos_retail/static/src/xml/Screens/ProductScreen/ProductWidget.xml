@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductsWidget" t-inherit="point_of_sale.ProductsWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//ProductsWidgetControlPanel" position="replace"/>
+        <xpath expr="//ProductList" position="replace"/>
+        <xpath expr="//div[hasclass('products-widget')]" position="inside">
+            <t t-set="products" t-value="productsToDisplay"/>
+            <ProductsWidgetControlPanel
+                    breadcrumbs="breadcrumbs"
+                    subcategories="subcategories"
+                    countProductsToDisplay="products.length"
+                    hasNoCategories="hasNoCategories"/>
+            <ProductList
+                    t-att-class="{oe_hidden: blockScreen}"
+                    products="products"
+                    searchWord="searchWord" />
+        </xpath>
+    </t>
+
+</templates>

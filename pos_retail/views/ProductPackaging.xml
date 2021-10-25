@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="retail_product_packaging_tree_view" model="ir.ui.view">
+            <field name="name">inherit.product.packaging.tree.view</field>
+            <field name="model">product.packaging</field>
+            <field name="inherit_id" ref="product.product_packaging_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty']" position="before">
+                    <field name="barcode"/>
+                    <field name="qty"/>
+                    <field name="list_price"/>
+                </xpath>
+                <xpath expr="//field[@name='sequence']" position="before">
+                    <field name="active"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="retail_product_packaging_form_view" model="ir.ui.view">
+            <field name="name">inherit.product.packaging.form.view</field>
+            <field name="model">product.packaging</field>
+            <field name="inherit_id" ref="product.product_packaging_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='id']" position="after">
+                    <group>
+                        <field name="list_price"/>
+                        <field name="active"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="product_packaging_tree_view" model="ir.ui.view">
+            <field name="name">product.packaging.tree.view</field>
+            <field name="model">product.packaging</field>
+            <field name="arch" type="xml">
+                <search string="Product Packages">
+                    <field name="sequence" widget="handle"/>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="qty"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="groupby_product" domain="[]" context="{'group_by': 'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_product_packaging" model="ir.actions.act_window">
+            <field name="name">Product Packaging</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.packaging</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_product_packaging"
+                  action="action_product_packaging"
+                  parent="menu_product_operation"
+                  sequence="3"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+    </data>
+</odoo>

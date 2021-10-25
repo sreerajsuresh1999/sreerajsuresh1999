@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductCollegeFilter" owl="1">
+        <div class="pos-search-bar" style="display:contents">
+            <span class="filter-label">AND</span>
+            <div class="filter radius-right"
+                t-on-click.stop="state.showFilterOptions = !state.showFilterOptions">
+                <span class="down-icon">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                </span>
+                <span>
+                    <t t-esc="state.selectedFilter['name']" />
+                </span>
+                <ul t-if="state.showFilterOptions" class="options" style="right: unset; left: 0px">
+                    <t t-foreach="env.pos.product_colleges" t-as="college" t-key="college.id">
+                        <li t-on-click="selectFilter(college)">
+                            <t t-esc="college.name"></t>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+        </div>
+    </t>
+
+</templates>

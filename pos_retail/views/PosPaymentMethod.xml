@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_payment_method_view_form" model="ir.ui.view">
+        <field name="name">pos.payment.method.form</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_cash_count']" position="after">
+                <field name="fullfill_amount"/>
+                <field name="shortcut_keyboard"/>
+                <field name="cheque_bank_information"/>
+                <field name="discount"/>
+                <field name="discount_type"
+                       attrs="{'required': [('discount', '=', True)], 'invisible': [('discount', '=', False)]}"/>
+                <field name="discount_amount"
+                       attrs="{'required': [('discount', '=', True)], 'invisible': [('discount', '=', False)]}"/>
+                <field name="discount_product_id"
+                       attrs="{'required': [('discount', '=', True)], 'invisible': [('discount', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_payment_method_view_tree" model="ir.ui.view">
+        <field name="name">pos.payment.method.form</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_cash_count']" position="after">
+                <field name="fullfill_amount"/>
+                <field name="shortcut_keyboard"/>
+                <field name="cheque_bank_information"/>
+                <field name="discount"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_view_pos_payment_method_form" model="ir.ui.view">
+        <field name="name">pos.payment.method.form.view.inherit</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[@name='Payment methods']" position="after">
+                <notebook>
+                    <page name='custom_point_of_sale' string="Point of Sale">
+                        <group>
+                            <group>
+                                <field name="jr_use_for"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name='payment_charges' string="Payment Charges">
+                        <group>
+                            <group>
+                                <field name="apply_charges"/>
+                                <field name="fees_amount"
+                                       attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+                            </group>
+                            <group>
+                                <field name="fees_type"
+                                       attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+                                <field name="fees_product_id"
+                                       attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

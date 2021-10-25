@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_warehouse" model="ir.ui.view">
+            <field name="name">stock.warehouse.form.branch</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="pos_branch_id" groups="pos_retail.group_branch_manager"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

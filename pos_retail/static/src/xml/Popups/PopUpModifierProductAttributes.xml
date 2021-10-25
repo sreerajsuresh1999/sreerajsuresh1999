@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PopUpModifierProductAttributes" owl="1">
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title"><t t-esc=" props.title || '' " /></h4>
+                        <t t-foreach="props.arrays" t-as="item">
+                            <div class="row haft_box">
+                                <span class='label'><t t-esc="item['name']"/></span>
+                                    <select class='form-control'
+                                            t-on-change="OnChange"
+                                            t-att-id="item.id"
+                                            t-att-name="item['name']">
+                                            <option value='null'>
+                                                Please Choice One
+                                            </option>
+                                            <t t-foreach='props.datas' t-as="data" t-key="data.id">
+                                                <option t-att-value='data.name'>
+                                                    <t t-esc='data.sequence'/>. <t t-esc='data.name'/>
+                                                </option>
+                                            </t>
+                                    </select>
+                            </div>
+                        </t>
+                        <span class="card-issue"/>
+                        <div class="form-footer text-center">
+                            <div class="btn btn-success pull-right" t-on-click="confirm">
+                                Confirm
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Finish </span></span>
+                            </div>
+                            <div class="btn btn-danger pull-right" t-on-click="cancel">
+                                Close
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

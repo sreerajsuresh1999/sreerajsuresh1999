@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_generic_option_form" model="ir.ui.view">
+            <field name="name">product.generic.option.form</field>
+            <field name="model">product.generic.option</field>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="price_extra"/>
+                            </group>
+                        </group>
+                        <group string="Material Redeem Stock">
+                            <field name="material_ids" colspan="4" nolabel="1">
+                                <tree string="Material Redeem Stock" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                                <form string="Material Redeem Stock">
+                                    <sheet>
+                                        <group>
+                                            <field name="product_id"/>
+                                            <field name="quantity"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </group>
+                        <group string="Products required Input">
+                            <field name="product_ids" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_generic_option_tree" model="ir.ui.view">
+            <field name="name">product.generic.option.tree</field>
+            <field name="model">product.generic.option</field>
+            <field name="arch" type="xml">
+                <tree string="Product Generic Option">
+                    <field name="name"/>
+                    <field name="price_extra"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_generic_option_search" model="ir.ui.view">
+            <field name="name">product.generic.option.filter</field>
+            <field name="model">product.generic.option</field>
+            <field name="arch" type="xml">
+                <search string="Product Generic Option">
+                    <field name="name"/>
+                    <field name="price_extra"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_generic_option">
+            <field name="name">Product Generic Option</field>
+            <field name="res_model">product.generic.option</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_product_generic_option"
+                  action="action_product_generic_option"
+                  parent="menu_product_operation"
+                  sequence="2"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="metrc_account_type_tree" model="ir.ui.view">
+        <field name="name">metrc account tree</field>
+        <field name="model">metrc.account</field>
+        <field name="arch" type="xml">
+            <tree string="User Account">
+                <field name="name"/>
+                <field name="active_"/>
+                <field name="api_version"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="metrc_account_type_form" model="ir.ui.view">
+        <field name="name">metrc.account.form</field>
+        <field name="model">metrc.account</field>
+        <field name="arch" type="xml">
+            <form string="User Account">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="test_metrc_connection" type="object" class="oe_stat_button">
+                            <i class="fa fa-check fa-2x" style="margin-left:20px;"></i>
+                            <span style="margin-left:20px;">Test Connection</span>
+                        </button>
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="actives" readonly="1"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <span class="o_form_label">Account Credentials &amp; API</span>
+                    </div>
+                    <br/>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">METRC Credentials</span>
+                                    <div class="content-group">
+                                        <label for="url" string="Server"/>
+                                        <div class="mt16">
+                                            <field name="url"/>
+                                        </div>
+                                        <label for="password1" string="Vendor Key"/>
+                                        <div class="mt16">
+                                            <field name="password1" password="True"/>
+                                        </div>
+                                        <label for="password2" string="User Key"/>
+                                        <div class="mt16">
+                                            <field name="password2" password="True"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <span class="o_form_label">API Version</span>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <label for="api_version" string="Version"/>
+                                                <field name="api_version"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string="Import Data">
+                            <div class="container row">
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>1. Import Customer Types</h6>
+                                    <button name="sync_metrc_customer_types" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Customer Types
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Customer Types to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>2. Import UOM</h6>
+                                    <button name="sync_metrc_uom" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import UOM
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC UOM to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>3. Import Facilities</h6>
+                                    <button name="sync_metrc_facility" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Facilities
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Facilities to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>4. Import Strains</h6>
+                                    <button name="sync_metrc_facility_strains" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Strains
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Strains to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>5. Import Transfer Types</h6>
+                                    <button name="sync_metrc_facility_transfer_types" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Transfer Types
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Transfer Types to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>6. Import Location Types</h6>
+                                    <button name="sync_metrc_facility_location_types" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Location Types
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Location Types to Odoo</p6>
+                                </div>
+                                <div style="margin: 20px; width: 30%;">
+                                    <h6>7. Import Locations</h6>
+                                    <button name="sync_metrc_facility_locations" type="object" class="oe_highlight"
+                                            style="margin-right: 20px;">
+                                        <i class="fa fa-download"></i>
+                                        Import Locations
+                                    </button>
+                                    <br/>
+                                    <p6>Click the button to import all METRC Locations to Odoo</p6>
+                                </div>
+                            </div>
+
+
+                        </page>
+                        <page string="Export Data">
+                            <button name="sync_metrc_facility_pos_order" type="object" class="oe_highlight"
+                                    style="margin-right: 20px;">
+                                <i class="fa fa-upload"></i>
+                                Export PoS Orders
+                            </button>
+                            <button name="sync_metrc_facility_sale_order" type="object" class="oe_highlight"
+                                    style="margin-right: 20px;">
+                                <i class="fa fa-upload"></i>
+                                Export Sale Orders
+                            </button>
+                        </page>
+                        <page string="Logs">
+                            <field name="logs">
+                                <tree default_order="create_date desc">
+                                    <field name="create_date"/>
+                                    <field name="res_name"/>
+                                    <field name="res_model"/>
+                                    <field name="operation"/>
+                                    <field name="full_url"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

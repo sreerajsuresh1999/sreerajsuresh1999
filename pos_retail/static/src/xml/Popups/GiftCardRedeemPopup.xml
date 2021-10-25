@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="giftCardRedeemPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <span>Due Amount : <t t-esc="env.pos.format_currency(env.pos.get_order().get_due())"/></span>
+                    <br/>
+                    <br/>
+                    <div class="div">
+                        <table border="0" align="center" id="table_barcode">
+                            <tr>
+                                <t t-if="state.showCardNumberInput">
+                                    <td colspan="2"><input type="text" t-model="state.GiftCardNumber" t-ref="gift_card_number"  placeholder="Enter Card Number" id="text_gift_card_no" name="card_number" t-on-keypress="CheckGiftCardBalance" /></td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> <label id="lbl_set_customer"/> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> <label id="lbl_single_card_no"/> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> <label id="lbl_card_no"/> </td>
+                            </tr>
+                            <tr id="in_balance" style="display:none">
+                                <td></td>
+                                <td> <label style="color:red">Insufficient Balance.</label> </td>
+                            </tr>
+                            <tr id="redeem_amount_row">
+                                <td colspan="2"><input type="text" t-model="state.GiftCardAmount" t-ref="gift_card_amount"  placeholder="Enter Amount" id="text_redeem_amount" name="points"/></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

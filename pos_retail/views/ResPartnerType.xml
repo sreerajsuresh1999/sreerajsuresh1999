@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="res_partner_type_form" model="ir.ui.view">
+            <field name="name">res.partner.type.form</field>
+            <field name="model">res.partner.type</field>
+            <field name="arch" type="xml">
+                <form string="type">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <field name="from_amount_total_orders"/>
+                            <field name="to_amount_total_orders"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_partner_type_tree" model="ir.ui.view">
+            <field name="name">res.partner.type.tree</field>
+            <field name="model">res.partner.type</field>
+            <field name="arch" type="xml">
+                <tree string="type">
+                    <field name="name"/>
+                    <field name="from_amount_total_orders"/>
+                    <field name="to_amount_total_orders"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_partner_type_search" model="ir.ui.view">
+            <field name="name">res.partner.type.search</field>
+            <field name="model">res.partner.type</field>
+            <field name="arch" type="xml">
+                <search string="type">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="res_partner_type_action">
+            <field name="name">Customer Type</field>
+            <field name="res_model">res.partner.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_res_partner_type_action"
+            action="res_partner_type_action"
+            parent="menu_clients"
+            sequence="6"
+        />
+
+    </data>
+</odoo>

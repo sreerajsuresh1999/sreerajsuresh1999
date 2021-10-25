@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ClientInformation" owl="1">
+        <div class="summary clearfix">
+            <table class='summary-table' style="width: 100%">
+                <colgroup>
+                    <col width='35%'/>
+                    <col width='65%'/>
+                </colgroup>
+                <tr class="header-colum">
+                    <th class="header-table">Customer</th>
+                    <th class="header-table"><t t-esc="props.partner.display_name"/></th>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        Total Orders Purchased
+                    </td>
+                    <td style="text-align: right">
+                        <span t-on-click.stop="showPurchasedHistories"
+                              style="cursor: pointer"
+                              t-if="props.partner.pos_order_count &gt; 0 and env.pos.config.pos_orders_management"
+                              aria-label="Orders Count"
+                              title="Orders Count"
+                              class="with-badge" t-att-badge="env.pos.format_currency_no_symbol(props.partner.pos_order_count)">
+                            <i class="oe_link_icon fa fa-book oe_icon line-icon" aria-hidden="true"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        Loyalty Points
+                    </td>
+                    <td style="text-align: right">
+                        <span t-on-click.stop="usePointsDoPayment"
+                              style="cursor: pointer"
+                              t-if="props.partner.pos_loyalty_point &gt; 0"
+                              aria-label="Client Points"
+                              title="Client Points"
+                              class="with-badge" t-att-badge="env.pos.format_currency_no_symbol(props.partner.pos_loyalty_point)">
+                            <i class="oe_link_icon fa fa-gift oe_icon line-icon" aria-hidden="true"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        Credit Points
+                    </td>
+                    <td style="text-align: right">
+                        <span t-on-click.stop="useCreditsDoPayment"
+                              style="cursor: pointer"
+                              t-if="props.partner.balance &gt; 0"
+                              aria-label="Credit Balance Amount"
+                              title="Credit Balance Amount"
+                              class="with-badge" t-att-badge="env.pos.format_currency_no_symbol(props.partner.balance)">
+                            <i class="oe_link_icon fa fa-book oe_icon line-icon" aria-hidden="true"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        Wallet Points
+                    </td>
+                    <td style="text-align: right">
+                        <span t-on-click.stop="useWalletsDoPayment"
+                              style="cursor: pointer"
+                              t-if="props.partner.wallet &gt; 0"
+                              aria-label="Card Wallet Amount"
+                              title="Card Wallet Amount"
+                              class="with-badge" t-att-badge="env.pos.format_currency_no_symbol(props.partner.wallet)">
+                            <i class="oe_link_icon fa fa-book oe_icon line-icon" aria-hidden="true"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        Purchased Total
+                    </td>
+                    <td style="text-align: right">
+                        <t t-esc="env.pos.format_currency_no_symbol(props.partner.pos_total_amount)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </t>
+
+</templates>

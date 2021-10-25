@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_backup_order_form" model="ir.ui.view">
+            <field name="name">pos.backup.orders.form</field>
+            <field name="model">pos.backup.orders</field>
+            <field name="arch" type="xml">
+                <form string="Global Discount">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="config_id"/>
+                                <field name="total_orders"/>
+                            </group>
+                            <group>
+                                <field name="unpaid_orders"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_backup_order_tree" model="ir.ui.view">
+            <field name="name">pos.backup.orders.tree</field>
+            <field name="model">pos.backup.orders</field>
+            <field name="arch" type="xml">
+                <tree string="Backup Orders Unpaid">
+                    <field name="config_id"/>
+                    <field name="total_orders"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_backup_order_search" model="ir.ui.view">
+            <field name="name">pos.backup.orders.search</field>
+            <field name="model">pos.backup.orders</field>
+            <field name="arch" type="xml">
+                <search string="Backup Orders Unpaid">
+                    <field name="config_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_backup_orders_unpaid">
+            <field name="name">Backup Orders Unpaid</field>
+            <field name="res_model">pos.backup.orders</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_backup_orders_unpaid"
+                  action="action_backup_orders_unpaid"
+                  parent="menu_master_data"
+        />
+
+    </data>
+</odoo>

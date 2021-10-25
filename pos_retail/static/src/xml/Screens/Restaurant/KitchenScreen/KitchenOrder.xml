@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="KitchenOrder" owl="1">
+        <div class="kitchen-box" t-on-click="trigger('click-setSelectedOrder', {order: props.order})" t-att-class="{highlight: props.selectedOrder and props.selectedOrder.request_time == props.order.request_time}">
+            <div class="ribbon">
+                <span class="kitchen_box_state" t-att-class="props.order.state">
+                    <t t-esc="props.order.state"/>
+                </span>
+            </div>
+            <div class="pos-receipt-title product-name" style="margin-top: 20px">
+                <t t-if="props.order.floor and props.order.table">
+                    <t t-esc="props.order.floor" /> at <t t-esc="props.order.table"/>
+                </t>
+                :
+                <t t-esc="props.order.name" />
+            </div>
+            <div class="pos-receipt-title product-name" t-if="props.order.priority">
+                <span class="warning_box" t-if="props.order.priority">High Priority</span>
+            </div>
+            <div class="pos-receipt-title product-name" t-if="props.order.take_away_order">
+                <span class="New">Take Away Order</span>
+            </div>
+            <div class="pos-receipt-title" t-if="props.order.customer_count">
+                Guests : <t t-esc="props.order.customer_count"/>
+            </div>
+            <div class="pos-receipt-title" t-if="props.order.ticket_number">
+                Ticket No : <t t-esc="props.order.ticket_number"/>
+            </div>
+            <div class="pos-receipt-title">
+                Items : <span class="notification"><t t-esc="props.order.total_items"/></span>
+            </div>
+            <div class="pos-receipt-title" t-if="props.order.ready_transfer_items">
+                Ready Transfer: <span class="ready_notification"><t t-esc="props.order.ready_transfer_items"/></span>
+            </div>
+            <div class="pos-receipt-title">
+                Requester: <t t-esc="props.order.user"/>
+            </div>
+            <div class="pos-receipt-title">
+                <span class="order_times">
+                    Time: <t t-esc="props.order.time.hours" /> : <t t-esc="props.order.time.minutes"/>
+                </span>
+                <span class="delayed_times" t-if="props.order.state != 'Done'" style="float: left">
+                    <KitchenProcessingTimes order="props.order"/>
+                </span>
+            </div>
+            <div class="pos-receipt-title" t-if="props.order.finished_time">
+                <span>
+                    Finished: <t t-esc="props.order.finished_time"/>
+                </span>
+            </div>
+            <div class="pos-receipt-title" t-if="props.order.userAction">
+                <span class="warning_box" t-if="props.order.userAction"><t t-esc="props.order.userAction"/> : <t t-esc="props.order.state"/></span>
+            </div>
+            <div class="pos-receipt-order-data" t-if="env.pos.config.screen_type != 'kitchen'">
+                <span class="btn" t-on-click="openOrder" style="float: left; display: inline-block">
+                    <i class="fa fa-shopping-cart"/> View Cart
+                </span>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- TODO applied branch rule for list object bellow -->
+        <!-- =========================================================================================== -->
+                                    <!-- - [x] stock.inventory-->
+                                    <!-- - [x] stock.warehouse-->
+                                    <!-- - [x] pos.order.line-->
+                                    <!-- - [x] pos.config-->
+                                    <!-- - [x] pos.session-->
+                                    <!-- - [x] stock.picking-->
+                                    <!-- - [x] stock.move.line-->
+                                    <!-- - [x] stock.move-->
+                                    <!-- - [x] stock.location-->
+                                    <!-- - [x] sale.order-->
+                                    <!-- - [x] sale.order.line-->
+                                    <!-- - [x] purchase.order.line-->
+                                    <!-- - [x] purchase.order-->
+                                    <!-- - [x] account.payment-->
+                                    <!-- - [x] account.move-->
+                                    <!-- - [x] account.move.line-->
+                                    <!-- - [x] res.partner-->
+                                    <!-- - [x] product.template-->
+                                    <!-- - [x] account.bank.statement.line-->
+                                    <!-- - [x] account.bank.statement-->
+                                    <!-- - [x] pos.order-->
+                                    <!-- - [ ] pos.payment-->
+    <!-- =========================================================================================== -->
+        
+        <!-- TODO: for pos.branch -->
+        <record id="pos_branch_applied_pos_branch_user" model="ir.rule">
+            <field name="name">[POS Retail] POS Config Group Branch User</field>
+            <field name="model_id" ref="model_pos_branch"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('user_id','=', user.id), ('user_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_pos_branch_manager" model="ir.rule">
+            <field name="name">[POS Retail] POS Config Group Branch Manager</field>
+            <field name="model_id" ref="model_pos_branch"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for bank.statement -->
+        <record id="pos_branch_applied_account_bank_statement_user" model="ir.rule">
+            <field name="name">[POS Retail] Account Bank Statement Group Branch User</field>
+            <field name="model_id" ref="model_account_bank_statement"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_account_bank_statement_manager" model="ir.rule">
+            <field name="name">[POS Retail] Account Bank Statement Group Branch Manager</field>
+            <field name="model_id" ref="model_account_bank_statement"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for bank.statement.line -->
+        <record id="pos_branch_applied_account_bank_statement_line_user" model="ir.rule">
+            <field name="name">[POS Retail] Account Bank Statement Line Group Branch User</field>
+            <field name="model_id" ref="model_account_bank_statement_line"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_account_bank_statement_line_manager" model="ir.rule">
+            <field name="name">[POS Retail] Account Bank Statement Line Group Branch Manager</field>
+            <field name="model_id" ref="model_account_bank_statement_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.inventory -->
+        <record id="pos_branch_applied_stock_inventory_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Inventory Group Branch User</field>
+            <field name="model_id" ref="model_stock_inventory"/>
+            <field name="global" eval="True"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_inventory_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Inventory Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_inventory"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.warehouse -->
+        <record id="pos_branch_applied_stock_warehouse_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Warehouse Group Branch User</field>
+            <field name="model_id" ref="model_stock_warehouse"/>
+            <field name="global" eval="True"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_warehouse_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Warehouse Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_warehouse"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_pos_order_manager" model="ir.rule">
+            <field name="name">[POS Retail] POS Order Group Branch Manager</field>
+            <field name="model_id" ref="model_pos_order"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for pos.config -->
+        <record id="pos_branch_applied_pos_config_user" model="ir.rule">
+            <field name="name">[POS Retail] POS Config Group Branch User</field>
+            <field name="model_id" ref="model_pos_config"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_pos_config_manager" model="ir.rule">
+            <field name="name">[POS Retail] POS Config Group Branch Manager</field>
+            <field name="model_id" ref="model_pos_config"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for pos.session -->
+        <record id="pos_branch_applied_pos_session_user" model="ir.rule">
+            <field name="name">[POS Retail] POS Session Group Branch User</field>
+            <field name="model_id" ref="model_pos_session"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_pos_session_manager" model="ir.rule">
+            <field name="name">[POS Retail] POS Session Group Branch Manager</field>
+            <field name="model_id" ref="model_pos_session"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.picking -->
+        <record id="pos_branch_applied_stock_picking_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Picking Group Branch User</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_picking_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Picking Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.move -->
+        <record id="pos_branch_applied_stock_move_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Move Group Branch User</field>
+            <field name="model_id" ref="model_stock_move"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_move_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Move Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_move"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.move.line -->
+        <record id="pos_branch_applied_stock_move_line_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Move Line Group Branch User</field>
+            <field name="model_id" ref="model_stock_move_line"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_move_line_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Move Line Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_move_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for stock.location -->
+        <record id="pos_branch_applied_stock_location_user" model="ir.rule">
+            <field name="name">[POS Retail] Stock Location Group Branch User</field>
+            <field name="model_id" ref="model_stock_location"/>
+            <field name="global" eval="True"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_stock_location_manager" model="ir.rule">
+            <field name="name">[POS Retail] Stock Location Group Branch Manager</field>
+            <field name="model_id" ref="model_stock_location"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for sale.order -->
+        <record id="pos_branch_applied_sale_order_user" model="ir.rule">
+            <field name="name">[POS Retail] Sale Order Group Branch User</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_sale_order_manager" model="ir.rule">
+            <field name="name">[POS Retail] Sale Order Group Branch Manager</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for purchase.order -->
+        <record id="pos_branch_applied_purchase_order_user" model="ir.rule">
+            <field name="name">[POS Retail] Branch User: Purchase Order</field>
+            <field name="model_id" ref="model_purchase_order"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_purchase_order_manager" model="ir.rule">
+            <field name="name">[POS Retail] Branch Manager: Purchase Order</field>
+            <field name="model_id" ref="model_purchase_order"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for account.payment -->
+        <record id="pos_branch_applied_account_payment_user" model="ir.rule">
+            <field name="name">[POS Retail] Branch User: Account Payment</field>
+            <field name="model_id" ref="model_account_payment"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_account_payment_manager" model="ir.rule">
+            <field name="name">[POS Retail] Branch Manager: Account Payment</field>
+            <field name="model_id" ref="model_account_payment"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for account.move -->
+        <record id="pos_branch_applied_account_move_user" model="ir.rule">
+            <field name="name">[POS Retail] Branch User: Account Move</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_account_move_manager" model="ir.rule">
+            <field name="name">[POS Retail] Branch Manager: Account Move</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+        <!-- TODO: for res.partner -->
+        <record id="pos_branch_applied_res_partner_user" model="ir.rule">
+            <field name="name">[POS Retail] Branch User: Res Partner</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_res_partner_manager" model="ir.rule">
+            <field name="name">[POS Retail] Branch Manager: Res Partner</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+         <!-- TODO: for product.template -->
+        <record id="pos_branch_applied_product_template_user" model="ir.rule">
+            <field name="name">[POS Retail] Branch User: Product Template</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="global" eval="True"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_product_template_manager" model="ir.rule">
+            <field name="name">[POS Retail] Branch Manager: Product Template</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+         <!-- TODO: for pos.order -->
+        <record id="pos_branch_applied_pos_order_user" model="ir.rule">
+            <field name="name">[POS Retail] POS Order Group Branch User</field>
+            <field name="model_id" ref="model_pos_order"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <!-- TODO: for pos.payment -->
+        <record id="pos_branch_applied_pos_payment_user" model="ir.rule">
+            <field name="name">[POS Retail] POS Payment Group Branch User</field>
+            <field name="model_id" ref="model_pos_payment"/>
+            <field name="global" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="domain_force">['|', '|', ('pos_branch_id.user_id','=', user.id), ('pos_branch_id.user_ids', 'in', [user.id]), ('pos_branch_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_user'))]"/>
+        </record>
+
+        <record id="pos_branch_applied_pos_payment_manager" model="ir.rule">
+            <field name="name">[POS Retail] POS Payment Group Branch Manager</field>
+            <field name="model_id" ref="model_pos_payment"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_branch_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

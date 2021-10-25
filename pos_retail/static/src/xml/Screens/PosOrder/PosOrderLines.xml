@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PosOrderLines" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <div class="orders">
+            <h4>Products</h4>
+            <div class="header-row">
+                <div class="col start">Product</div>
+                <div class="col end">Qty</div>
+                <div class="col end" t-if="!env.isMobile">Returned Qty</div>
+                <div class="col end" t-if="!env.isMobile">Price</div>
+                <div class="col end">Sub Total</div>
+                <div class="col start" t-if="!env.isMobile">Seller</div>
+            </div>
+            <t t-foreach='props.order.lines' t-as='line' t-key="line.id">
+                <div class="order-row pointer">
+                    <div class="col start">
+                        <t t-esc="env.pos.generate_wrapped_name(line.product_id[1])[0]"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="line.qty"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="line.returned_qty"></t>
+                    </div>
+                    <div class="col end" t-if="!env.isMobile">
+                        <t t-esc="env.pos.format_currency(line.price_unit)"></t>
+                    </div>
+                    <div class="col end">
+                        <t t-esc="env.pos.format_currency(line.price_subtotal_incl)"></t>
+                    </div>
+                    <div class="col start" t-if="!env.isMobile">
+                        <t t-if="line.user_id" t-esc="line.user_id[1]"></t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

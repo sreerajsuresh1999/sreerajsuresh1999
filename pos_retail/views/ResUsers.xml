@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="res_users_view_form" model="ir.ui.view">
+        <field name="name">res.users.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Point of Sale">
+                    <group>
+                        <field name="barcode" />
+                        <field name="pos_security_pin" />
+                        <field name="pos_config_id" domain="[('company_id', '=', company_id)]"/>
+                        <field name="pos_delete_order"/>
+                        <field name="pos_branch_id" options="{'no_create_edit': True}"/>
+                        <field name="allow_access_backend"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="view_users_tree" model="ir.ui.view">
+        <field name="name">res.users.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="pos_branch_id"/>
+                <field name="allow_access_backend"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.user.branch</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="pos_branch_id" options="{'no_create_edit': True}"/>
+                <field name="allow_access_backend"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

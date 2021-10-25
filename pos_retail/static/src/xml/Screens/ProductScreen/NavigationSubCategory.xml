@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NavigationSubCategory" owl="1">
+        <li t-att-class="{'has-sub': env.pos.db.get_category_childs_ids(props.category_id).length != 0}">
+            <a href="#" t-on-click="setCategory(props.category_id)">
+                <t t-esc="env.pos.db.category_by_id[props.category_id]['name']"/>
+            </a>
+            <ul>
+                <t t-foreach='env.pos.db.get_category_childs_ids(props.category_id)' t-as='category_id' t-key="category_id">
+                    <NavigationSubCategory category_id="category_id"/>
+                </t>
+            </ul>
+        </li>
+    </t>
+
+</templates>

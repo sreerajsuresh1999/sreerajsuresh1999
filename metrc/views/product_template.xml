@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button string="Sync with METRC" type="object" class="oe_highlight" name="sync_with_metrc" attrs="{'invisible': [('metrc_synced', '=', True)]}"/>
+            </header>
+            <xpath expr="//notebook/page[@name='inventory']" position="after">
+                <page name="metrc" string="METRC">
+                    <group>
+                        <group>
+                            <field name="metrc_synced"/>
+                            <field name="metrc_id"/>
+                            <field name="categ_type"/>
+                            <field name="qty_type"/>
+                            <field name="def_lab_test_state"/>
+                            <field name="u_o_m"/>
+                            <field name="approve_status"/>
+                            <field name="approve_status_datetime"/>
+                            <field name="strain_id"/>
+                            <field name="strain_name"/>
+                        </group>
+                        <group>
+                            <field name="unit_thc_content"/>
+                            <field name="unit_thc_content_uom"/>
+                            <field name="unit_volume"/>
+                            <field name="unit_volume_uom"/>
+                            <field name="unit_weight"/>
+                            <field name="unit_weight_uom"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

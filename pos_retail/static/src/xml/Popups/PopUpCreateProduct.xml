@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+     <t t-name="PopUpCreateProduct" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup medium-form touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title"><t t-esc="props.title || '' " /></h4>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="form-group label-floating">
+                                <div class='client-picture'>
+                                    <t><i class='fa fa-camera'></i></t>
+                                    <input name="image" type='file' class='image-uploader' t-on-change="OnChange"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="client-details-box clearfix">
+                            <div class="client-details-left">
+                                <div class="row">
+                                    <span class='label'>Name</span>
+                                    <t t-if="!props.product">
+                                        <input class="form-control" name="name" t-on-change="OnChange"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input class="form-control" name="name" t-on-change="OnChange" t-att-value="props.product.name"/>
+                                    </t>
+                                </div>
+                                <div class="row">
+                                    <span class='label'>List Price</span>
+                                    <t t-if="!props.product">
+                                        <input class="form-control" name="list_price" type="number" t-on-change="OnChange"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input class="form-control" name="list_price" type="number" t-on-change="OnChange" t-att-value="props.product.lst_price"/>
+                                    </t>
+                                </div>
+                                <div class="row">
+                                    <span class='label'>Category</span>
+                                    <select class='form-control'
+                                            t-on-change="OnChange"
+                                            name='pos_categ_id'>
+                                        <option value='null'>
+                                            None
+                                        </option>
+                                        <t t-foreach='env.pos.pos_categories' t-as="category" t-key="category.id">
+                                            <t t-if="!props.product">
+                                                <option t-att-value='category.id'>
+                                                    <t t-esc='category.name'/>
+                                                </option>
+                                            </t>
+                                            <t t-else="">
+                                                <option t-att-value="category.id" t-att-selected="props.product.pos_categ_id and props.product.pos_categ_id[0] === category.id ? true : undefined">
+                                                    <t t-esc='category.name'/>
+                                                </option>
+                                            </t>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="row" t-if="env.pos.productBrands">
+                                    <span class='label'>Brand</span>
+                                    <select class='form-control'
+                                            t-on-change="OnChange"
+                                            name='product_brand_id'>
+                                        <option value='null'>
+                                            None
+                                        </option>
+                                        <t t-foreach='env.pos.productBrands' t-as="brand" t-key="brand.id">
+                                            <t t-if="!props.product">
+                                                <option t-att-value='brand.id'>
+                                                    <t t-esc='brand.name'/>
+                                                </option>
+                                            </t>
+                                            <t t-else="">
+                                                <option t-att-value="brand.id" t-att-selected="props.product.product_brand_id and props.product.product_brand_id[0] === brand.id ? true : undefined">
+                                                    <t t-esc='brand.name'/>
+                                                </option>
+                                            </t>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="client-details-right">
+                                <div class="row">
+                                    <span class='label'>Internal Ref</span>
+                                    <t t-if="!props.product">
+                                        <input class="form-control" name="default_code" t-on-change="OnChange"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input class="form-control" name="default_code" t-on-change="OnChange" t-att-value="props.product.default_code || ''"/>
+                                    </t>
+                                </div>
+                                <div class="row">
+                                    <span class='label'>Barcode</span>
+                                    <t t-if="!props.product">
+                                        <input class="form-control" name="barcode"
+                                               t-att-value="props.barcode || ''"
+                                               t-on-change="OnChange"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input class="form-control" name="barcode"
+                                               t-att-value="props.product.barcode || ''"
+                                               t-on-change="OnChange"/>
+                                    </t>
+                                </div>
+                                <div class="row">
+                                    <span class='label'>Cost Price</span>
+                                    <t t-if="!props.product">
+                                        <input class="form-control" name="standard_price" t-on-change="OnChange"/>
+                                    </t>
+                                    <t t-else="">
+                                        <input class="form-control" name="standard_price" t-on-change="OnChange" t-att-value="props.product.standard_price || 0"/>
+                                    </t>
+                                </div>
+                                <div class="row">
+                                    <span class='label'>Type</span>
+                                    <t t-if="!props.product">
+                                        <select class='form-control' name='type' t-on-change="OnChange">
+                                            <option value='consu'>Consumable</option>
+                                            <option value='service'>Service</option>
+                                            <option value='product'>StockAble Product</option>
+                                        </select>
+                                    </t>
+                                    <t t-else="">
+                                        <select class='form-control' name='type' t-on-change="OnChange">
+                                            <option value='consu' t-att-selected="props.product.type and props.product.type === 'consu' ? true : undefined">Consumable</option>
+                                            <option value='service' t-att-selected="props.product.type and props.product.type === 'service' ? true : undefined">Service</option>
+                                            <option value='product' t-att-selected="props.product.type and props.product.type === 'product' ? true : undefined">StockAble Product</option>
+                                        </select>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="card-issue" t-if="state.error">
+                            <t t-esc="state.error"/>
+                        </span>
+                        <div class="form-footer text-center">
+                            <div class="btn btn-success pull-right" t-on-click="confirm">
+                                <i class="fa fa-save"/> Save
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Enter </span></span>
+                            </div>
+                            <div class="btn btn-danger pull-right" t-on-click="cancel">
+                                Cancel
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

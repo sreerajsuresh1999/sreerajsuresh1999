@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+
+        <record id="pos_session_turbo_closing" model="ir.ui.view">
+            <field name="name">pos.session.form.view</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stop_at']" position="after">
+                    <field name="cash_journal_id" readonly="1"/>
+                    <field name="cash_register_id" readonly="1"/>
+                    <field name="required_reinstall_cache" groups="point_of_sale.group_pos_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PosOrderDetail" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <section class='client-details edit'>
+            <div class="header">
+                <t t-if="order.state == 'draft' or order.state == 'quotation'">
+                    <button t-on-click.stop="trigger('register_amount')">
+                        <i class="fa fa-plus"/>
+                        Register Payment
+                    </button>
+                    <button t-on-click.stop="trigger('edit_order')">
+                        <i class="fa fa-edit"/>
+                        Edit Order and Paid
+                    </button>
+                    <button t-on-click.stop="trigger('cancel_order')">
+                        <i class="fa fa-trash"/>
+                        Cancel Order
+                    </button>
+                </t>
+                <t t-if="!order.account_move">
+                    <button t-on-click.stop="trigger('action_invoice')">
+                        <i class="fa fa-plus"/>
+                        Action Invoice
+                    </button>
+                </t>
+                <t t-else="">
+                    <button t-on-click.stop="trigger('download_invoice')">
+                        <i class="fa fa-download"/>
+                        Download Invoice
+                    </button>
+                </t>
+                <button t-on-click.stop="trigger('download_order_report')">
+                    <i class="fa fa-download"/>
+                    Order Report
+                </button>
+                <button t-on-click.stop="trigger('download_delivery_report')">
+                    <i class="fa fa-download"/>
+                    Delivery Report
+                </button>
+                <button title="RePrint Print Receipt" t-on-click.stop="trigger('reprint_order')">
+                    <i class="fa fa-print"/>
+                    Print Receipt
+                </button>
+                <t t-if="order.state != 'draft' and env.pos.config.return_products and !order.is_return">
+                    <button title="Return Order"  t-on-click.stop="trigger('return_order')">
+                        <i class="fa fa-arrow-left"/>
+                        Return Order
+                    </button>
+                </t>
+                <button type="button"
+                        t-if="order.state == 'draft' or order.state == 'quotation'"
+                        t-on-click.stop="trigger('continue-order')">
+                    <i class="fa fa-shopping-cart"/>
+                    Continue Order
+                </button>
+                <button type="button" t-on-click.stop="trigger('refill_order')">
+                    <i class="fa fa-arrow-right"/>
+                    ReFill Products
+                </button>
+                <t t-if="env.pos.config.print_voucher">
+                    <button type="button" t-on-click.stop="trigger('covert_to_voucher')">
+                        <i class="fa fa-gift"/>
+                        Covert Return Order to Voucher
+                    </button>
+                </t>
+                <button type="button" t-on-click.stop="trigger('covert_to_credit')">
+                    <i class="fa fa-gift"/>
+                    Covert Return Order to Credit
+                </button>
+            </div>
+            <t t-if="order.partner_id">
+                <div class='client-picture'>
+                    <img t-att-src='partnerImageUrl'/>
+                </div>
+            </t>
+            <div class='client-name'>
+                <a class='so_link' target='_blank' order="order" t-att-href="OrderUrl" title="Open Order">
+                    <t t-if="order.name != '/'">
+                        <t t-esc="order.name"/>
+                    </t>
+                    <t t-if="!order.name">
+                        Ref: <t t-esc="order.pos_reference"/> (Not Paid Full)
+                    </t>
+                (Click Open Order)</a>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <t t-if="order.partner">
+                        <div class='client-detail'>
+                            <span class='label'>Customer</span>
+                            <span class="detail"><t t-esc="order.partner.name"/></span>
+                        </div>
+                        <t t-if="order.partner.email">
+                            <div class='client-detail'>
+                                <span class='label'>Email</span>
+                                <span class="detail"><t t-esc="order.partner.email"/></span>
+                            </div>
+                        </t>
+                        <t t-if="order.partner.phone || order.partner.mobile">
+                            <div class='client-detail'>
+                                <span class='label'>Phone/Mobile</span>
+                                <span class="detail"><t t-esc="order.partner.phone || order.partner.mobile"/></span>
+                            </div>
+                        </t>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Ean13</span>
+                        <span class="detail">
+                            <t t-if='order.ean13'>
+                                <t t-esc='order.ean13'/>
+                            </t>
+                            <t t-if='!order.ean13'>
+                                N/A
+                            </t>
+                        </span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Ref</span>
+                        <span class="detail">
+                            <t t-if='order.pos_reference'>
+                                <t t-esc='order.pos_reference'/>
+                            </t>
+                            <t t-if='!order.pos_reference'>
+                                N/A
+                            </t>
+                        </span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Date</span>
+                        <span class="detail">
+                            <t t-esc='order.date_order'/>
+                        </span>
+                    </div>
+                    <t t-if="order.note">
+                        <div class='client-detail'>
+                            <span class='label'>Note</span>
+                            <span class="detail">
+                                <t t-esc='order.note'/>
+                            </span>
+                        </div>
+                    </t>
+                    <t t-if="order.user_id">
+                        <div class='client-detail'>
+                            <span class='label'>Cashier</span>
+                            <span class="detail">
+                                <t t-esc='order.user_id[1]'/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>State</span>
+                        <span class="detail value">
+                            <span style="color: #6EC89B">
+                                <t t-if="order.state == 'draft'">Draft</t>
+                                <t t-if="order.state == 'quotation'">Quotation</t>
+                                <t t-if="order.state == 'cancel'">Cancelled</t>
+                                <t t-if="order.state == 'paid'">Paid</t>
+                                <t t-if="order.state == 'done'">Posted</t>
+                                <t t-if="order.state == 'invoiced'">Invoiced</t>
+                            </span>
+                        </span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Total</span>
+                        <span class="detail value"><t t-esc='env.pos.format_currency(order.amount_total)'/></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Tax</span>
+                        <span class="detail value"><t t-esc='env.pos.format_currency(order.amount_tax)'/></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Paid</span>
+                        <span class="detail value"><t t-esc='env.pos.format_currency(order.amount_paid)'/></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Debit</span>
+                        <span class="detail value"><t t-esc='env.pos.format_currency(order.amount_total - order.amount_paid)'/></span>
+                    </div>
+                </div>
+            </div>
+            <div class='client-details-box clearfix sub1-form'>
+                <div class='client-detail'>
+                    <div class='lines_detail'>
+                        <PosOrderLines order="order"/>
+                    </div>
+                </div>
+            </div>
+            <div class='client-details-box clearfix sub2-form' t-if="order.payments and order.payments.length != 0">
+                <div class='client-detail'>
+                    <div class='lines_detail'>
+                        <PosPayments order="order"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+</templates>

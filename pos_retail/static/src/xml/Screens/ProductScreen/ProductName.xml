@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductName" owl="1">
+        <span class="product-line-name"
+              t-att-class="{'price-down': props.out_stock and props.product['type'] == 'product',}"
+              style="display: block">
+            <t t-esc="props.product.display_name"/>
+            <t t-if="props.product.name_second and env.pos.config.display_product_second_name">
+                <t t-esc="props.product.name_second"/>
+            </t>
+            <t t-if="props.product.tracking !== 'none'">
+                <i class="oe_link_icon fa fa-list oe_icon line-lot-icon"/>
+            </t>
+        </span>
+    </t>
+
+</templates>

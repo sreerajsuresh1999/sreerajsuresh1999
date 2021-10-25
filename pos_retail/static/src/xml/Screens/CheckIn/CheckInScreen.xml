@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CheckInScreen" owl="1">
+        <div class="login-overlay">
+            <div class="screen-login">
+                <div class="login-title">
+                    <small>Please type your mobile to Input Box</small>
+                </div>
+                <div class="login-body">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <span class='label'>Your Mobile/Phone</span>
+                                <input class="form-control"
+                                       t-model="state.mobile"
+                                       type="number"
+                                       t-on-change="OnChangeMobile"/>
+                            </div>
+                            <div class="row" t-if="state.client">
+                                <span class='label'>Welcome Back: <t t-esc="state.client.name"/></span>
+                            </div>
+                            <div class="row" t-if="state.error">
+                                <span class='label'><t t-esc="state.mobile"/> not found</span>
+                            </div>
+                            <div class="row" t-if="state.mobile">
+                                <i class="fa fa-spin fa-spinner fa-pulse" style="font-size: 16px"/> Searching: <t t-esc="state.mobile"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="login-footer">
+                    <small>
+                        <button class="login-button close-session" t-on-click="checkIn">
+                            <i class="fa fa-sign-in" style="font-size: 30px"/>
+                        </button>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

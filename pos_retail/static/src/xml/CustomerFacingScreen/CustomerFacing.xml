@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="CustomerFacingDisplayOrderLines">
+        <t t-jquery="div[class*='pos_orderlines_item']" t-operation="append">
+            <div>
+                <t t-esc="pos.format_currency(orderline.get_tax())" />
+            </div>
+            <div>
+                <t t-esc="orderline.get_discount_str()" /> %
+            </div>
+        </t>
+    </t>
+
+</templates>

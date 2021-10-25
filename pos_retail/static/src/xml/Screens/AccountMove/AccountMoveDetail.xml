@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AccountMoveDetail" owl="1">
+        <t t-set="move" t-value="props.move"/>
+        <section class='client-details edit'
+                 style="max-height: 600px;min-height: 300px;height: fit-content;">
+            <div class="header">
+                <button t-on-click.stop="trigger('actionConfirm')" t-if="move.state == 'draft' and !move.auto_post and move.move_type != 'entry'">
+                    <i class="fa fa-check"/>
+                    <t t-if="!env.isMobile">Confirm</t>
+                </button>
+                <button t-on-click.stop="trigger('actionPreview')" t-if="['out_invoice', 'out_refund'].includes(move.move_type)">
+                    <i class="fa fa-toggle-on"/>
+                    <t t-if="!env.isMobile">Preview</t>
+                </button>
+                <button t-on-click.stop="trigger('actionCancelEntry')" t-if="move.state == 'draft'">
+                    <i class="fa fa-trash"/>
+                    <t t-if="!env.isMobile">Cancel Entry</t>
+                </button>
+                <button t-on-click.stop="trigger('actionResetDraft')" t-if="move.state == 'cancel'">
+                    <i class="fa fa-refresh"/>
+                    <t t-if="!env.isMobile">Reset Draft</t>
+                </button>
+            </div>
+            <div class="client-picture">
+                <t t-if="partnerImageUrl">
+                    <img t-att-src="partnerImageUrl" alt="Partner"
+                         style="width: 64px; height: 64px; object-fit: cover;" />
+                </t>
+            </div>
+            <div class='client-name'>
+                <a class='so_link' target='_blank' order="order" t-att-href="OrderUrl" title="Open Order">
+                    <t t-if="move.name">
+                        <t t-esc="move.name"/>
+                    </t>
+                    <t t-if="!move.name">
+                        N/A
+                    </t>
+                    (Click open Move)
+                </a>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail'>
+                        <span class='label'>Partner</span>
+                        <t t-if='move.partner_id'>
+                            <span class='detail client-address'><t t-esc='move.partner_id[1]' /></span>
+                        </t>
+                        <t t-if='!move.partner_id'>
+                            <span class='detail client-address empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Payment Reference</span>
+                        <t t-if='move.payment_reference'>
+                            <span class='detail client-origin'><t t-esc='move.payment_reference' /></span>
+                        </t>
+                        <t t-if='!move.payment_reference'>
+                            <span class='detail client-origin empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Invoice Date</span>
+                        <t t-if='move.invoice_date_due'>
+                            <span class='detail client-phone'><t t-esc='move.invoice_date_due' /></span>
+                        </t>
+                        <t t-if='!move.invoice_date_due'>
+                            <span class='detail client-phone empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Customer Reference</span>
+                        <t t-if='move.ref'>
+                            <span class='detail client-phone'><t t-esc='move.ref' /></span>
+                        </t>
+                        <t t-if='!move.ref'>
+                            <span class='detail client-phone empty'>N/A</span>
+                        </t>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>State</span>
+                        <span class="detail value">
+                            <span style="color: #6EC89B">
+                                <t t-if="move.state == 'draft'">Draft</t>
+                                <t t-if="move.state == 'posted'">Posted</t>
+                                <t t-if="move.state == 'cancel'">Cancelled</t>
+                            </span>
+                        </span>
+                    </div>
+                    <div class='client-detail' t-if="move.amount_untaxed">
+                        <span class='label'>Untaxed Amount</span>
+                        <span class='detail value'><t t-esc='env.pos.format_currency(move.amount_untaxed)' /></span>
+                    </div>
+                    <div class='client-detail' t-if="move.amount_tax">
+                        <span class='label'>Taxes Amount</span>
+                        <span class='detail value'><t t-esc='env.pos.format_currency(move.amount_tax)' /></span>
+                    </div>
+                    <div class='client-detail' t-if="move.amount_total">
+                        <span class='label'>Total Amount</span>
+                        <span class='detail value'><t t-esc='env.pos.format_currency(move.amount_total)' /></span>
+                    </div>
+                    <div class='client-detail' t-if="move.amount_residual">
+                        <span class='label'>Due Amount</span>
+                        <span class='detail value'><t t-esc='env.pos.format_currency(move.amount_residual)' /></span>
+                    </div>
+                </div>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-detail'>
+                    <div class='lines_detail'>
+                        <AccountMoveLines move="move"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+</templates>

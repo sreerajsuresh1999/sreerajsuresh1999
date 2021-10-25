@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="product_category_retail" model="product.category">
+            <field name="name">Retail</field>
+        </record>
+
+        <record id="reward_01" model="product.product">
+            <field name="name">Reward service</field>
+            <field name="standard_price">0</field>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Reward service</field>
+            <field name="default_code">Rs</field>
+        </record>
+
+        <record id="promotion_service_01" model="product.product">
+            <field name="name">Promotion service</field>
+            <field name="standard_price">0</field>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">PS</field>
+            <field name="default_code">PS</field>
+        </record>
+
+         <record id="voucher_service" model="product.product">
+            <field name="name">Voucher service</field>
+            <field name="standard_price">0</field>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Voucher service</field>
+            <field name="default_code">VC</field>
+        </record>
+
+        <record id="voucher_card" model="product.product">
+            <field name="name">Voucher credit 500</field>
+            <field name="standard_price">500</field>
+            <field name="list_price">500</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Voucher card</field>
+            <field name="is_voucher">True</field>
+        </record>
+
+        <record id="voucher_card2" model="product.product">
+            <field name="name">Voucher credit 1000</field>
+            <field name="standard_price">1000</field>
+            <field name="list_price">1000</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Voucher card</field>
+            <field name="is_voucher">True</field>
+        </record>
+
+        <record id="voucher_card3" model="product.product">
+            <field name="name">Voucher credit 1500</field>
+            <field name="standard_price">1500</field>
+            <field name="list_price">1500</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Voucher card</field>
+            <field name="is_voucher">True</field>
+        </record>
+
+        <record id="voucher_card4" model="product.product">
+            <field name="name">Voucher credit 2000</field>
+            <field name="standard_price">2000</field>
+            <field name="list_price">2000</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description">Voucher card</field>
+            <field name="is_voucher">True</field>
+        </record>
+
+        <record id="global_discount" model="product.product">
+            <field name="name">Discount</field>
+            <field name="standard_price">0</field>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">GD</field>
+        </record>
+
+        <record id="credit_service" model="product.product">
+            <field name="name">Credit</field>
+            <field name="standard_price">1</field>
+            <field name="is_credit">True</field>
+            <field name="list_price">100</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="categ_id" ref="product_category_retail"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        </record>
+
+        <record id="pos_gift_card_product" model="product.product">
+            <field name="name">Gift Card</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="available_in_pos">True</field>
+            <field name="supplier_taxes_id"
+                   search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'VAT Untaxed')]"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+        </record>
+
+        <record id="pos_gift_card_product_type_gold" model="pos.gift.card.type">
+            <field name="name">Gold</field>
+            <field name="code">001</field>
+        </record>
+
+        <record id="pos_gift_card_product_type_silver" model="pos.gift.card.type">
+            <field name="name">Silver</field>
+            <field name="code">002</field>
+        </record>
+
+        <record id="pos_gift_card_product_type_platinum" model="pos.gift.card.type">
+            <field name="name">Platinum</field>
+            <field name="code">003</field>
+        </record>
+
+    </data>
+</odoo>

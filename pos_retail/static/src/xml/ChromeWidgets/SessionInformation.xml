@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SessionInformation" owl="1">
+        <div class="oe_status" t-on-click="onClick">
+            <span class="username">
+                <t t-esc="state['session'].substr(0, 10)"/> of <t t-esc="state['shop'].substr(0, 5)"/>
+                - Opened: <t t-esc="state['opened_at'].substr(0, 5)"/>
+                - Sold: <t t-esc="env.pos.format_currency(state['total_payments_amount'])"/>
+            </span>
+            <span class="username" style="padding-top: 10px">
+                -
+                <span aria-label="Orders Count"
+                      title="Orders Count"
+                      class="with-badge" t-att-badge="state['order_count']">
+                    <i class="oe_link_icon fa fa-shopping-basket oe_icon" aria-hidden="true"></i>
+                </span>
+            </span>
+        </div>
+    </t>
+
+</templates>

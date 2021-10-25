@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ButtonPrintReceipt" owl="1">
+        <div class="control-button">
+            <span><i class="fa fa-print"/></span>
+            <span>Print Receipt</span>
+        </div>
+    </t>
+
+</templates>

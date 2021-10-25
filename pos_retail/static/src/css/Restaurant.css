@@ -1,0 +1,911 @@
+
+.pos.kitchen .shop_logo {
+    margin-right: 100px !important;
+}
+
+/*.table.kitchen > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {*/
+/*    padding: 0px !important;*/
+/*}*/
+.pos .order-number {
+    text-align: left;
+    display: list-item;
+    height: 50px;
+    background: #6EC89B;
+    color: white;
+    line-height: 30px;
+    min-width: 20px;
+    margin-right: 0px;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 3px;
+}
+
+.pos .order-button.floor-button {
+    background: #6EC89B;
+    padding-top: 14px;
+    font-size: 16px;
+    min-width: 128px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-weight: 900;
+    margin-left: 10px !important;
+    display: flex;
+    margin-right: 1px;
+    margin-top: 1px;
+    border-top-left-radius: 10px;
+    height: 48px;
+    line-height: 20px;
+    border-top-right-radius: 10px;
+}
+
+.pos .kitchen-box .info {
+    margin-left: 0px !important;
+}
+
+.pos.kitchen .oe_status .oe_icon > span {
+    min-width: 200px;
+}
+
+.pos .table .fa-lock {
+    color: #6EC89B;
+    font-size: 20px;
+    background: #fff;
+    border-radius: 65%;
+    padding: 10px;
+    min-width: 20px;
+
+}
+
+.pos .set_bom {
+    cursor: pointer;
+    background: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    padding-right: 10px;
+}
+
+.pos.kitchen .oe_status > span {
+    min-width: 250px;
+}
+
+.pos.kitchen .pos_chat {
+    display: none;
+}
+
+.pos .info .btn {
+    margin-left: 40px;
+}
+
+.pos.kitchen .full-content {
+    top: 0px !important;
+}
+
+.pos.kitchen .line-state {
+    margin-right: 0px;
+    font-weight: 900;
+}
+
+.pos.kitchen .shop_logo {
+    display: none;
+}
+
+.pos .lines-list {
+}
+
+/*.pos .pos-receipt-title {*/
+/*    text-align: left;*/
+/*    margin-left: 20px;*/
+/*    margin: 5px;*/
+/*    font-size: 16px;*/
+/*    line-height: 20px;*/
+/*    color: black;*/
+/*}*/
+
+.pos.kitchen .line-select {
+    font-size: 13px !important;
+}
+
+.pos.kitchen .oe_status {
+    line-height: 20px;
+}
+
+.pos.kitchen .js_synch {
+    display: none;
+}
+
+/*.kitchen-box tr:nth-child(odd) {*/
+/*    background: #DDD;*/
+/*}*/
+
+.pos .product-name {
+    color: black;
+}
+
+.pos .order-time {
+    display: inline-block;
+    padding: 3px;
+    min-height: 20px;
+    text-align: center;
+    min-width: 60px;
+    float: right;
+    font-size: 18px;
+    position: absolute;
+    left: 0px;
+    color: white;
+    line-height: 20px;
+    background: #6EC89B;
+    padding: 3px;
+    border-radius: 2px;
+    float: left;
+}
+
+.pos.kitchen .line-select {
+    background: none;
+}
+
+.pos.kitchen .placeholder-EmployeeWidget {
+    display: none;
+}
+
+.pos-receipt .pos-receipt-title {
+    color: black;
+}
+.pos .combo_item {
+    border-top: dotted 1px gray;
+    margin-left: 10%;
+    font-size: 13px;
+    text-align: left;
+    color: black;
+}
+.pos .kitchen-box {
+    width: 15%;
+    padding: 1.5em;
+    margin: 5px;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    font-size: 13px;
+    border-radius: 3px;
+    line-height: 20px;
+    overflow: hidden;
+    color: black;
+    text-align: left;
+    cursor: pointer;
+    background: #ffffff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.pos .kitchen-box .ribbon span {
+    width: 100% !important;
+}
+
+.pos .table-striped {
+    width: 100%;
+}
+
+.pos .table-striped tr {
+    border-bottom: dotted 1px;
+}
+
+.pos .kitchen_box_state {
+    color: white;
+    background: #3c4858;
+}
+
+.pos .kitchen-box .buttons {
+    margin-top: 1em;
+    height: 50px;
+}
+
+.pos .kitchen-box .New {
+    background: #6EC89B !important;
+    color: #fff;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.pos .kitchen-box .Transfer {
+    background: #6EC89B !important;
+    color: #fff;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.pos .kitchen-box .Priority {
+    background: #6EC89B !important;
+    color: #fff;
+}
+
+.pos .kitchen-box .Cancelled {
+    background: #eee !important;
+    color: #fff;
+}
+
+
+.pos .line-state {
+    color: #6EC89B;
+    font-weight: 900;
+    line-height: 20px;
+}
+
+.pos.kitchen .line-select:nth-of-type(odd) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.pos .kitchen-box .kitchen-img img {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.pos .kitchen-box .kitchen-buttons {
+    margin-top: -3px;
+    vertical-align: top;
+    float: left;
+    line-height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    text-align: center;
+    vertical-align: top;
+    color: black;
+    font-size: 30px;
+    line-height: 26px;
+    margin-left: -12px;
+    border-radius: 2px;
+    padding: 0px;
+}
+
+.pos .kitchen_delivery {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ffffff;
+}
+
+.pos .kitchen_delivery:hover {
+    background: #6EC89B;
+}
+
+.pos .kitchen-box .product .product-name {
+    line-height: 30px !important;
+    font-weight: 900 !important;;
+}
+
+.pos .order-information {
+    margin-top: -40px;
+    right: 10%;
+    width: 100%;
+    height: 20px;
+    font-weight: 400;
+    border-radius: 3px;
+    font-size: 14px;
+    z-index: 10;
+    color: black;
+    font-weight: 500;
+    text-align: center;
+}
+
+.floor-map .tables {
+    max-width: 100%;
+    margin: auto;
+    max-height: 100%;
+    border-radius: 0px 0px 6px 6px;
+    border: unset;
+    border-top: none;
+    height: 100%;
+    min-height: 100px !important;
+}
+
+table .kitchen {
+    border-collapse: inherit;
+}
+
+.pos.kitchen .show_hide_buttons {
+    display: none;
+}
+
+.pos.kitchen .collapsed {
+    display: none;
+}
+
+.pos.kitchen .leftpane {
+    display: none;
+}
+
+.pos.kitchen .pos-pos-branding {
+    display: none;
+}
+
+.pos.kitchen .rightpane {
+    display: none;
+}
+
+.pos.kitchen .order-selector {
+    display: none;
+}
+
+.pos.kitchen .top-content {
+    display: none;
+}
+
+.pos.kitchen .pos-rightheader {
+    text-align: center;
+    font-size: 16px !important;
+    left: unset !important;
+}
+
+.pos.kitchen .pos-rightheader {
+    left: 0px !important;
+}
+
+.floor-map .table .label {
+    text-align: unset !important;
+}
+
+.floor-map .table .active_print {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background: #6EC89B;
+    color: #fff;
+    width: 20px;
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 3px;
+    font-size: 16px;
+    z-index: 10;
+}
+
+.floor-map .table .table-seats {
+    bottom: -3px;
+}
+
+.floor-map .table .unactive_print {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #3c4858;
+    width: 20px;
+    margin-top: 0px;
+    height: 20px;
+    line-height: 22px;
+    border-radius: 3px;
+    font-size: 16px;
+    z-index: 10;
+    color: #000;
+}
+.floor-map .table {
+    min-height: 100px;
+}
+
+.floor-map .table .Delivery {
+    position: absolute;
+    top: 0;
+    right: 35px;
+    background: #6EC89B;
+    background: #6EC89B;
+    width: 20px;
+    margin-top: 0px;
+    margin-left: 0px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 0px;
+    font-size: 16px;
+    z-index: 10;
+}
+
+
+.pos .control-button .control-button-number {
+    color: rgb(226, 226, 226);
+    height: 18px;
+    vertical-align: middle;
+    width: 20px;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 36%;
+    margin-right: 4px;
+}
+
+/* PAY LATER SCREEN */
+.order-later {
+    display: inline-block;
+    width: 123px;
+    height: 44px;
+    position: relative;
+    background-color: #aaaaaa;
+    border-radius: 3px 5px 0 0px;
+    border-bottom: 1px solid #CCC;
+}
+
+.order-later span {
+    display: inline-block;
+    position: absolute;
+    top: 33%;
+    left: 8%;
+    width: 100%;
+
+
+    cursor: pointer;
+    color: #444;
+}
+
+.pos .paylaterlist-screen .back_product {
+    top: 63px;
+    width: 300px;
+    height: 300px;
+    font-size: 18px;
+    border-radius: 3px;
+    background: white;
+    color: ghostwhite;
+}
+
+.pos .paylaterlist-screen .paylater-list {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 40px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.paylater-list thead {
+    width: 100%;
+
+}
+
+.paylater-list thead th {
+    padding: 0px 8px;
+}
+
+.pos .paylaterlist-screen .paylater-list td {
+    color: black;
+    border: 1px solid black !important;
+
+}
+
+.refund_order_details {
+    background: white;
+    color: white;
+    width: 100%;
+    font-size: 18px;
+    line-height: 40px;
+    padding: 0px 20px 40px 80px;
+    background: #6EC89B;
+}
+
+.pos .warning {
+    color: white;
+}
+
+.highlight {
+    background: #6EC89B !important;
+    color: black !important;
+}
+
+.pos .made_refund_order {
+    color: #6EC89B;
+}
+
+.pos .made_refund_order:hover {
+    color: green;
+}
+
+.pos .cooking-status-waiting {
+    color: #6EC89B;
+}
+
+.pos .cooking-status-default {
+    color: black;
+}
+
+.pos .cooking-status-warning {
+    color: #6EC89B;
+}
+
+.pos .table-line-important {
+    color: #6EC89B;
+    font-size: 20px;
+}
+
+.pos .table-line-note {
+    color: #6EC89B;
+    /*animation: blink-animation 1s steps(5, start) infinite;*/
+    /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
+}
+
+.pos .animation {
+    animation: blink-animation 3s steps(5, start) infinite;
+    -webkit-animation: blink-animation 3s steps(5, start) infinite;
+}
+
+.pos .kitchen_screen {
+    max-width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 10px;
+    text-align: center;
+    border-color: #6EC89B;
+}
+
+.pos .kitchen_header {
+    text-align: center;
+    color: black;
+
+
+}
+
+.pos .kitchen-button {
+    font-size: 12px;
+}
+
+.blink {
+    text-transform: uppercase;
+    font-size: 900px;
+    animation: blink-animation 2s steps(5, start) infinite;
+    -webkit-animation: blink-animation 2s steps(5, start) infinite;
+}
+
+.pos .need_send_kitchen {
+    background: #6EC89B !important;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+/* ---------- Kitchen line state ------------ */
+.pos .Cancel {
+    color: #3c4858;
+
+    float: right;
+}
+
+.pos .Done {
+    color: #0a0a0a;
+}
+
+.pos .Error {
+    background: #6EC89B !important;
+    float: right;
+}
+
+.pos .order_times {
+
+}
+
+.pos .qty_requested {
+    min-width: 35px !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 35px !important;
+}
+
+.pos .delayed_times {
+    float: left;
+    display: inline-block;
+}
+
+.pos .full_box {
+    width: 100%;
+    padding: 0px;
+    font-size: 20px !important;
+}
+
+.pos .full_box .pos-receipt-title {
+    font-size: 20px !important;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 3px;
+    margin-top: 15px;
+}
+
+.pos .Delivery {
+    /*animation: blink-animation 1s steps(5, start) infinite;*/
+    /*-webkit-animation: blink-animation 1s steps(5, start) infinite;*/
+}
+
+.pos .order-waiting-delivery {
+    background: #6EC89B;
+    animation: blink-animation 1s steps(3, start) infinite;
+    -webkit-animation: blink-animation 1s steps(3, start) infinite;
+    position: absolute;
+    top: 32%;
+    left: 70%;
+    margin-top: 0px;
+    line-height: 20px;
+    border-radius: 65%;
+    font-size: 13px;
+    min-width: 20px;
+}
+
+.splitbill-screen.screen .contents {
+    max-width: 100%;
+}
+
+.splitbill-screen .order-info {
+    padding: 40px 0px;
+}
+
+.pos .finished_time {
+    float: right;
+    color: #6EC89B;
+}
+
+.pos .open_order {
+    float: left;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 3px;
+    color: #ffffff;
+    background: black;
+}
+
+/*.pos .ticket_state {*/
+/*    float: left;*/
+/*    cursor: pointer;*/
+/*    cursor: pointer;*/
+/*    padding: 5px;*/
+/*    color: #ffffff;*/
+/*    background: #6EC89B;*/
+/*}*/
+
+.pos .table-striped {
+    width: 94% !important;
+    margin: 5px;
+    margin-top: 1em;
+}
+
+.pos .warning_box {
+    background: #6EC89B;
+    color: #fff;
+    /* animation: blink-animation 2s steps(5, start) infinite; */
+    /* -webkit-animation: blink-animation 2s steps(5, start) infinite; */
+    padding: 10px;
+    border-radius: 3px;
+    line-height: 50px;
+}
+
+.pos .succeed_box {
+    background: #6EC89B;
+}
+
+.pos .table_amount_total {
+    color: #000000;
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    left: 0px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 1px;
+    font-size: 14px;
+    z-index: 10;
+}
+
+.pos .order-line-time {
+    font-size: 14px;
+}
+
+.pos .product-kitchen {
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    line-height: 100px;
+    font-size: 11px;
+    margin: 8px !important;
+    width: 60px;
+    height: 60px;
+    background: black;
+    border: 1px solid #999999;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.pos .product-image-kitchen {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px !important;
+    border-color: darkviolet;
+}
+
+.pos .table-line {
+    font-size: 13px;
+}
+
+.pos .product-order-name {
+    font-size: 14px;
+    color: #6EC89B !important;
+    font-weight: 500;
+}
+
+.pos .product-order-image {
+    width: 40px;
+    height: 40px;
+}
+
+.pos .ribbon-kitchen {
+    position: initial;
+    left: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    text-align: right;
+}
+
+.pos .ribbon-kitchen .out_stock span {
+    background: #6EC89B !important;
+}
+
+.pos .ribbon-kitchen .limit_stock span {
+    background: orange !important;
+}
+
+.pos .ribbon-kitchen span {
+    color: #6EC89B;
+    /*text-transform: uppercase;*/
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(-45deg);
+    width: 200px;
+    font-weight: 400;
+    font-size: 14px;
+    display: block;
+    position: absolute;
+    top: 45px;
+    left: -41px;
+}
+
+.pos .ribbon-kitchen span::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid #6EC89B;
+    border-right: 3px solid transparent;
+    border-top: 3px solid #6EC89B;
+}
+
+.pos .ribbon-kitchen span::after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #6EC89B;
+    border-top: 3px solid #6EC89B;
+}
+
+.pos .product .create-time {
+    text-align: right !important;
+    position: absolute;
+    width: 100%;
+    color: black !important;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    top: 45px;
+    right: 0px;
+    border-radius: 0px;
+    font-weight: 400;
+
+}
+
+.pos .product .line-notes {
+    text-align: right !important;
+    position: absolute;
+    margin-right: 5px;
+    width: 200px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    top: 155px;
+    right: 0px;
+    border-radius: 0px;
+    font-weight: 400;
+    color: black;
+}
+
+.pos .product .line-tags {
+    text-align: right !important;
+    position: absolute;
+    margin-right: 5px;
+    width: 200px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    top: 115px;
+    right: 0px;
+    border-radius: 0px;
+    font-weight: 400;
+    color: black;
+}
+
+.pos .product .line-combos {
+    text-align: right !important;
+    position: absolute;
+    margin-right: 5px;
+    width: 200px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    top: 100px;
+    right: 0px;
+    border-radius: 0px;
+    font-weight: 400;
+
+}
+
+.pos .product .line-variants {
+    text-align: right !important;
+    position: absolute;
+    margin-right: 5px;
+    width: 200px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    top: 120px;
+    right: 0px;
+    border-radius: 0px;
+    font-weight: 400;
+
+}
+
+.pos .product-qty {
+    color: black;
+    float: right;
+    font-weight: 900;
+    margin-right: 3px;
+}
+
+.pos .product .line-state {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: top;
+    color: #6EC89B;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 5px 5px;
+    border-radius: 2px;
+    margin: 5px;
+}
+
+.pos .product .line-name {
+    color: #000000;
+    min-height: 60px;
+    max-height: 200px;
+    line-height: 35px;
+    margin-left: -3px;
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 3px;
+    padding-top: 3px;
+}

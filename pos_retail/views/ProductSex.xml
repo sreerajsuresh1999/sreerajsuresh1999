@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_sex_form" model="ir.ui.view">
+            <field name="name">product.sex.form</field>
+            <field name="model">product.sex</field>
+            <field name="arch" type="xml">
+                <form string="Sex">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_sex_tree" model="ir.ui.view">
+            <field name="name">product.sex.tree</field>
+            <field name="model">product.sex</field>
+            <field name="arch" type="xml">
+                <tree string="Product Sex">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_sex_search" model="ir.ui.view">
+            <field name="name">product.sex.search</field>
+            <field name="model">product.sex</field>
+            <field name="arch" type="xml">
+                <search string="Product Sex">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="product_sex_action">
+            <field name="name">Product Sex</field>
+            <field name="res_model">product.sex</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_sex"
+                  action="product_sex_action"
+                  parent="menu_product_operation"
+                  sequence="11"
+        />
+
+    </data>
+</odoo>

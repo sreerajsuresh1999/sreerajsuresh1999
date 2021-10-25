@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_partner_form">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="metrc" string="METRC">
+                    <group>
+                        <field name="metrc_type"/>
+                        <field name="facility_id" attrs="{'invisible': [('metrc_type', 'not in', ['Facility'])]}"/>
+                        <field name="customer_type" attrs="{'invisible': [('metrc_type', 'not in', ['Customer'])]}"/>
+                        <field name="patient_lic_num" attrs="{'invisible': [('metrc_type', 'not in', ['Customer'])]}"/>
+                        <field name="driver_lic_num" attrs="{'invisible': [('metrc_type', 'not in', ['Driver'])]}"/>
+                        <field name="caregiver_lic_num" attrs="{'invisible': [('metrc_type', 'not in', ['Customer'])]}"/>
+                        <field name="identification_method" attrs="{'invisible': [('metrc_type', 'not in', ['Customer'])]}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Chrome" t-inherit="point_of_sale.Chrome" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.background + '; font-family:' + env.session.config.font_family + ';'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-content')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.background + '; font-family:' + env.session.config.font_family + ';'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('loader')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.background</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-topheader')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.header_background_color</attribute>
+        </xpath>
+    </t>
+
+<!--    <t t-name="ProductCheckOut" t-inherit="pos_retail.ProductCheckOut" t-inherit-mode="extension" owl="1">-->
+<!--        <xpath expr="//div[hasclass('right-checkout')]" position="attributes">-->
+<!--            <attribute name="t-att-style">'background:' +  env.session.config.header_background_color</attribute>-->
+<!--        </xpath>-->
+<!--    </t>-->
+
+    <t t-name="LoginScreen" t-inherit="pos_hr.LoginScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('login-overlay')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.background + '; font-family:' + env.session.config.font_family + ';'</attribute>
+        </xpath>
+    </t>
+
+<!--    <t t-name="ListFeaturesButtons" t-inherit="pos_retail.ListFeaturesButtons" t-inherit-mode="extension" owl="1">-->
+<!--        <xpath expr="//div[hasclass('button-extend')]" position="attributes">-->
+<!--            <attribute name="t-att-style">'background:' +  env.session.config.header_background_color</attribute>-->
+<!--        </xpath>-->
+<!--    </t>-->
+
+<!--    <t t-name="RetailActionpadWidget" t-inherit="pos_retail.RetailActionpadWidget" t-inherit-mode="extension" owl="1">-->
+<!--        <xpath expr="//button[hasclass('set-customer')]" position="attributes">-->
+<!--            <attribute name="t-att-style">'background:' +  env.session.config.price_tag_color</attribute>-->
+<!--        </xpath>-->
+<!--    </t>-->
+
+    <t t-name="RetailHeaderButton" t-inherit="point_of_sale.HeaderButton" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('header-button')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.price_tag_color + '!important'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailProductItem" t-inherit="pos_retail.RetailProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//article[hasclass('product')]" position="attributes">
+            <attribute name="t-att-style">'width:' +  env.session.config.product_width + 'em; height:' + env.session.config.product_height + 'em; margin:' + env.session.config.product_margin + 'em !important;'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="DesignProductName" t-inherit="pos_retail.ProductName" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('product-line-name')]" position="attributes">
+            <attribute name="t-att-style">'; font-size:' +  env.session.config.product_name_font_size + 'px !important'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailCategoryButton" t-inherit="point_of_sale.CategoryButton" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('category-button')]" position="attributes">
+            <attribute name="t-att-style">'width:' +  env.session.config.product_width + 'em; height:' + env.session.config.product_height + 'em; margin:' + env.session.config.product_margin + 'em !important;'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('left_01')]" position="attributes">
+            <attribute name="t-att-style">'max-width:' +  getMaxWidthLeftScreen + '; background:' + env.session.config.cart_background + ';'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('left_02')]" position="attributes">
+            <attribute name="t-att-style">'max-width:' +  getMaxWidthLeftScreen + '; background:' + env.session.config.cart_background + ';'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('rightpane')]" position="attributes">
+            <attribute name="t-att-style">'background:' +  env.session.config.product_screen_background</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailProductItem" t-inherit="pos_retail.RetailProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//img" position="replace">
+            <t t-if="env.session.config.display_product_image != 'none'">
+                <img t-att-src="imageUrl"
+                     t-att-style="'width:' +  env.session.config.product_image_width + '% !important; height:' + env.session.config.product_image_height + '% !important'"
+                     t-att-alt="props.product.display_name"/>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('payment-screen')]" position="attributes">
+            <attribute name="t-att-style">'background:' + env.session.config.payment_screen_background + '; position: unset'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailProductItem" t-inherit="pos_retail.RetailProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('price-tag')]" position="attributes">
+            <attribute name="t-att-style">'color:' + env.session.config.price_tag_color + ' !important'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailOrderline" t-inherit="pos_retail.RetailOrderline" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('price')]" position="attributes">
+            <attribute name="t-att-style">'color:' + env.session.config.price_tag_color + ' !important'</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="RetailOrderReceipt" t-inherit="pos_retail.RetailOrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt')]" position="attributes">
+            <attribute name="t-att-style">'font-size:' + env.pos.config.receipt_font_size + 'px !important'</attribute>
+        </xpath>
+    </t>
+
+<!--    <t t-name="RetailProductsWidgetControlPanel" t-inherit="point_of_sale.ProductsWidgetControlPanel" t-inherit-mode="extension" owl="1">-->
+<!--        <xpath expr="//div[hasclass('categories')]" position="attributes">-->
+<!--            <attribute name="t-att-style">'height:' + env.pos.config.product_categories_height + 'vh !important'</attribute>-->
+<!--        </xpath>-->
+<!--    </t>-->
+
+
+</templates>
+

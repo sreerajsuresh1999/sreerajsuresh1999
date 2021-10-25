@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_pricelist_view_inherit" model="ir.ui.view">
+            <field name="name">product.pricelist.extend</field>
+            <field name="inherit_id" ref="product.product_pricelist_view_inherit"/>
+            <field name="model">product.pricelist</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="barcode"/>
+                    <div class="o_row">
+                        <button string="Generate" class="btn btn-link" type="object" name="generate_random_barcode" attrs="{'invisible': [('barcode', '!=', False)]}"/>
+                        <button name="%(report_product_pricelist)d" string="Print Badge" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='item_ids']//field[@name='name']" position="after">
+                    <field name="uom_id"/>
+                    <field name="min_price"/>
+                    <field name="max_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_pricelist_item_tree_view" model="ir.ui.view">
+            <field name="name">product.pricelist.item.extend</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="model">product.pricelist.item</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="before">
+                    <field name="uom_id"/>
+                    <field name="min_price"/>
+                    <field name="max_price"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="product_pricelist_item_form_view" model="ir.ui.view">
+            <field name="name">product.pricelist.item.extend</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="model">product.pricelist.item</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="uom_ids" invisible="1"/>
+                    <field name="uom_id"
+                           domain="[('id', 'in', uom_ids)]"
+                           attrs="{'invisible':[('applied_on', '!=', '0_product_variant')], 'required':[('applied_on', '=', '0_product_variant')]}"
+                           options="{'no_create':1}"/>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="pos_category_id"
+                           attrs="{
+                                  'invisible':[('applied_on', '!=', '4_pos_category')],
+                                  'required':[('applied_on', '=', '4_pos_category')]}"
+                           options="{'no_create':1}"/>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="min_price"/>
+                    <field name="max_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_pricelist_item_view_search">
+            <field name="name">product.pricelist.item.search</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricelist_id']" position="before">
+                    <field name="product_tmpl_id"/>
+                    <field name="product_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_product_pricelist_item" model="ir.actions.act_window">
+            <field name="name">Pricelists</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pricelist.item</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_product_pricelist_item"
+                  name="Pricelists Items"
+                  parent="pos_retail.menu_clients"
+                  action="action_product_pricelist_item"
+                  sequence="2"
+                  groups="product.group_sale_pricelist"/>
+
+    </data>
+</odoo>

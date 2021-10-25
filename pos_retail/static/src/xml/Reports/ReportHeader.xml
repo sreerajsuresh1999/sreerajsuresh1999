@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="HeaderReport">
+        <div class="receipt-line">
+            <span>
+                Company
+            </span>
+            <span class="pos-receipt-right-align">
+                <t t-esc="pos.company.name"/>
+            </span>
+        </div>
+        <t t-if="pos.company.phone">
+            <div class="receipt-line">
+                <span>
+                    Phone
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.company.phone"/>
+                </span>
+            </div>
+        </t>
+        <t t-if="pos.company.email">
+            <div class="receipt-line">
+                <span>
+                    Email
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.company.email"/>
+                </span>
+            </div>
+        </t>
+        <t t-if="pos.cashier || pos.user">
+            <div class="receipt-line">
+                <span>
+                    Cashier/Seller
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.cashier ? pos.cashier.name : pos.user.name"/>
+                </span>
+            </div>
+        </t>
+        <t t-if="from_date and to_date">
+            <div class="receipt-line">
+                <span>
+                    From:<t t-esc="from_date"/>
+                </span>
+                <span class="pos-receipt-right-align">
+                    To:<t t-esc="to_date"/>
+                </span>
+            </div>
+        </t>
+        <br/>
+    </t>
+
+</templates>

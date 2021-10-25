@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="TableGuestsButton" t-inherit="pos_restaurant.TableGuestsButton" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('control-button')]" position="replace">
+            <span class="control-button">
+                <span class="with-badge" t-att-badge="nGuests">
+                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                    Guests
+                </span>
+            </span>
+        </xpath>
+    </t>
+
+</templates>

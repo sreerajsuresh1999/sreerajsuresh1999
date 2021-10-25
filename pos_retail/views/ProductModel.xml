@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_model_form" model="ir.ui.view">
+            <field name="name">product.model.form</field>
+            <field name="model">product.model</field>
+            <field name="arch" type="xml">
+                <form string="Model">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_model_tree" model="ir.ui.view">
+            <field name="name">product.model.tree</field>
+            <field name="model">product.model</field>
+            <field name="arch" type="xml">
+                <tree string="Product Model">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_model_search" model="ir.ui.view">
+            <field name="name">product.model.search</field>
+            <field name="model">product.model</field>
+            <field name="arch" type="xml">
+                <search string="Product Model">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="product_model_action">
+            <field name="name">Product Models</field>
+            <field name="res_model">product.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_model"
+                  action="product_model_action"
+                  parent="menu_product_operation"
+                  sequence="10"
+        />
+
+    </data>
+</odoo>

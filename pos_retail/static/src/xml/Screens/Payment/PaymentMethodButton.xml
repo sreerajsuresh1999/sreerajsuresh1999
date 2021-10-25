@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RetailPaymentMethodButton" owl="1">
+        <button class="mode-button payment-box"
+                t-att-class="{
+                    'highlight': isSelected,
+                    'not-selected': !isSelected
+                }"
+                t-on-click="trigger('new-payment-line', props.paymentMethod)">
+            <span class="payment-method">
+                <t t-esc="props.paymentMethod.name"/>
+                <t t-if="props.paymentMethod.apply_charges">
+                    - Fees Charges:
+                    <t t-if="props.paymentMethod.fees_type == 'fixed'">
+                        <t t-esc="env.pos.format_currency(props.paymentMethod.fees_amount)"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="env.pos.format_currency_no_symbol(props.paymentMethod.fees_amount)"/>
+                        (%)
+                    </t>
+                </t>
+                <t t-if="props.paymentMethod.journal and props.paymentMethod.journal.currency_id">
+                    ( <t t-esc="props.paymentMethod.journal.currency_id[1]"/>
+                    )
+                </t>
+                <t t-if="!env.isMobile and props.paymentMethod.discount">
+                    ( Discount:
+                    <t t-if="props.paymentMethod.discount_type == 'percent'">
+                        <t t-esc="env.pos.format_currency_no_symbol(props.paymentMethod.discount_amount)"/>
+                        %
+                    </t>
+                    <t t-else="">
+                        <t t-esc="env.pos.format_currency(props.paymentMethod.discount_amount)"/>
+                    </t>
+                    )
+                </t>
+                <span class="total-value" t-if="paymentAmount != 0">
+                    <t t-esc="env.pos.format_currency(paymentAmount)"/>
+                </span>
+                <t t-if="!env.isMobile and props.paymentMethod.shortcut_keyboard">
+                    <span>
+                        <i class="fa fa-keyboard-o" style="width: unset"/>
+                        <t t-esc="props.paymentMethod.shortcut_keyboard"/>
+                    </span>
+                </t>
+            </span>
+        </button>
+    </t>
+
+</templates>

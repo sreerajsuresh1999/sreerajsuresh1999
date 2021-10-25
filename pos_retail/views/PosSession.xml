@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+
+        <record id="view_pos_session_form" model="ir.ui.view">
+            <field name="name">pos.session.form.view</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="statements" string="Bank Statements">
+                        <group>
+                            <field name="statement_ids" colspan="4" nolabel="4" readonly="1"/>
+                        </group>
+                    </page>
+                    <page name="log_order" string="Logs of Orders">
+                        <group>
+                            <field name="order_log_ids" colspan="4" nolabel="4" readonly="1"/>
+                        </group>
+                    </page>
+                    <page name="other_info" string="Other Info">
+                        <group>
+                            <group>
+                                <field name="opened_at"/>
+                                <field name="opened_uid"/>
+                                <field name="cash_journal_id" readonly="1"/>
+                                <field name="cash_register_id" readonly="1"/>
+                                <field name="employee_id" groups="point_of_sale.group_pos_manager"/>
+                                <field name="required_reinstall_cache" groups="point_of_sale.group_pos_manager"/>
+                                <field name="pos_branch_id"/>
+                            </group>
+                            <group>
+                                <field name="lock_state" groups="point_of_sale.group_pos_manager"/>
+                                <field name="update_stock_at_closing" groups="point_of_sale.group_pos_manager"/>
+                                <field name="login_number" groups="point_of_sale.group_pos_manager"/>
+                                <field name="last_login_time" groups="point_of_sale.group_pos_manager"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='cash_control']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//button[@id='validate_opened']" position="attributes">
+                    <attribute name="onclick">remove_pos_database()</attribute>
+                </xpath>
+                <xpath expr="//button[@id='validate_closing_control']" position="attributes">
+                    <attribute name="onclick">remove_pos_database()</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_stock_picking']" position="after">
+                    <button class="oe_stat_button"
+                            name="action_open_move"
+                            type="object"
+                            icon="fa-dollar"
+                            groups="account.group_account_invoice"
+                            attrs="{'invisible':[('move_id', '=', None)]}">
+                        Account Move
+                    </button>
+                </xpath>
+                <!--                <xpath expr="//button" position="before">-->
+                <!--                    <button id="backup_validate_closing_control"-->
+                <!--                            name="action_pos_session_validate"-->
+                <!--                            type="object"-->
+                <!--                            string="Close Session"-->
+                <!--                            states="closing_control,opening_control"-->
+                <!--                            attrs="{'invisible': [('cash_control', '=', True)]}"/>-->
+                <!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="view_pos_session_tree" model="ir.ui.view">
+            <field name="name">pos.session.tree.view</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='config_id']" position="after">
+                    <field name="employee_id" widget="many2one_avatar_employee"/>
+                    <field name="pos_branch_id" optional="hide"/>
+                    <field name="lock_state" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

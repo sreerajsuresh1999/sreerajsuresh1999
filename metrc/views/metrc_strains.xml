@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="metrc_strain_tree" model="ir.ui.view">
+        <field name="name">metrc.strain.tree</field>
+        <field name="model">metrc.strain</field>
+        <field name="arch" type="xml">
+            <tree string="Strains" create="false">
+                <field name="metrc_id"/>
+                <field name="name"/>
+                <field name="testing_status"/>
+                <field name="is_used"/>
+                <field name="ind_percentage"/>
+                <field name="sat_percentage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="metrc_strain_form" model="ir.ui.view">
+        <field name="name">metrc.strain.form</field>
+        <field name="model">metrc.strain</field>
+        <field name="arch" type="xml">
+            <form string="Strains" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="metrc_id"/>
+                            <field name="name"/>
+                            <field name="testing_status"/>
+                            <field name="thc_level"/>
+                            <field name="cbd_level"/>
+                        </group>
+                        <group>
+                            <field name="ind_percentage"/>
+                            <field name="sat_percentage"/>
+                            <field name="is_used"/>
+                            <field name="genetics"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

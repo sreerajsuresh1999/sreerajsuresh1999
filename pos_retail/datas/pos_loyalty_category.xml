@@ -1,0 +1,26 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="pos_loyalty_category_01" model="pos.loyalty.category">
+            <field name="name">Basic</field>
+            <field name="code">B</field>
+            <field name="from_point">0</field>
+            <field name="to_point">10000</field>
+        </record>
+
+        <record id="pos_loyalty_category_02" model="pos.loyalty.category">
+            <field name="name">Silver</field>
+            <field name="code">S</field>
+            <field name="from_point">10001</field>
+            <field name="to_point">100000</field>
+        </record>
+
+        <record id="pos_loyalty_category_03" model="pos.loyalty.category">
+            <field name="name">Gold</field>
+            <field name="code">G</field>
+            <field name="from_point">100001</field>
+            <field name="to_point">1000000000000</field>
+        </record>
+
+    </data>
+</odoo>

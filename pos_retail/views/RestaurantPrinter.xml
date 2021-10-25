@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+
+        <record id="network_printer_view_restaurant_printer" model="ir.ui.view">
+            <field name="name">Order Printers</field>
+            <field name="model">restaurant.printer</field>
+            <field name="inherit_id" ref="pos_restaurant.view_restaurant_printer"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_categories_ids']" position="after">
+                    <field name="branch_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="network_printer_view_restaurant_printer_form" model="ir.ui.view">
+            <field name="name">Order Printer</field>
+            <field name="inherit_id" ref="pos_restaurant.view_restaurant_printer_form"/>
+            <field name="model">restaurant.printer</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='proxy_ip']" position="replace">
+                    <field name="printer_id" attrs="{'invisible': [('printer_type', '!=', 'network')], 'required': [('printer_type', '!=', 'iot')]}"/>
+                    <field name="proxy_ip" attrs="{'invisible': [('printer_type', 'in', ['network', 'epson_epos'])], 'required': [('printer_type', '=', 'iot')]}"/>
+                    <field name="branch_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

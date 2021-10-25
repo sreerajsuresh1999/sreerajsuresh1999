@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="giftCardControlButton" owl="1">
+        <div class="control-button" title="Gift">
+            <i class="fa fa-gift"/>
+            <span> Gift Card</span>
+        </div>
+    </t>
+
+</templates>

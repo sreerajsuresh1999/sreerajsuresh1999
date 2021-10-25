@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="GiftCardLine" owl="1">
+        <t t-set="card" t-value="props.gift_card"/>
+        <tr class="receipt-line"
+            t-attf-class="client-line {{highlight}}"
+            t-att-data-id="card.id"
+            t-on-click="trigger('click-card', {card: card})">
+            <td style="text-align: center">
+                <t t-esc="props.number"/>
+            </td>
+            <td style="text-align: center">
+                <span class="product-line-name">
+                    <t t-esc="card.card_no"/>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="card.customer_id[1] || ''" />
+            </td>
+            <td style="text-align: center">
+                <t t-esc="card.issue_date or ''" />
+            </td>
+            <td style="text-align: center">
+                <t t-esc="card.expire_date or ''" />
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(card.card_value)" />
+            </td>
+            <td style="text-align: center">
+                <span t-if="highlight">
+                    <button class="edit-client-button" t-on-click.stop="trigger('click-exchange')">Exchange</button>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <span t-if="highlight">
+                    <button class="edit-client-button" t-on-click.stop="trigger('click-extend')">Extend</button>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <span t-if="highlight">
+                    <button class="edit-client-button" t-on-click.stop="trigger('click-recharge')">Recharge</button>
+                </span>
+            </td>
+        </tr>
+    </t>
+
+</templates>

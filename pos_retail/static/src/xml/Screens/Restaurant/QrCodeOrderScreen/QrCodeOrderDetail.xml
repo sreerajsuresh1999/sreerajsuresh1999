@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="QrCodeOrderDetail" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <section class='client-details edit'>
+            <div class="header">
+                <button t-on-click="trigger('actionRemove', {order: props.order})" t-if="['Confirmed', 'Cancelled'].includes(order.state)">
+                    <i class="fa fa-check"/>
+                    <t t-if="!env.isMobile"> Remove</t>
+                </button>
+                <button class="highlight" t-on-click="trigger('actionConfirm', {order: props.order})" t-if="order.state == 'Waiting'">
+                    <i class="fa fa-check"/>
+                    <t t-if="!env.isMobile"> Confirm</t>
+                </button>
+                <button t-on-click="trigger('actionCancel', {order: props.order})" t-if="order.state == 'Waiting'">
+                    <i class="fa fa-trash"/>
+                    <t t-if="!env.isMobile"> Cancel</t>
+                </button>
+                <button t-on-click="trigger('actionResetDraft', {order: props.order})" t-if="order.state == 'Cancelled'">
+                    <i class="fa fa-refresh"/>
+                    <t t-if="!env.isMobile"> Reset Draft</t>
+                </button>
+            </div>
+            <div class='client-name'>
+                <t t-if="order.name">
+                    <t t-esc="order.name"/>
+                </t>
+                <t t-if="!order.name">
+                    N/A
+                </t>
+            </div>
+            <div class="ribbon ribbon-top-right o_widget">
+                <span>
+                    <t t-esc="order.state"/>
+                </span>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail'>
+                        <span class='label'>Table</span>
+                        <span class='detail'><t t-esc="order.table"/></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Floor</span>
+                        <span class='detail'><t t-esc="order.floor"/></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Created Time</span>
+                        <span class='detail'><t t-esc="order.created_time"/></span>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>Amount Total</span>
+                        <span class='detail value'><t t-esc='env.pos.format_currency(order.amount_total)' /></span>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Notes of Customer</span>
+                        <span class='detail'>
+                            <t t-if="order.note">
+                                <t t-esc="order.note"/>
+                            </t>
+                            <t t-else="">
+                                N/A
+                            </t>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-detail'>
+                    <div class='lines_detail'>
+                        <QrCodeOrderDetailLines order="order"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+</templates>

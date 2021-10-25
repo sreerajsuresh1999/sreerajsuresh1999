@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_location_inherit" model="ir.ui.view">
+        <field name="name">stock.location.inherited</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_tree2"/>
+        <field name="arch" type="xml">
+            <field name="usage" position="after">
+                <field name="location_type_id"/>
+                <field name="metrc_id"/>
+                <field name="metrc_name"/>
+                <field name="location_type_metrc_id"/>
+                <field name="location_type_name"/>
+                <field name="for_plant_batches"/>
+                <field name="for_plants"/>
+                <field name="for_harvests"/>
+                <field name="for_packages"/>
+            </field>
+        </field>
+    </record>
+</odoo>

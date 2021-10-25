@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_pos_order_template">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=lang)" />
+                <div class="page">
+                    <div>
+                        <p>
+                            <h3>
+                                <span t-field="doc.name"/>
+                                -
+                                <span t-field="doc.state"/>
+                            </h3>
+                        </p>
+                        <h5>
+                            <table class="table table-responsive">
+                                <tr>
+                                    <td>
+                                        <strong>Session</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.session_id.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Order Date</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.date_order"/>
+                                    </td>
+                                    <td>
+                                        <img t-if="len(doc.ean13) == 13" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;quiet=%s' % ('EAN13', doc.ean13, 400, 100, 0)" style="height:35px" alt="Barcode"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Customer</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.partner_id.name"/>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </h5>
+                        <h5 t-if="doc.lines">
+                            <strong style="border-bottom:2px solid black;">Products:</strong>
+                        </h5>
+                        <table class="table table-sm o_main_table" t-if="doc.lines">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount (%)</th>
+                                    <th>Taxes</th>
+                                    <th>Subtotal w/o Tax</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-foreach="doc.lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="line.product_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.price_unit"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.discount"/>
+                                        </td>
+                                        <td>
+                                            <t t-foreach="line.tax_ids_after_fiscal_position" t-as="tax">
+                                                <t t-esc="tax.name"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.price_subtotal"
+                                                  t-options='{"widget": "monetary", "display_currency": line.company_id.currency_id}'/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.price_subtotal_incl"
+                                                  t-options='{"widget": "monetary", "display_currency": line.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <h5 t-if="doc.payment_ids">
+                            <strong style="border-bottom:2px solid black;">Payments:</strong>
+                        </h5>
+                        <table class="table table-sm o_main_table" t-if="doc.payment_ids">
+                            <tr>
+                                <th>Method</th>
+                                <th>Ref</th>
+                                <th>Amount</th>
+                            </tr>
+                            <t t-foreach="doc.payment_ids" t-as="payment">
+                                <tr>
+                                    <td>
+                                        <span t-esc="payment.payment_method_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="payment.ref"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="payment.amount"
+                                              t-options='{"widget": "monetary", "display_currency": payment.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <h5>
+                            <strong style="border-bottom:2px solid black;">Extra Info:</strong>
+                        </h5>
+                        <h5>
+                            <table class="table table-sm o_main_table">
+                                <tr>
+                                    <td>
+                                        <strong>Location</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.location_id.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Salesman</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.user_id.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Picking</strong>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="doc.picking_ids" t-as="picking">
+                                            <span t-field="picking.name"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Company</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.company_id.name"/>
+                                    </td>
+                                    <td>
+                                        <strong>Receipt Ref</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.pos_reference"/>
+                                    </td>
+                                    <td>
+                                        <strong>Sale Journal</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.payment_journal_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h5>
+                        <div class="clearfix" name="so_total_summary">
+                            <div id="total" class="row" name="total">
+                                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                    <table class="table table-sm">
+                                        <tr class="border-black o_subtotal" style="">
+                                            <td name="td_amount_untaxed_label"><strong>Taxes</strong></td>
+                                            <td name="td_amount_untaxed" class="text-right">
+                                                <span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black o_total">
+                                            <td name="td_amount_total_label"><strong>Paid</strong></td>
+                                            <td name="td_amount_total" class="text-right">
+                                                <span t-field="doc.amount_paid" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black o_total">
+                                            <td name="td_amount_total_label"><strong>Total</strong></td>
+                                            <td name="td_amount_total" class="text-right">
+                                                <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black o_total">
+                                            <td name="td_amount_total_label"><strong>Change</strong></td>
+                                            <td name="td_amount_total" class="text-right">
+                                                <span t-field="doc.amount_return" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 t-if="doc.note">
+                            <strong style="border-bottom:2px solid black;">Notes:</strong>
+                            <p>
+                                <span t-field="doc.note"/>
+                            </p>
+                        </h5>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Signature:____________________</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="pos_order_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="lang" t-value="doc.user_id.sudo().lang"/>
+                    <t t-call="pos_retail.report_pos_order_template" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- This report included 3 report: report_pos_order_template,stock.report_picking, account.report_invoice_with_payments -->
+        <template id="combine_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="record">
+                    <t t-set="doc" t-value="record"/>
+                    <t t-set="lang" t-value="doc.user_id.sudo().lang"/>
+                    <t t-call="pos_retail.report_pos_order_template" t-lang="lang" t-doc="record"/>
+                    <t t-if="record.picking_ids">
+                        <t t-foreach="doc.picking_ids" t-as="picking">
+                            <t t-set="docs" t-value="[picking]"/>
+                            <t t-call="stock.report_picking" t-lang="lang" t-doc="picking"/>
+                        </t>
+                    </t>
+                    <t t-if="record.account_move">
+                        <t t-set="docs" t-value="[record.account_move]"/>
+                        <t t-call="account.report_invoice_with_payments" t-lang="lang" t-doc="record.account_move"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="report_pos_order" model="ir.actions.report">
+            <field name="name">POS Order Report</field>
+            <field name="model">pos.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_retail.combine_report</field>
+            <field name="report_file">pos_retail.combine_report</field>
+            <field name="print_report_name">'%s-%s' % (object.name, object.pos_reference)</field>
+            <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RegisterScreen" owl="1">
+        <div class="login-overlay" style='font-family: "Montserrat", "Odoo Unicode Support Noto", sans-serif'>
+            <div class="screen-login" style="min-height: 500px; height: 100%">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <tr style="font-size: 13px; font-weight: 400"><i class="fa fa-copyright"/>
+                                TL Technology</tr>
+                            <t t-esc="shopName" style="text-transform: uppercase"/>
+                            <div class="successfully_order highlight" t-if="props.selectedOrder">
+                                <div>Successfully Ordered</div>
+                                <div style="font-weight: 900; color: #6EC89B">Please request Waiters/Cashiers of Restaurant scan this Code</div>
+                                <div id="qrcode" style="width: 200px; margin: 0 auto"></div>
+                                <script type="text/javascript">
+                                    var origin = window.origin;
+                                    if (window.posmodel.placed_order) {
+                                        var link = origin + '/public/scan?uid=' + window.posmodel.placed_order.uid;
+                                        new QRCode(document.getElementById("qrcode"), {
+                                            text: link,
+                                            width: 200,
+                                            height: 200,
+                                            colorDark : "#000000",
+                                            colorLight : "#ffffff",
+                                            correctLevel : QRCode.CorrectLevel.H
+                                        });
+                                    }
+                                </script>
+                            </div>
+                            <div t-else="" class="successfully_order highlight">
+                                <div>You and your Friends can Scan this Code for starting Place Order</div>
+                                <div id="qrcode" style="width: 200px; margin: 0 auto"></div>
+                                <script type="text/javascript">
+                                    new QRCode(document.getElementById("qrcode"), {
+                                        text: window.location.href,
+                                        width: 200,
+                                        height: 200,
+                                        colorDark : "#000000",
+                                        colorLight : "#ffffff",
+                                        correctLevel : QRCode.CorrectLevel.H
+                                    });
+                                </script>
+                            </div>
+                        </h4>
+                        <div class="form-group">
+                            <div class="login-body" t-if="env.pos.config.login_required"
+                                 style="display: inline-block; width: 100%">
+                                <div class='client-detail login_div'>
+                                    <span class='label'>Mobile</span>
+                                    <input class='detail client-address-street'
+                                           style="width: 90%; height: 40px; font-size: 16px"
+                                           type="number"
+                                           t-on-change="OnChange"
+                                           required="required"
+                                           autocomplete="off"
+                                           placeholder="....Your mobile ex: 0902333666...."
+                                           name="mobile"/>
+                                </div>
+                                <div class='client-detail login_div'>
+                                    <span class='label'>Name</span>
+                                    <input class='detail client-address-street'
+                                           style="width: 90%; height: 40px; font-size: 16px"
+                                           t-on-change="OnChange"
+                                           required="required"
+                                           autocomplete="off"
+                                           placeholder="... Your Name here ..."
+                                           name="name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer text-center" style="padding: 0px">
+                            <small t-if="env.pos.config.login_required">
+                                <button class="btn pull-right login-button close-session"
+                                        t-on-click="closeSession"
+                                        style="wdith: 200px; height: 50px">Close
+                                </button>
+                                <button class="btn btn-success pull-right login-button close-session"
+                                        t-on-click="openSession"
+                                        style="wdith: 200px; height: 50px">
+                                    <i class="fa fa-shopping-cart"/>
+                                    First Place Order
+                                </button>
+                            </small>
+                            <t t-else="">
+                                <button class="btn btn-danger pull-right login-button close-session"
+                                        t-on-click="openSessionDirect"
+                                        t-if="!env.pos.first_order_succeed"
+                                        style="wdith: 200px; height: 50px">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Starting Place Order Now
+                                </button>
+                                <button class="btn btn-success pull-right login-button close-session"
+                                        t-on-click="printPlaceOrder"
+                                        t-if="env.pos.first_order_succeed"
+                                        style="wdith: 200px; height: 50px">
+                                    <i class="fa fa-print"/>
+                                </button>
+                                <button class="btn btn-danger pull-right login-button close-session"
+                                        t-on-click="openSessionDirect"
+                                        t-if="env.pos.first_order_succeed"
+                                        style="wdith: 200px; height: 50px">
+                                    <i class="fa fa-shopping-cart"/>
+                                    Place Order More Items
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

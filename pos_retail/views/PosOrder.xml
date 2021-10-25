@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="retail_view_pos_pos_form" model="ir.ui.view">
+        <field name="name">pos.order.retail</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="replace">
+                <header>
+                    <button name="action_pos_order_cancel"
+                            string="Cancel"
+                            class="oe_highlight"
+                            type="object"
+                            attrs="{'invisible': [('state', 'in', ['paid', 'invoiced', 'done', 'cancel'])]}"
+                            groups="point_of_sale.group_pos_manager"
+                    />
+                    <button name="%(point_of_sale.action_pos_payment)d"
+                            string="Payment"
+                            class="oe_highlight"
+                            type="action"
+                            states="draft,quotation"/>
+                    <button name="action_pos_order_invoice" string="Invoice" type="object"
+                            attrs="{'invisible': ['|', ('invoice_group', '=', False), ('state','!=','paid')]}"/>
+                    <button name="refund" string="Return Products" type="object"
+                            attrs="{'invisible':[('state', 'in', ['draft', 'quotation'])]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,paid,done"/>
+                </header>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_download_receipt"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-paperclip"
+                    attrs="{'invisible':[('receipt_count', '=', 0)]}">
+                    <field name="receipt_count" widget="statinfo" string="Receipt"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="picking_type_id"/>
+                <field name="shipping_id"/>
+                <field name="delivery_address"
+                       attrs="{'invisible': [('shipping_id', '=', False)]}"/>
+                <field name="delivery_phone"
+                       attrs="{'invisible': [('shipping_id', '=', False)]}"/>
+                <field name="delivery_date"
+                       attrs="{'invisible': [('shipping_id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_ids']//field[@name='payment_date']" position="after">
+                <field name="ref" optional="hide"/>
+                <field name="cheque_bank_id" optional="hide"/>
+                <field name="cheque_owner" optional="hide"/>
+                <field name="cheque_bank_account" optional="hide"/>
+                <field name="cheque_check_number" optional="hide"/>
+                <field name="cheque_card_name" optional="hide"/>
+                <field name="cheque_card_number" optional="hide"/>
+                <field name="cheque_card_type" optional="hide"/>
+            </xpath>
+            <xpath expr="//group[@name='order_total']" position="after">
+                <group name="margin">
+                    <field name="margin" widget='monetary'/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='lines']/tree/field[@name='price_unit']" position="before">
+                <field name="user_id" optional="hide"/>
+                <field name="note" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/tree/field[@name='price_subtotal_incl']" position="after">
+                <field name="price_extra" optional="hide"/>
+                <field name="uom_id" optional="hide"/>
+                <field name="margin" optional="hide"/>
+                <field name="margin_percent" optional="hide"/>
+                <field name="variant_ids" widget="many2many_tags" optional="hide"/>
+                <field name="promotion" invisible="1"/>
+                <field name="promotion_id" optional="hide"/>
+                <field name="promotion_reason" optional="hide"/>
+                <field name="discount_reason" readonly="1" optional="hide"/>
+                <field name="is_return" invisible="1" optional="hide"/>
+                <field name="tag_ids" widget="many2many_tags" groups="point_of_sale.group_pos_manager" optional="hide"/>
+                <field name="packaging_id" optional="hide"/>
+                <field name="manager_user_id" optional="hide"/>
+                <field name="generic_option_ids" widget="many2many_tags" optional="hide"/>
+                <field name="mrp_production_id" optional="hide"/>
+                <field name="is_shipping_cost" optional="hide"/>
+                <field name="order_time" optional="hide"/>
+                <field name="coupon_program_id" optional="hide"/>
+                <field name="coupon_id" optional="hide"/>
+                <field name="coupon_ids" optional="hide" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//button[@states='draft']" position="replace">
+                <button name="%(point_of_sale.action_pos_payment)d"
+                        string="Payment" class="oe_highlight"
+                        type="action"
+                        attrs="{'invisible': ['|', ('is_paid_full', '=', True), ('state', '!=', 'draft')]}"
+                        context="{'pos_session_id' : session_id}"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_pos_order_send" string="Send by Email" type="object"
+                        groups="point_of_sale.group_pos_user" class="btn-primary"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/form//field[@name='discount']" position="after">
+                <field name="price_extra"/>
+                <field name="analytic_account_id"/>
+                <field name="variant_ids" widget="many2many_tags"/>
+                <field name="promotion" invisible="1"/>
+                <field name="promotion_id"/>
+                <field name="promotion_reason"/>
+                <field name="discount_reason" readonly="1"/>
+                <field name="is_return" invisible="1"/>
+                <field name="tag_ids" widget="many2many_tags" groups="point_of_sale.group_pos_manager"/>
+                <field name="user_id" groups="point_of_sale.group_pos_manager"/>
+                <field name="note"/>
+                <field name="packaging_id"/>
+                <field name="manager_user_id"/>
+                <field name="mrp_production_id" readonly="1"/>
+                <field name="coupon_program_id"/>
+                <field name="coupon_id"/>
+                <field name="coupon_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/tree//field[@name='qty']" position="after">
+                <field name="returned_qty" optional="hide"/>
+                <field name="returned_order_line_id" optional="hide"/>
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="after">
+                <page string="Retail Operation" name="retail" groups="point_of_sale.group_pos_manager">
+                    <group name="retail" string="POS Retail">
+                        <group>
+                            <field name="ean13"/>
+                            <field name="currency_id"/>
+                            <field name="booking_id"/>
+                            <field name="expire_date"/>
+                            <field name="is_return" readonly="1"/>
+                            <field name="is_returned" readonly="1"/>
+                            <field name="return_order_id" readonly="1"/>
+                            <field name="paid_date"/>
+                            <field name="pos_branch_id"/>
+                            <field name="partial_payment" readonly="1"/>
+                            <field name="is_paid_full" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="signature" widget='image'/>
+                            <field name="email"/>
+                            <field name="email_invoice"/>
+                            <field name="parent_id" readonly="1"/>
+                            <field name="sale_id" readonly="1"/>
+                            <field name="analytic_account_id" readonly="1"/>
+                            <field name="payment_journal_id" readonly="1"/>
+                            <field name="removed_user_id"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Delivery Orders" name="stock_picking" groups="point_of_sale.group_pos_manager">
+                    <group string="Delivery Orders">
+                        <field name="picking_ids" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='amount_tax']" position="after">
+                <field name="amount_paid" widget="monetary"/>
+                <field name="amount_return" widget="monetary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="retail_view_pos_order_tree">
+        <field name="name">Orders</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="paid_date"/>
+                <field name="analytic_account_id" optional="hide"/>
+                <field name="pos_branch_id" optional="hide"/>
+                <field name="ean13" optional="hide"/>
+                <field name="expire_date" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='session_id']" position="after">
+                <field name="plus_point" groups="point_of_sale.group_pos_manager" optional="hide"/>
+                <field name="redeem_point" groups="point_of_sale.group_pos_manager" optional="hide"/>
+                <field name="is_return" groups="point_of_sale.group_pos_manager" optional="hide"/>
+                <field name="return_order_id" groups="point_of_sale.group_pos_manager" optional="hide"/>
+                <field name="voucher_id" groups="point_of_sale.group_pos_manager" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="state"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_order_filter" model="ir.ui.view">
+        <field name="name">pos.order.list.select</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="paid_date"/>
+                <field name="analytic_account_id"/>
+                <field name="pos_branch_id"/>
+                <field name="ean13"/>
+                <field name="expire_date"/>
+                <field name="note"/>
+                <field name="partial_payment"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Branch" name="pos_branch" domain="[]" context="{'group_by':'pos_branch_id'}"/>
+                <filter string="Analytic Account" name="analytic_account" domain="[]"
+                        context="{'group_by':'analytic_account_id'}"/>
+                <filter string="Is Partial Payment" name="partial_payment" domain="[('partial_payment', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_order_partial_payment_tree" model="ir.ui.view">
+        <field name="name">Partial Orders</field>
+        <field name="model">pos.order</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <tree string="POS Orders" create="0">
+                <field name="name"/>
+                <field name="ean13"/>
+                <field name="pos_branch_id" optional="hide"/>
+                <field name="pos_reference" optional="hide"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="shipping_id" optional="hide"/>
+                <field name="date_order" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="session_id"/>
+                <field name="amount_tax" sum="Amount total" widget="monetary"/>
+                <field name="amount_paid" sum="Amount total" widget="monetary"/>
+                <field name="amount_total" sum="Amount total" widget="monetary"/>
+                <field name="paid_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_partial_orders" model="ir.actions.act_window">
+        <field name="name">Partial Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="domain">[('partial_payment', '=', True)]</field>
+    </record>
+
+    <record id="action_shipping_orders" model="ir.actions.act_window">
+        <field name="name">Shipping Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="domain">[('shipping_id', '!=', False)]</field>
+    </record>
+
+    <record id="sub_tree_action_partial_orders" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pos_order_partial_payment_tree"/>
+        <field name="act_window_id" ref="action_partial_orders"/>
+    </record>
+
+    <record id="action_quotation_orders" model="ir.actions.act_window">
+        <field name="name">Quotation Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="domain">[('state', '=', 'quotation')]</field>
+    </record>
+
+    <menuitem id="menu_action_partial_orders"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_partial_orders"
+              sequence="50"
+              groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"/>
+
+    <menuitem id="menu_action_shipping_orders"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_shipping_orders"
+              sequence="60"
+              groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"/>
+
+    <menuitem id="menu_action_quotation_orders"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_quotation_orders"
+              sequence="70"
+              groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"/>
+
+    <record id="mrp_pos_order_form" model="ir.ui.view">
+        <field name="name">pos.order.retail</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="pos_retail.retail_view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lines']/tree//field[@name='qty']" position="after">
+                <field name="pos_bom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

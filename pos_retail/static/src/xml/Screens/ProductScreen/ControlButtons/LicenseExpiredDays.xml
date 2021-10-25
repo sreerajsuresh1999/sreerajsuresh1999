@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="LicenseExpiredDays" owl="1">
+        <div>
+            <span t-if="!state.isValid"
+                  t-on-click="onClick"
+                  style="text-align: center;
+                    cursor: pointer;
+                    height: 25px;
+                    line-height: 10px;
+                    width: 100%;
+                    color: white;
+                    display: block;
+                    background: #ff5722;
+                    padding-top: 10px;
+                    text-transform: uppercase;
+                    font-weight: 900;">
+                <i class="fa fa-copyright"/>
+                <span> </span>
+                <t t-esc="state.message"/>
+                <a hrf="#" style="color: blue">(Click Register License)</a>
+            </span>
+        </div>
+    </t>
+
+</templates>

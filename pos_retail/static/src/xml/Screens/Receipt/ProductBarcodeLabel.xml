@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductBarcodeLabel">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t>
+                <left>
+                    <t t-esc="product.display_name"/>
+                </left>
+                <cennter>
+                    <t t-esc="product.default_code"/>
+                </cennter>
+                <right>
+                    <barcode encoding="ean13"><t t-esc='product.barcode'/></barcode>
+                </right>
+            </t>
+        </receipt>
+    </t>
+
+</templates>

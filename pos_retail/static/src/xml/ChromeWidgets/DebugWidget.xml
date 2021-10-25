@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="DebugWidget" t-inherit="point_of_sale.DebugWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//p[hasclass('category')]" position="before">
+            <p class="category">Sync Data</p>
+            <ul>
+                <li>
+                    <input t-model="state.syncData" type="text" class="ean"></input>
+                </li>
+                <li class="button barcode" t-on-click="manualSync">Test Manual Sync</li>
+                <li class="button barcode" t-on-click="test1Order">Test 1 Order</li>
+                <li class="button barcode" t-on-click="test10Orders">Test 10 Orders</li>
+                <li class="button barcode" t-on-click="testFullTables">Test Full Tables</li>
+                <li class="button barcode" t-on-click="testFullTables">Test Printer Network</li>
+            </ul>
+            <ul>
+                <li>
+                    <input t-model="state.printerNetworkIp" type="text" class="ean"></input>
+                </li>
+                <li>
+                    <input t-model="state.printerNetworkMessage" type="text" class="ean"></input>
+                </li>
+                <li>
+                    <input t-model="state.printTotal" type="number" class="ean"></input>
+                </li>
+                <li class="button barcode" t-on-click="testPrinterNetwork">Test Printer Network</li>
+            </ul>
+            <ul>
+                <li>
+                    <input t-model="state.testDuplicateOrderNumber" type="text" class="ean"></input>
+                </li>
+                <li class="button barcode" t-on-click="testDuplicateUidOrders">Test Duplicate Orders Reference</li>
+                <li class="button barcode" t-on-click="testDuplicateOrders">Test Duplicate Orders Reference</li>
+            </ul>
+        </xpath>
+    </t>
+
+</templates>

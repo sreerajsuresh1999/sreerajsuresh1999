@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_report_pos_order_pivot" model="ir.ui.view">
+        <field name="name">report.pos.order.pivot</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot"/>
+        <field name="model">report.pos.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="pos_branch_id" type="row"/>
+                <field name="seller_id" type="row"/>
+                <field name="analytic_account_id" type="row"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_report_pos_order_graph" model="ir.ui.view">
+        <field name="name">report.pos.order.graph</field>
+        <field name="model">report.pos.order</field>
+        <field name="arch" type="xml">
+            <graph string="Point of Sale Analysis">
+                <field name="product_categ_id" type="row"/>
+                <field name="price_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_report_pos_order_search" model="ir.ui.view">
+        <field name="name">report.pos.order.search</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
+        <field name="model">report.pos.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="before">
+                <field name="pos_branch_id" type="row"/>
+                <field name="seller_id" type="row"/>
+                <field name="analytic_account_id" type="row"/>
+            </xpath>
+            <xpath expr="//filter[@name='pos']" position="before">
+                <filter string="Branch" name="branch" context="{'group_by': 'pos_branch_id'}"/>
+                <filter string="Seller" name="seller" context="{'group_by': 'seller_id'}"/>
+                <filter string="Analytic Account" name="analytic_account"
+                        context="{'group_by': 'analytic_account_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

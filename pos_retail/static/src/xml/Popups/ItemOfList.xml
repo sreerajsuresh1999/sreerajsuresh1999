@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ItemOfList" owl="1">
+        <tr>
+            <td>
+                <input class="popup-input list-line-input col end"
+                       t-model="props.item.product_id[1]"
+                       disabled="disabled"
+                       placeholder="Item"/>
+            </td>
+            <td>
+                <input t-model="props.item.quantity"
+                       class="popup-input list-line-input col end"
+                       placeholder="Quantity" t-on-keyup="onKeyup"/>
+            </td>
+            <td>
+                <i class="oe_link_icon fa fa-close"
+                   role="img"
+                   aria-label="Remove"
+                   title="Remove"
+                   style="color: #6EC89B"
+                   t-on-click="trigger('remove-item', props.item)"></i>
+            </td>
+        </tr>
+    </t>
+
+</templates>

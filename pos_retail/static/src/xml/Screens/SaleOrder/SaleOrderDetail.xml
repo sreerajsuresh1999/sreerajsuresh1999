@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SaleOrderDetail" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <section class='client-details edit'
+                 style="max-height: 600px;min-height: 300px;height: fit-content;">
+            <div class="header">
+                <t t-if="!order.pos_oder_id">
+                    <button t-on-click.stop="trigger('covertToPosOrder')">
+                        <i class="fa fa-check"/>
+                        <t t-if="!env.isMobile">Covert to POS Order</t>
+                    </button>
+                </t>
+                <t t-if="(order.state == 'draft' or order.state == 'sent') and env.pos.config.booking_allow_confirm_sale">
+                    <button t-on-click.stop="trigger('actionConfirmSale')">
+                        <i class="fa fa-check"/>
+                        <t t-if="!env.isMobile">Confirm Sale</t>
+                    </button>
+                </t>
+                <t t-if="order.state == 'sale'">
+                    <button t-on-click.stop="trigger('actionDone')">
+                        <i class="fa fa-fw fa-lock"/>
+                        <t t-if="!env.isMobile">Lock</t>
+                    </button>
+                </t>
+                <button t-on-click.stop="trigger('actionPrint')">
+                    <i class="fa fa-print"/>
+                    <t t-if="!env.isMobile">Print Quotation / Order</t>
+                </button>
+            </div>
+            <div class="client-picture">
+                <t t-if="partnerImageUrl">
+                    <img t-att-src="partnerImageUrl" alt="Partner"
+                         style="width: 64px; height: 64px; object-fit: cover;"/>
+                </t>
+            </div>
+            <div class='client-name'>
+                <a class='so_link' target='_blank' order="order" t-att-href="OrderUrl" title="Open Order">
+                    <t t-if="order.name">
+                        <t t-esc="order.name"/>
+                    </t>
+                    <t t-if="!order.name">
+                        N/A
+                    </t>
+                (Click Open Order)</a>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <t t-if="order.partner">
+                        <div class='client-detail'>
+                            <span class='label'>Customer</span>
+                            <t t-esc="order.partner.name"/>
+                        </div>
+                        <t t-if="order.partner.email">
+                            <div class='client-detail'>
+                                <span class='label'>Email</span>
+                                <t t-esc="order.partner.email"/>
+                            </div>
+                        </t>
+                        <t t-if="order.partner.phone || order.partner.mobile">
+                            <div class='client-detail'>
+                                <span class='label'>Phone/Mobile</span>
+                                <t t-esc="order.partner.phone || order.partner.mobile"/>
+                            </div>
+                        </t>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Date Order</span>
+                        <t t-esc='order.date_order'/>
+                    </div>
+                    <t t-if="order.reserve_order">
+                        <div class='client-detail'>
+                            <span class='label'>Reserved From</span>
+                            <t t-esc='order.reserve_from'/>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Reserved To</span>
+                            <t t-esc='order.reserve_to'/>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Reserved Table</span>
+                            <t t-esc='order.reserve_table_id[1]'/>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Reserved No Of Guests</span>
+                            <t t-esc="order.reserve_no_of_guest or ''"/>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Reserved Mobile</span>
+                            <t t-esc="order.reserve_mobile or 'N/A'"/>
+                        </div>
+                    </t>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>State</span>
+                        <span style="color: #6EC89B">
+                            <t t-if="order.state == 'draft'">
+                                <t t-if="order.reserve_order">
+                                    Reserved
+                                </t>
+                                <t t-else="">
+                                    Quotation
+                                </t>
+                            </t>
+                            <t t-if="order.state == 'sent'">Quotation Sent</t>
+                            <t t-if="order.state == 'sale'">Sale Order</t>
+                            <t t-if="order.state == 'done'">Looked</t>
+                            <t t-if="order.state == 'cancel'">Cancelled</t>
+                            <t t-if="order.state == 'booked'">Booked</t>
+                        </span>
+                    </div>
+                    <t t-if="order.note">
+                        <div class='client-detail'>
+                            <span class='label'>Notes</span>
+                            <t t-esc='order.note'/>
+                        </div>
+                    </t>
+                    <t t-if="order.user_id">
+                        <div class='client-detail'>
+                            <span class='label'>Sale Persion</span>
+                            <t t-esc='order.user_id[1]'/>
+                        </div>
+                    </t>
+                    <div class='client-detail'>
+                        <span class='label'>Total</span>
+                        <t t-esc='env.pos.format_currency(order.amount_total)'/>
+                    </div>
+                </div>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-detail'>
+                    <div class='lines_detail'>
+                        <SaleOrderLines order="order"/> <!-- set order to props-->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+
+</templates>

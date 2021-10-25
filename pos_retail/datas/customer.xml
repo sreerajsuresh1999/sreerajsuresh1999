@@ -1,0 +1,9 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="res_partner_return_order" model="res.partner">
+            <field name="name">Customer Return</field>
+        </record>
+
+    </data>
+</odoo>

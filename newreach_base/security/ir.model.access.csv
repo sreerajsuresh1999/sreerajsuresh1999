@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_weekly_purchase,access.weekly.purchase,model_weekly_purchase,,1,1,1,1
+access_newreach_limit,access.newreach.limit,model_newreach_limit,,1,1,1,1

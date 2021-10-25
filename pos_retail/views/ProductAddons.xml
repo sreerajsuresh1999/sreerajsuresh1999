@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_addons_form" model="ir.ui.view">
+            <field name="name">product.addons.form</field>
+            <field name="model">product.addons</field>
+            <field name="arch" type="xml">
+                <form string="Add-on">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="include_price_to_product"/>
+                        </group>
+                        <group string="Products of Addon">
+                            <field name="product_ids" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_addons_tree" model="ir.ui.view">
+            <field name="name">product.addons.tree</field>
+            <field name="model">product.addons</field>
+            <field name="arch" type="xml">
+                <tree string="Product Add-ons">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_addons_search" model="ir.ui.view">
+            <field name="name">product.addons.search</field>
+            <field name="model">product.addons</field>
+            <field name="arch" type="xml">
+                <search string="Product Add-ons">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="product_addons_action">
+            <field name="name">Product Add-ons</field>
+            <field name="res_model">product.addons</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_addons"
+                  action="product_addons_action"
+                  parent="menu_product_operation"
+                  sequence="1"
+        />
+
+    </data>
+</odoo>

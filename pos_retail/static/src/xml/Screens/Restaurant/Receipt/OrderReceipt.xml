@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="OrderChangeReceipt">
+        <t t-jquery="div[class='pos-receipt-order-data']" t-operation="append">
+            - Ticket No: <t t-esc="changes.ticket_number"/>
+        </t>
+        <t t-jquery="t[t-if*='change.note']" t-operation="before">
+            <t t-if="change.modifiers">
+                <t t-foreach="change.modifiers" t-as="modifier">
+                    <div class="combo_item">
+                        <span> - </span>
+                        <t t-esc="modifier"/>
+                        <span> : </span>
+                        <t t-esc="change.modifiers[modifier]"/>
+                    </div>
+                </t>
+            </t>
+            <t t-if="change.combo_items">
+                <t t-foreach="change.combo_items" t-as="combo_item">
+                    <div class="combo_item">
+                        <t t-esc="combo_item.quantity"/>
+                        <span> x </span>
+                        <span t-esc="combo_item.product_id[1]"/>
+                    </div>
+                    <t t-if="combo_item.modifiers">
+                        <t t-foreach="combo_item.modifiers" t-as="modifier" t-key="modifier">
+                            <div class="combo_item">
+                                <span> - </span>
+                                <t t-esc="modifier"/>
+                                <span> : </span>
+                                <t t-esc="combo_item.modifiers[modifier]"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+
+    </t>
+
+</templates>

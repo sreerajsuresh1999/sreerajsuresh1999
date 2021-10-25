@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_coupon" name="report_coupon assets" inherit_id="coupon.report_coupon">
+        <xpath expr="//h1[1]" position="replace">
+            <h1 t-if="o.program_id.discount_type == 'fixed_amount' and not o.is_gift_card"
+                style="font-size: 55px; color: #875A7B">
+                <strong>
+                    <span t-field="o.program_id.discount_fixed_amount"
+                          t-options='{"widget": "monetary", "display_currency": o.program_id.currency_id}'/>
+                </strong>
+            </h1>
+            <h1 t-if="o.program_id.discount_type == 'fixed_amount' and o.is_gift_card"
+                style="font-size: 55px; color: #875A7B">
+                <strong>
+                    <span t-field="o.base_amount"
+                          t-options='{"widget": "monetary", "display_currency": o.program_id.currency_id}'/>
+                </strong>
+            </h1>
+        </xpath>
+        <xpath expr="//h4[3]" position="replace">
+            <h4 t-if="o.is_returned_order and o.origin">
+                Coupon Created from Return Order ref:
+                <t t-esc="o.origin"/>
+            </h4>
+            <br/>
+            <h4 t-if="o.expiration_date">
+                Use this promo code before
+                <span t-field="o.expiration_date" t-options='{"format": "yyyy-MM-d"}'/>
+            </h4>
+            <br/>
+            <br/>
+        </xpath>
+    </template>
+
+
+</odoo>

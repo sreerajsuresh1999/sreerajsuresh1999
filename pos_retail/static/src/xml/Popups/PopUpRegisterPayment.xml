@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="PopUpRegisterPayment" owl="1">
+        <div class="modal-dialog">
+            <div class="popup medium-form popup-text">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title" t-if="props.title">
+                            <t t-esc="props.title"/>
+                        </h4>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="row">
+                                    <label class="label voucher-label">ID</label>
+                                    <input class="form-control/>"
+                                           type="number"
+                                           name="id"
+                                           t-att-value="props.order.id"
+                                           disabled="disabled"/>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Debit</label>
+                                    <input class="form-control/>"
+                                           type="number"
+                                           name="amount"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.amount.toFixed(3)"
+                                           required="true"/>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Payment Reference</label>
+                                    <input class="form-control/>"
+                                           type="text"
+                                           name="payment_reference"
+                                           t-att-value="props.payment_reference"
+                                           t-on-change="OnChange"
+                                           required="true"/>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Payment Date</label>
+                                    <input class="form-control datetimepicker/>"
+                                           type="date"
+                                           t-att-value="props.payment_date"
+                                           t-on-change="OnChange"
+                                           name="payment_date"
+                                           required="true"/>
+                                </div>
+                                <div class="row">
+                                    <label class="label voucher-label">Payment Mode (Method)</label>
+                                    <select class='form-control'
+                                            t-on-change="OnChange"
+                                            name='payment_method_id'>
+                                        <t t-foreach='props.payment_methods' t-as='payment_method' t-key="payment_method.id">
+                                            <option t-att-value='payment_method.id'>
+                                                <t t-esc='payment_method.name'/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <t t-if="orderUiState.isSuccessful !== null">
+                                <div class="notice" t-attf-class="{{ orderUiState.isSuccessful ? 'successful' : 'failed' }}">
+                                    <t t-esc="orderUiState.hasNotice"></t>
+                                </div>
+                            </t>
+                            <div class="form-footer text-center">
+                                <span class="btn" t-on-click="confirm">
+                                    Do Payment
+                                    <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Enter </span></span>
+                                </span>
+                                <span class="btn btn-danger" t-on-click="cancel">
+                                    Close
+                                    <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

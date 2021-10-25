@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PointsSummary" owl="1">
+        <t t-if="order">
+            <div class='loyalty-points'>
+                <div class='loyalty-points-title'>
+                    Client's Points
+                </div>
+                <div class="loyalty-points-total">
+                    <span>+<t t-esc='env.pos.format_currency_no_symbol(get_points.pos_loyalty_point)'/></span>
+                </div>
+                <div class='loyalty-points-title'>
+                    Plus Points
+                </div>
+                <div class="loyalty-points-total">
+                    <span>+<t t-esc='env.pos.format_currency_no_symbol(get_points.plus_point)'/></span>
+                </div>
+                <div class='loyalty-points-title'>
+                    Redeem Points
+                </div>
+                <div class="loyalty-points-total">
+                    <span>-<t t-esc='env.pos.format_currency_no_symbol(get_points.redeem_point)'/></span>
+                </div>
+                <div class='loyalty-points-title'>
+                    Remaining Points
+                </div>
+                <div class='loyalty-points-total'>
+                    <span><t t-esc='env.pos.format_currency_no_symbol(get_points.remaining_point)'/></span>
+                </div>
+                <div class='loyalty-points-title'>
+                    Next Points
+                </div>
+                <div class='loyalty-points-total'>
+                    <span><t t-esc='env.pos.format_currency_no_symbol(get_points.next_point)'/></span>
+                </div>
+            </div>
+        </t>
+        <t t-else="">
+            <div></div>
+        </t>
+    </t>
+
+ </templates>

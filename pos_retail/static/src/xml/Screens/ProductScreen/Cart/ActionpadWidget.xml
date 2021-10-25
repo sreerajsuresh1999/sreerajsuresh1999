@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RetailActionpadWidget" owl="1">
+        <div class="actionpad"
+             t-att-class="{
+                    'oe_hidden': env.session.restaurant_order
+                }">
+            <span class="control-button"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.allow_remove_line or env.session.restaurant_order
+                    }"
+                  t-att-disabled="!env.pos.config.allow_remove_line or env.session.restaurant_order"
+                  t-on-click="sendInput('ClearCart')">
+                <i class="fa fa-trash"/>
+                Clear Items
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'highlight': orderToInvoice
+                    }"
+                  t-att-disabled="env.session.restaurant_order"
+                  t-on-click="sendInput('onOfInvoice')">
+                <i class="fa fa-check"/>
+                <t t-esc="getStateToInvoiceString"/>
+            </span>
+            <span class="control-button"
+                  t-on-click="sendInput('PrePrintReceipt')"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.review_receipt_before_paid or env.session.restaurant_order
+                    }"
+                  t-att-disabled="!env.pos.config.review_receipt_before_paid or env.session.restaurant_order">
+                <i class="fa fa-print"/>
+                Print Receipt
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.discount_value
+                    }"
+                  t-att-disabled="!env.pos.config.allow_remove_line or blockScreen"
+                  t-on-click="sendInput('DiscValue')">
+                <i class="fa fa-sort-amount-desc"/>
+                Disc Value
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.discount or env.pos.config.discount_ids.length == 0
+                    }"
+                  t-att-disabled="!env.pos.config.discount or env.pos.config.discount_ids.length == 0"
+                  t-on-click="sendInput('GlobalDisc')">
+                <i class="fa fa-sort-amount-desc"/>
+                Global Disc
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.note_order
+                    }"
+                  t-att-disabled="!env.pos.config.note_order"
+                  t-on-click="sendInput('SetNotes')">
+                <i class="fa fa-edit"/>
+                Notes
+            </span>
+            <span class="control-button"
+                  t-on-click="sendInput('QuicklyPaid')"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.quickly_payment_full
+                    }"
+                  t-att-disabled="!env.pos.config.quickly_payment_full">
+                <i class="fa fa-check"/>
+                Quickly Paid [<t t-esc="env.pos.config.quickly_payment_method_id[1]"/>] 
+            </span>
+            <span class="control-button"
+                  t-on-click="sendInput('ReturnMode')"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.return_products or env.session.restaurant_order,
+                        'highlight': isReturnOrder,
+                    }"
+                  t-att-disabled="!env.pos.config.return_products or env.session.restaurant_order">
+                <i class="fa fa-arrow-left"/>
+                <t t-esc="returnStringButton"/>
+            </span>
+            <span class="control-button"
+                  t-on-click="sendInput('CashControl')"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.cash_control or !env.pos.config.management_session or env.session.restaurant_order,
+                        'highlight': isReturnOrder,
+                    }"
+                  t-att-disabled="!env.pos.config.cash_control or !env.pos.config.management_session or env.session.restaurant_order">
+                <i class="fa fa-calculator"/>
+                Cash In/Out
+            </span>
+            <span class="control-button"
+                  t-on-click="sendInput('UpdateCashOpeningSession')"
+                  t-att-class="{
+                        'oe_hidden': !env.pos.config.cash_control or !env.pos.config.management_session or env.session.restaurant_order,
+                        'highlight': isReturnOrder,
+                    }"
+                  t-att-disabled="!env.pos.config.cash_control or !env.pos.config.management_session or env.session.restaurant_order">
+                <i class="fa fa-save"/>
+                Cash Opened:
+                <t t-esc="env.pos.format_currency(env.pos.bank_statement.balance_start)"/>
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'highlight': env.pos.config.manual_input_cart,
+                    }"
+                  t-on-click="sendInput('changeManualInputCartMode')">
+                <i class="fa fa-check"/>
+                <t t-if="env.pos.config.manual_input_cart">
+                    Edit Mode On
+                </t>
+                <t t-else="">
+                    Edit Mode Off
+                </t>
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'highlight': env.pos.sellers and env.pos.sellers.length != 0,
+                    }"
+                  t-on-click="sendInput('setSeller')">
+                <i class="fa fa-user"/>
+                Assigned Seller
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'highlight': env.pos.config.product_recommendation,
+                    }"
+                  t-on-click="sendInput('AutoRecommendations')">
+                <t t-if="env.pos.config.product_recommendation">
+                    <i class="fa fa-toggle-on"/>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-toggle-off"/>
+                </t>
+                Recommendations is
+                <t t-if="env.pos.config.product_recommendation">
+                    [ ON ]
+                </t>
+                <t t-else="">
+                    [ OFF ]
+                </t>
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'highlight': env.pos.config.start_category and env.pos.config.iface_start_categ_id,
+                    }"
+                  t-on-click="sendInput('setStartCategory')">
+                <t t-if="env.pos.config.start_category and env.pos.config.iface_start_categ_id">
+                    <i class="fa fa-toggle-on"/>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-toggle-off"/>
+                </t>
+                <t t-if="env.pos.config.start_category and env.pos.config.iface_start_categ_id">
+                    <t t-esc="env.pos.config.iface_start_categ_id[1]"/>
+                </t>
+                <t t-else="">
+                    Set Start Categ
+                </t>
+            </span>
+            <span class="control-button"
+                  t-att-class="{
+                        'oe_hidden': state.processing != 'done',
+                        'highlight': state.processing == 'done' and env.pos.config.cache
+                    }"
+                  t-att-disabled="state.processing != 'done'"
+                  t-on-click="sendInput('syncBackEnd')">
+                <t t-if="state.processing == 'done'">
+                    <i class="fa fa-refresh"/>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-spin fa-spinner fa-pulse"/>
+                </t>
+                Sync Backend
+            </span>
+        </div>
+    </t>
+
+</templates>

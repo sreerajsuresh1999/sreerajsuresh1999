@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="MobileMode" owl="1">
+        <div class="oe_status display-mode" t-on-click="onClick">
+            <i class="fa fa-desktop" aria-hidden="true" t-if="env.isMobile"/>
+            <span>
+                <t t-if="env.isMobile">
+                    Full Screen
+                </t>
+                <i class="fa fa-mobile" aria-hidden="true" t-if="!env.isMobile"/>
+                <t t-if="!env.isMobile">
+                    Mobile Screen
+                </t>
+            </span>
+        </div>
+    </t>
+
+</templates>

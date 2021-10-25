@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PopUpCreateSaleOrder" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup medium-form touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title"><t t-esc=" props.title || '' " /></h4>
+                        <div class="client-details-box clearfix">
+                            <div class="client-details-left">
+                                <div class="row">
+                                    <span class="label voucher-label">Amount total</span>
+                                    <input class='form-control'
+                                           t-att-value="env.pos.format_currency_no_symbol(props.order.get_total_with_tax())"
+                                           hidden="hidden"
+                                           disabled="disabled"/>
+                                </div>
+                                <p>Reservation</p>
+                                <div class="row">
+                                    <span class='label voucher-label'>Reserve From <i class="fa fa-calendar"></i></span>
+                                    <input class="form-control"
+                                           name="reserve_from"
+                                           type="datetime-local"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.reserve_from"/>
+                                </div>
+                                <div class="row">
+                                    <span class='label voucher-label'>Reserve To <i class="fa fa-calendar"></i></span>
+                                    <input class="form-control"
+                                           name="reserve_to"
+                                           type="datetime-local"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.reserve_to"/>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Reserve (No of Guest)</span>
+                                    <input class='form-control'
+                                           t-att-value='props.order.get_guest()'
+                                           t-on-change="OnChange"
+                                           type="number"
+                                           name="reserve_no_of_guests"/>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Reserve Mobile</span>
+                                    <input class='form-control'
+                                           t-on-change="OnChange"
+                                           name="reserve_mobile"/>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Notes</span>
+                                    <input class='form-control'
+                                           name="note"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.order.note"/>
+                                </div>
+                                <t t-if="env.pos.config.sale_order_required_signature">
+                                    <div class="row">
+                                        <span class="label voucher-label">Signature</span>
+                                        <div class="signature"
+                                             t-on-change="OnChange"
+                                             name="signature"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="client-details-right">
+                                <p>Payment one part of Order</p>
+                                <t t-if="env.pos.pricelists">
+                                    <div class="row">
+                                        <span class="label voucher-label">PriceList</span>
+                                        <select class='form-control' name='pricelist_id' t-on-change="OnChange">
+                                            <t t-foreach='env.pos.pricelists' t-as='pricelist' t-key="pricelist.id">
+                                                <option t-att-value='pricelist.id' t-att-selected="pricelist['id'] ? ((props.order.pricelist.pricelist and pricelist.id === props.order.pricelist['id']) ? true : undefined) : undefined">
+                                                    <t t-esc='pricelist.name'/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </t>
+                                <div class="row">
+                                    <span class="label voucher-label">Register Partial Amount</span>
+                                    <input type='number' class='form-control' name="payment_partial_amount" t-on-change="OnChange"/>
+                                </div>
+                                <div class="row">
+                                    <span class="label voucher-label">Partial Payment Method</span>
+                                    <select class='form-control' name='payment_partial_method_id' t-on-change="OnChange">
+                                        <t t-foreach='env.pos.normal_payment_methods' t-as='method'>
+                                            <option t-att-value='method.id'>
+                                                <t t-esc='method.name'/>
+                                                <t t-if="method.journal and method.journal.currency_id">
+                                                    (<t t-esc="method.journal.currency_id[1]"/>)
+                                                </t>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <p>Shipping Address</p>
+                                <div class="row">
+                                    <span class="label voucher-label">Phone</span>
+                                    <input class='form-control'
+                                           t-att-value='props.order.get_client().mobile || props.order.get_client().phone'
+                                           t-on-change="OnChange"
+                                           name="delivery_phone"/>
+                                </div>
+                                <div class="row">
+                                    <span class='label voucher-label'>Delivery Address</span>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="delivery_address"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.order.delivery_address || props.order.get_client().address"/>
+                                </div>
+                                <div class="row">
+                                    <span class='label voucher-label'>Delivery Date <i class="fa fa-calendar"></i></span>
+                                    <input class="form-control"
+                                           name="delivery_date"
+                                           type="datetime-local"
+                                           t-on-change="OnChange"
+                                           t-att-value="props.delivery_date"/>
+                                </div>
+                                <div class="row">
+                                    <label class="label checkbox-label" style="width: 50%">Auto Confirm</label>
+                                    <input type="checkbox"
+                                           name="sale_order_auto_confirm"
+                                           t-on-change="OnChange"
+                                           t-att-checked="props.sale_order_auto_confirm"
+                                           class="checkbox">
+                                        <span class="checkbox-material"><span class="check"></span></span>
+                                    </input>
+                                </div>
+                                <div class="row">
+                                    <label class="label checkbox-label" style="width: 50%">Auto Invoice</label>
+                                    <input type="checkbox"
+                                           name="sale_order_auto_invoice"
+                                           t-on-change="OnChange"
+                                           t-att-checked="props.sale_order_auto_invoice"
+                                           class="checkbox">
+                                        <span class="checkbox-material"><span class="check"></span></span>
+                                    </input>
+                                </div>
+                                <div class="row">
+                                    <label class="label checkbox-label" style="width: 50%">Auto Delivery</label>
+                                    <input type="checkbox"
+                                           name="sale_order_auto_delivery"
+                                           t-on-change="OnChange"
+                                           t-att-checked="props.sale_order_auto_delivery"
+                                           class="checkbox">
+                                        <span class="checkbox-material"><span class="check"></span></span>
+                                    </input>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="orderUiState.isSuccessful !== null">
+                            <div class="notice" t-attf-class="{{ orderUiState.isSuccessful ? 'successful' : 'failed' }}">
+                                <t t-esc="orderUiState.hasNotice"></t>
+                            </div>
+                        </t>
+                        <div class="form-footer text-center">
+                            <div class="btn btn-success pull-right confirm" t-on-click="confirm">
+                                Confirm
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Enter </span></span>
+                            </div>
+                            <div class="btn btn-danger pull-right cancel" t-on-click="cancel">
+                                Close
+                                <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,525 @@
+.pos .pos-content {
+  font-family: $font_family_pos;
+  font-size: 1.08333333rem;
+  font-weight: 400;
+  background-size: cover;
+}
+
+.screen .top-content .button {
+  background: $base_color;
+}
+
+.pos .rightpane {
+  width: 50%;
+  max-width: unset;
+  position: relative;
+}
+
+.pos .leftpane {
+  width: 30%;
+}
+
+
+.pos .oe_status {
+  padding-top: 13px;
+  font-style: normal;
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+}
+
+.pos .employee_logo {
+  height: 48px;
+  margin-top: -14px;
+  border-radius: 65%;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.pos .oe_status .fa {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.pos .pos-rightheader > * {
+  border-right: unset !important;
+  font-size: 13px;
+}
+
+.pos textarea {
+  width: 95%;
+  min-height: 250px;
+}
+
+.pos .text-left {
+  text-align: left !important;
+}
+
+.pos .text-right {
+  text-align: right !important;
+}
+
+.pos .category-simple-button {
+  line-height: 3em;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 13px;
+  min-width: 10%;
+  font-weight: 900;
+  margin: 0px;
+}
+
+.pos button {
+  font-family: $font_family_pos;
+}
+
+.pos .client-name {
+  font-weight: 900;
+  margin-top: 10px;
+  color: $primary_color;
+  display: inline-block;
+  max-width: 600px;
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.pos .form-control {
+  font-family: $font_family_pos;
+  width: 100%;
+  height: 45px;
+  border: none;
+  box-shadow: 0px 0px 0px 1px rgb(220, 220, 220) inset;
+}
+
+.pos .clientlist-screen .client-details input, .pos .clientlist-screen .client-details select {
+  margin-left: 12px;
+  border: 1px solid $three_color !important;
+  font-weight: 400;
+  color: black;
+  padding: 10px;
+  height: 40px;
+  font-family: inherit;
+}
+
+// payment screen
+.pos .input-button {
+  font-size: 25px !important;
+  border: unset;
+}
+
+.pos .payment-numpad .numpad {
+  float: left;
+  border-left: unset;
+}
+
+.pos .payment-controls {
+  width: 100%;
+}
+
+.payment-screen .payment-buttons .button {
+  max-width: unset !important;
+}
+
+.payment-screen .customer-button {
+  margin-bottom: 0px;
+  width: 100%;
+  display: table;
+}
+
+.payment-screen .payment-buttons .button .fa {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.payment-screen .payment-buttons .button {
+  max-width: 30%;
+}
+
+// screen content
+.screen .screen-content {
+  max-width: 100%;
+}
+
+.ticket-screen .pos-search-bar .search ul {
+  z-index: 999;
+}
+
+.pos .note_order:hover {
+  color: $secondary_color;
+}
+
+.pos .signature_order {
+  font-size: 40px;
+  cursor: pointer;
+  line-height: initial;
+}
+
+.pos .signature_order:hover {
+  color: $secondary_color;
+}
+
+.pos .signature {
+  background: $secondary_color;
+}
+
+.pos .order .orderline.dirty {
+  color: $primary_color;
+}
+
+.pos .order .orderline .info-list em {
+  color: black;
+}
+
+.pos .order .orderline {
+  color: black;
+  line-height: 15px;
+}
+
+.pos .info {
+  font-size: 13px;
+  color: black;
+}
+
+.pos .orderline_image {
+  height: 35px;
+  width: 35px;
+}
+
+.pos .order {
+  padding-top: 0px;
+  width: 100%;
+  max-width: unset !important;
+}
+
+.pos .actionpad {
+  margin: 0px;
+  width: 100%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: none;
+}
+
+.pos .summary-box-left {
+  width: 45%;
+  float: left;
+  margin-left: 10px;
+}
+
+.pos .summary-box-right {
+  width: 50%;
+  float: right;
+}
+
+.pos .promotion_recommend_customer {
+  margin-left: 25px;
+}
+
+.pos .promotion_active {
+  font-size: 13px;
+  text-align: left;
+  color: #6EC89B;
+  margin-left: 25px;
+}
+
+.pos .promotion {
+  padding-left: 40px;
+  font-size: $font_16;
+  font-weight: bold;
+}
+
+.pos .promotion-label {
+  font-size: $font_16;
+  text-align: left;
+  border-bottom: 1px solid;
+  margin-bottom: 5px;
+  margin-left: 25px;
+  margin-top: 15px;
+  width: 50%;
+}
+
+.pos .order .promotion_recomment_customer {
+  border-bottom: solid 1px $secondary_color;
+  width: 100%;
+  text-align: left;
+  max-width: 200px;
+}
+
+.pos .note_element {
+  text-align: left;
+  font-size: 13px !important;
+  font-width: 400 !important;
+}
+
+.pos .signature_element {
+  text-align: left;
+  margin-left: 25px;
+}
+
+.pos .order-note-information {
+  margin-left: 25px;
+  float: left;
+  width: 50%;
+  font-size: 13px;
+  line-height: 30px;
+  background: white;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: $border-radius;
+}
+
+// product screen
+.pos .logo_size {
+  width: 25px;
+  height: 25px;
+}
+
+.pos .product .sale_with_package {
+  position: relative;
+  top: 60px;
+  right: 0px;
+  line-height: 8px;
+  padding: 1px;
+  border: unset;
+  border-radius: $border-radius;
+}
+
+.pos .breadcrumb-button {
+  color: $base_color;
+}
+
+
+.pos .control-button .control-button-number {
+  margin-left: 0px;
+}
+
+.pos .product-list-contents {
+  width: 100%;
+}
+
+.pos .leftpane .pads .subpads {
+
+}
+
+.pos .product {
+  cursor: pointer;
+  height: 26em;
+  width: 20em;
+  border-radius: 3px;
+  border-bottom-width: 0px;
+}
+
+
+.pos .product .product-img {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  margin-top: 5em;
+}
+
+.pos .product .product-img-sale-extra {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: white;
+  text-align: center;
+}
+
+.pos .lines_detail {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #999999;
+}
+
+.pos .product .price-tag {
+  top: unset;
+  bottom: 0px;
+  color: black;
+  background: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 5px;
+  left: 0px;
+  text-align: center;
+  width: 100%;
+  z-index: 999;
+  line-height: 25px;
+}
+
+.pos .product .product-img-small {
+  margin: auto;
+  position: relative;
+  width: 50%;
+  height: 50%;
+  border-bottom: 1px solid #f1f1f2;
+  text-align: center;
+  top: 0px;
+}
+
+.pos .product .product-img-small img {
+  max-height: 50%;
+  max-width: 50%;
+  border-radius: 65%;
+  vertical-align: middle;
+}
+
+.pos .product .product-img-big {
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+
+.pos .product img {
+  border-radius: 3px;
+}
+
+.pos .product .product-img-big img {
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.pos .header-table th {
+  padding: 5px;
+  padding-left: 15px;
+  border: dotted 1px gray;
+  width: 20%;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: black;
+}
+
+.pos .product-list {
+  text-align: center;
+  padding: 0px;
+  width: 100%;
+}
+
+.pos .product-list-container .list tr {
+  color: #000000;
+  display: inline-table;
+  padding: 10px;
+  line-height: 30px;
+  cursor: pointer;
+  background: #fff;
+  font-size: $font_13;
+  vertical-align: bottom;
+  width: 100%;
+  border-bottom: dotted 1px;
+
+}
+
+.pos .product-list-container .list tr .product-line-name {
+  padding: 5px;
+  line-height: 25px;
+}
+
+.pos .product-list-container .list tr td {
+  padding: 5px;
+  width: 20%;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.pos .product-list-container .list tr td img {
+  height: 70px;
+  padding: 5px;
+  width: 70px;
+  border-radius: 65%;
+  vertical-align: bottom;
+}
+
+.pos .product-name-list {
+}
+
+.pos .product-list-container .list tr:hover {
+  background: $secondary_color;
+  color: white;
+}
+
+.pos .product-list .table {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+
+// OrderLine
+.pos .alert_line {
+  //color: 008 eff;
+}
+
+.pos .warning_line {
+  color: $primary_color !important;
+}
+
+// client screen
+.pos .searchbox-client input {
+  width: 300px;
+  text-align: center;
+}
+
+// popup screen
+.pos .popup-numpad {
+  width: 100% !important;
+}
+
+.pos .popup.popup-number {
+  height: 500px;
+
+}
+
+.pos .popup-number .title, .pos .popup-textinput .title {
+  line-height: 30px;
+}
+
+.pos .modal-dialog .popup .product {
+  max-height: 20em !important;
+  max-width: 20em !important;
+  border: 1px solid black;
+}
+
+.card .table .add_quantity {
+  cursor: pointer;
+  background: $secondary_color;
+
+}
+
+.card .table .add_quantity:hover {
+  background: $primary_color;
+}
+
+.card .table .remove_quantity {
+  cursor: pointer;
+  background: $primary_color;
+  color: #fff
+}
+
+.card .table .remove_quantity:hover {
+  background: $primary_color;
+}
+
+.pos .popup input, .pos .popup-input {
+  font-family: $font_family_pos;
+  font-size: 16px;
+}
+
+.pos .item-selected {
+  background: $secondary_color !important;
+}
+
+.pos .notice {
+  font-size: 13px;
+  padding: 15px;
+}
+
+.pos .failed {
+  color: #6EC89B
+}
+
+.pos .successful {
+  color: $secondary_color
+}
+

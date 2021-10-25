@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReportSalesSummarySession">
+        <div class="pos-receipt">
+            <div class="pos-receipt-contact">
+                <h1>Z-REPORT</h1>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Print Date
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.current_date"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Print Time
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.current_time"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Shop
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.session.config_id[1]"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Cashier/Seller
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.seller"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    State
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.state"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Started at
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.start_at"/>
+                </span>
+            </div>
+            <t t-if="report.stop_at">
+                <div class="receipt-line">
+                    <span>
+                        Stop at
+                    </span>
+                    <span class="pos-receipt-right-align">
+                        <t t-esc="report.stop_at"/>
+                    </span>
+                </div>
+            </t>
+            <div class="receipt-line">
+                <span>
+                    Total Orders
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.session.order_ids.length"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Cash Register Balance Start
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.cash_register_balance_start)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span>
+                    Sale Total
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="report.sales_total"/>
+                </span>
+            </div>
+            <t t-if="report.taxes">
+                <div class="pos-receipt-contact">
+                    <h5>TAXES DETAIL</h5>
+                </div>
+                <div class='orderlines'>
+                    <t t-foreach="report['taxes']" t-as="tax">
+                        <div class="receipt-line">
+                            <t t-esc="tax.tax_name"/>
+                            <span class="pos-receipt-center-align">
+                                <t t-esc="tax.tax_total.toFixed(2)"/>
+                            </span>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="tax.net_total.toFixed(2)"/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <t t-if="report.reversal_total &lt; 0">
+                <div class="pos-receipt-contact">
+                    <h5><div>Reversal Information</div></h5>
+                </div>
+                <div class="receipt-line">
+                    <span class="amount_total">
+                        Reversal Total
+                    </span>
+                    <span class="pos-receipt-right-align">
+                        <t t-esc="pos.format_currency_no_symbol(report.reversal_total)"/>
+                    </span>
+                </div>
+                <div class='orderlines'>
+                    <t t-foreach='report.reversal_orders_detail' t-as='order'>
+                        <t t-set="reversal_order_detail" t-value="report.reversal_orders_detail[order]"/>
+                        <div class="receipt-line">
+                            Order Ref
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="order"/>
+                            </span>
+                        </div>
+                        <t t-foreach='reversal_order_detail' t-as='line'>
+                            <div class="receipt-line">
+                                <t t-esc='line.qty' /> <t t-esc='line.product_id' />
+                                <span class="pos-receipt-right-align">
+                                    <t t-esc="pos.format_currency_no_symbol(line.price_subtotal_incl)"/>
+                                </span>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </t>
+            <t t-if="report.payments_amount.length">
+                <div class="pos-receipt-contact">
+                    <h5>PAYMENT METHOD</h5>
+                </div>
+                <div class='orderlines'>
+                    <t t-foreach="report['payments_amount']" t-as="payment_method">
+                        <div class="receipt-line">
+                            <t t-esc="payment_method.name"/>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="pos.format_currency_no_symbol(payment_method.amount)"/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <t t-if="report.cashs_in.length">
+                <div class="pos-receipt-contact">
+                    <h5>CASH IN</h5>
+                </div>
+                <div class='orderlines'>
+                    <t t-foreach="report['cashs_in']" t-as="cash">
+                        <div class="receipt-line">
+                            <t t-esc="cash.date"/>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="pos.format_currency_no_symbol(cash.amount)"/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <t t-if="report.cashs_in.length">
+                <div class="pos-receipt-contact">
+                    <h5>CASH OUT</h5>
+                </div>
+                <div class='orderlines'>
+                    <t t-foreach="report['cashs_out']" t-as="cash">
+                        <div class="receipt-line">
+                            <t t-esc="cash.date"/>
+                            <span class="pos-receipt-right-align">
+                                <t t-esc="pos.format_currency_no_symbol(cash.amount)"/>
+                            </span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <div class="pos-receipt-contact">
+                <h5>USERS SUMMARY</h5>
+            </div>
+            <div class='orderlines'>
+                <t t-foreach="report['users_summary']" t-as="user">
+                    <div class="receipt-line">
+                        <t t-esc="user"/>
+                        <span class="pos-receipt-right-align">
+                            <t t-esc="pos.format_currency_no_symbol(report['users_summary'][user])"/>
+                        </span>
+                    </div>
+                </t>
+            </div>
+            <div class="pos-receipt-contact">
+                <h5>SUMMARY</h5>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Refund
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.refund_total)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Discount
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.discounts_total)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Gross
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.gross_total)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Gross Profit
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.gross_profit_total)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Net
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.net_gross_total)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Cash-Regis Balance End
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.cash_register_balance_end)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Cash-Regis Balance End Real
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.cash_register_balance_end_real)"/>
+                </span>
+            </div>
+            <div class="receipt-line">
+                <span class="amount_total">
+                    Closing Total
+                </span>
+                <span class="pos-receipt-right-align">
+                    <t t-esc="pos.format_currency_no_symbol(report.closing_total)"/>
+                </span>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ReportSalesSummarySessionXml">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h1>Z-REPORT</h1>
+            <br/>
+            <h1><t t-esc='report.name' /></h1>
+            <br/>
+            <div font='b'>
+                <line>
+                    <left>Shop</left>
+                    <right><t t-esc='report.session.config_id[1]' /></right>
+                </line>
+                <line>
+                    <left>Seller</left>
+                    <right><t t-esc='report.user_id' /></right>
+                </line>
+                <line>
+                    <left>Date</left>
+                    <right><t t-esc='report.date' /></right>
+                </line>
+                <line>
+                    <left>Time</left>
+                    <right><t t-esc='report.time' /></right>
+                </line>
+                <line>
+                    <left>State</left>
+                    <right><t t-esc='report.state' /></right>
+                </line>
+                <line>
+                    <left>Start At</left>
+                    <right><t t-esc='report.start_at' /></right>
+                </line>
+                <line>
+                    <left>Stop At</left>
+                    <right><t t-esc='report.stop_at' /></right>
+                </line>
+                <line>
+                    <left>Total Orders</left>
+                    <right><t t-esc='report.session.order_ids.length' /></right>
+                </line>
+            </div>
+            <br />
+            <div font='b'>
+                <line>
+                    <left>Cash Register Balance Start</left>
+                    <right><t t-esc='pos.format_currency_no_symbol(report.cash_register_balance_start)' /></right>
+                </line>
+                <line>
+                    <left>Sales Total</left>
+                    <right><t t-esc='pos.format_currency_no_symbol(report.sales_total)'/></right>
+                </line>
+            </div>
+            <br />
+            <t t-if="report.taxes.length">
+                <div font='b'>
+                    <h6><div>TAXES</div></h6>
+                </div>
+                <br/>
+                <div class='orderlines' line-ratio='0.6'>
+                    <t t-foreach='report.taxes' t-as='tax'>
+                        <line>
+                            <left><t t-esc='tax.tax_name' /></left>
+                            <right>
+                                <t t-esc='pos.format_currency_no_symbol(tax.tax_total)' />
+                            </right>
+                        </line>
+                        <line indent='1'>
+                            <left>
+                                Per:
+                                <t t-esc='tax.tax_per' />
+                                with Gross:
+                                <t t-esc='tax.gross_tax' />
+                            </left>
+                            <right>
+                                and Net:
+                                <t t-esc='pos.format_currency_no_symbol(tax.net_total)' />
+                            </right>
+                        </line>
+                    </t>
+                </div>
+            </t>
+            <br/>
+            <t t-if="report.reversal_total &lt; 0">
+                <div font='b'>
+                    <h6><div>Reversal Information</div></h6>
+                </div>
+                <line>
+                    <left>Reversal Total</left>
+                    <right><t t-esc='pos.format_currency_no_symbol(report.reversal_total)' /></right>
+                </line>
+                <div class='orderlines' line-ratio='0.6'>
+                    <t t-foreach='report.reversal_orders_detail' t-as='order'>
+                        <t t-set="reversal_order_detail" t-value="report.reversal_orders_detail[order]"/>
+                        <line>
+                            <left>Order Ref</left>
+                            <right><t t-esc="order"/></right>
+                        </line>
+                        <t t-foreach='reversal_order_detail' t-as='line'>
+                            <line>
+                                <left><t t-esc='line.qty' /> <t t-esc='line.product_id' /></left>
+                                <right>
+                                    <t t-esc='pos.format_currency_no_symbol(line.price_subtotal_incl)' />
+                                </right>
+                            </line>
+                        </t>
+                    </t>
+                </div>
+                <br/>
+            </t>
+            <div font='b'>
+                <h6><div>JOURNAL</div></h6>
+            </div>
+            <br/>
+            <div class='orderlines' line-ratio='0.6'>
+                <t t-foreach='report.payments_amount' t-as='payment_method'>
+                    <line>
+                        <left><t t-esc='payment_method.name' /></left>
+                        <right>
+                            <t t-esc='pos.format_currency_no_symbol(payment_method.amount)' />
+                        </right>
+                    </line>
+                </t>
+            </div>
+            <br/>
+            <t t-if="report.cashs_in.length">
+                <div font='b'>
+                    <h6><div>CASH IN</div></h6>
+                </div>
+                <br/>
+                <div class='orderlines' line-ratio='0.6'>
+                    <t t-foreach='report.cashs_in' t-as='cash'>
+                        <line>
+                            <left><t t-esc='cash.date' /></left>
+                            <right>
+                                <t t-esc='pos.format_currency_no_symbol(cash.amount)' />
+                            </right>
+                        </line>
+                    </t>
+                </div>
+            </t>
+            <t t-if="report.cashs_out.length">
+                <br/>
+                <div font='b'>
+                    <h6><div>CASH OUT</div></h6>
+                </div>
+                <br/>
+                <div class='orderlines' line-ratio='0.6'>
+                    <t t-foreach='report.cashs_out' t-as='cash'>
+                        <line>
+                            <left><t t-esc='cash.date' /></left>
+                            <right>
+                                <t t-esc='pos.format_currency_no_symbol(cash.amount)' />
+                            </right>
+                        </line>
+                    </t>
+                </div>
+            </t>
+            <br/>
+            <div font='b'>
+                <h6><div>SUMMARY</div></h6>
+            </div>
+            <br/>
+            <line class='total'>
+                <left>DISCOUNT</left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.discounts_total)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>GROSS TOTAL</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.gross_total)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>GROSS PROFIT TOTAL</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.gross_profit_total)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>NET TOTAL</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.net_gross_total)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>CASH REGISTER BALANCE END</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.session.cash_register_balance_end)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>CASH REGISTER BALANCE END REAL</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.cash_register_balance_end_real)' /></right>
+            </line>
+            <br/>
+            <line class='total'>
+                <left><pre>CLOSING TOTAL</pre></left>
+                <right><t t-esc='pos.format_currency_no_symbol(report.closing_total)' /></right>
+            </line>
+        </receipt>
+    </t>
+
+</templates>

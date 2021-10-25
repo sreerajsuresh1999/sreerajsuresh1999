@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CustomerFacingScreenWiget" owl="1">
+        <div class="ticket-button" t-on-click="onClick" t-att-class="{ oe_hidden: isHidden}">
+            <i class="fa fa-slideshare" aria-hidden="true"/>
+            <div class="header-text">Share Screen</div>
+        </div>
+    </t>
+
+    <t t-name="CustomerFacingDisplayHead">
+        <div class="resources">
+            <base t-att-href="origin"/>
+            <link href="/point_of_sale/static/src/css/customer_facing_display.css"
+                  rel="stylesheet"/>
+            <link href="/pos_retail/static/src/css/CustomerFacingScreen.css" rel="stylesheet"/>
+            <script type="text/javascript">
+                // This function needs to be named that way, call it the foreign JS API
+                // The iotbox will execute it, with the behavior intended
+                function foreign_js() {
+                    if ($('.pos-adv').hasClass('pos-hidden')) {
+                        $('.pos-customer_facing_display').addClass('pos-js_no_ADV');
+                    }
+                    $(window).on('resize', function () {
+                        $('.pos-customer_facing_display').toggleClass('pos-js_no_ADV', $('.pos-adv').hasClass('pos-hidden'));
+                    }).trigger('resize');
+                };
+            </script>
+        </div>
+    </t>
+
+</templates>

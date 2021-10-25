@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SelectionPopup" t-inherit="point_of_sale.SelectionPopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//header" position="inside">
+            <t t-set="number" t-value="0"/>
+        </xpath>
+        <xpath expr="//div[hasclass('selection-item')]" position="replace">
+            <div class="selection-item" t-att-class="{ selected: item.isSelected }" t-on-click="selectItem(item.id)">
+                <span class="selection-item-label">
+                    <t t-esc="item.label"/>
+                </span>
+                <t t-if="item['icon']">
+                    <i t-att-class="item.icon"/>
+                </t>
+                <span class="selection-item-image" t-if="item['imageUrl']">
+                    <img t-att-src="item['imageUrl']" class="selection-image"/>
+                </span>
+                <span t-if="number &lt; 10 and !env.isMobile" style="display: block; color:#555555; font-weight: 400">
+                    <i class="fa fa-keyboard-o"/>
+                    <span>  </span>
+                    <t t-esc="number"/>
+                </span>
+                <t t-set="number" t-value="number + 1"/>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
+

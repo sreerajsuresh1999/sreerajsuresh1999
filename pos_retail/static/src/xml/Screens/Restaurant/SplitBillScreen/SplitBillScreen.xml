@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SplitBillScreen" t-inherit="pos_restaurant.SplitBillScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pay-button')]" position="after">
+            <div class="pay-button" t-if="env.pos.config.allow_split_table">
+                <div class="button" t-on-click="doTransferTable">
+                    <i class="fa fa-external-link" />
+                    <span> </span>
+                    <span>Transfer to another Table</span>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

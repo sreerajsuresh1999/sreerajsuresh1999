@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CashBalanceLine" owl="1">
+        <tr>
+            <td>
+                <input type="number" t-model="props.item.number"
+                   class="popup-input list-line-input col start"
+                   placeholder="Coin Number" t-on-keyup="onKeyup" />
+            </td>
+            <td>
+                <input type="text" t-model="props.item.coin_value"
+                   class="popup-input list-line-input col end"
+                   placeholder="Count Value" t-on-keyup="onKeyup" />
+            </td>
+            <td>
+                <i class="oe_link_icon fa fa-plus"
+                   role="img"
+                   aria-label="Add one more row"
+                   title="Add one more row"
+                   t-on-click="trigger('create-new-item', props.item)"></i>
+            </td>
+            <td>
+                <i class="oe_link_icon fa fa-trash-o"
+                   role="img"
+                   aria-label="Remove"
+                   title="Remove"
+                   t-on-click="trigger('remove-item', props.item)"></i>
+            </td>
+        </tr>
+    </t>
+
+</templates>

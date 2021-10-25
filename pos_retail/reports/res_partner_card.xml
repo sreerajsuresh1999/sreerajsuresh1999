@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_card_badge" model="ir.actions.report">
+        <field name="name">Print Badge</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pos_retail.report_res_partner_card</field>
+        <field name="report_file">pos_retail.report_res_partner_card</field>
+        <field name="print_report_name">'Card - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_res_partner_card">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="partner">
+                    <div class="col-md-6">
+                        <table style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                            <td style="width:33%;" valign="center">
+                                <table style="width:77pt; height:150pt">
+                                    <tr style="height:30%">
+                                        <td align="center" valign="center">
+                                            <img t-if="partner.company_id.logo" t-att-src="image_data_uri(partner.company_id.logo)" style="max-height:45pt;max-width:90%" alt="Company Logo"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:70%;">
+                                        <td align="center" valign="center">
+                                            <img t-if="partner.image_1920" t-att-src="image_data_uri(partner.image_1920)" style="max-height:85pt;max-width:90%" alt="partner Image"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width:67%" valign="center">
+                                <table style="width:155pt; height:85pt">
+                                    <tr><th><div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;" align="center"><t t-esc="partner.name"/></div></th></tr>
+                                    <tr><td><img alt="barcode" t-if="partner.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', partner.barcode, 600, 120)" style="max-height:50pt;max-width:100%;" align="center"/></td></tr>
+                                </table>
+                            </td>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ButtonClearTaxes" owl="1">
+        <div class="control-button" t-att-class="{highlight: isHighlighted}">
+            <i class="fa fa-trash"/>
+            <span>Remove all Taxes in Cart</span>
+        </div>
+    </t>
+
+</templates>

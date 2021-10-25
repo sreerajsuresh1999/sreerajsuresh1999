@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ItemsQuantities" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup medium-form popup-text">
+                <header class="title">
+                    <t t-esc="props.title" />
+                </header>
+                <div class="product-list-scroller touch-scrollable">
+                    <table class="receipt-orderlines">
+                        <thead style="width: 100%">
+                            <tr class="header-table">
+                                <th class="text-center" width="40%">Item</th>
+                                <th class="text-center" width="40%">Quantity</th>
+                                <th class="text-center" width="10%">Add (Type a Command [Enter])</th>
+                                <th class="text-center" width="10%">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody class='product-list-contents' t-on-remove-item="removeItem" t-on-create-new-item="createNewItem">
+                            <t t-foreach="state.array" t-as="item" t-key="item.id">
+                                <ItemOfList item="item"/>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="footer">
+                    <div class="button confirm" t-on-click="confirm">
+                        <i class="fa fa-arrow-right"/> Accept
+                        <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Enter </span></span>
+                    </div>
+                    <div class="button cancel" t-on-click="cancel">
+                        Close
+                        <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </t>
+
+</templates>

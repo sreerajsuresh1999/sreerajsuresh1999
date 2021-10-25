@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CashBalance" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup full-form popup-text">
+                <header class="title">
+                    <t t-esc="props.title" />
+                </header>
+                <div class="product-list-scroller touch-scrollable">
+                    <table class="receipt-orderlines">
+                        <thead style="width: 100%">
+                            <tr class="header-table">
+                                <th class="text-center" width="40%">Coin Number</th>
+                                <th class="text-center" width="40%">Coin Value</th>
+                                <th class="text-center" width="10%">Add (Enter)</th>
+                                <th class="text-center" width="10%">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody class='product-list-contents' t-on-remove-item="removeItem" t-on-create-new-item="createNewItem">
+                            <t t-foreach="state.array" t-as="item" t-key="item._id">
+                                <CashBalanceLine item="item" />
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="footer">
+                    <div class="button confirm" t-on-click="confirm">
+                        Ok
+                    </div>
+                    <div class="button cancel" t-on-click="cancel">
+                        Close
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </t>
+
+</templates>

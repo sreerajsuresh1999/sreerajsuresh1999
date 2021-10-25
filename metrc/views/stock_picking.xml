@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_picking_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_td_label')]" position="before">
+                <field name="metrc_sync"/>
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="after">
+                <page string="Shipping Manifest" name="shipping_manifest">
+                    <div>
+                        <div>
+                            <label for="shipper_facility"/>
+                            <field name="shipper_facility"/>
+                        </div>
+                        <div>
+                            <label for="receiver_facility"/>
+                            <field name="receiver_facility"/>
+                        </div>
+                        <div>
+                            <label for="distributor_facility"/>
+                            <field name="distributor_facility"/>
+                        </div>
+                        <div>
+                            <label for="driver_id"/>
+                            <field name="driver_id"/>
+                        </div>
+                        <div>
+                            <label for="vehicle_make"/>
+                            <field name="vehicle_make"/>
+                        </div>
+                        <div>
+                            <label for="vehicle_model"/>
+                            <field name="vehicle_model"/>
+                        </div>
+                        <div>
+                            <label for="vehicle_license"/>
+                            <field name="vehicle_license"/>
+                        </div>
+                    </div>
+                    <div>
+                        <button name="print_shipping_manifest" type="object" class="oe_highlight"
+                                style="margin-right: 20px;">
+                            <i class="fa fa-print"></i>
+                            Print
+                        </button>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

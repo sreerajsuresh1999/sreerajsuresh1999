@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="giftCardRechargePopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <div class="giftcard-recharge-popup">
+                        <div>Card No :</div>
+                        <div>
+                             <t t-esc="props.selectedCard.card_no"/>
+                        </div>
+                    </div>
+                    <div class="giftcard-recharge-popup">
+                        <div>Customer :</div>
+                        <div>
+                             <t t-esc="props.selectedCard.customer_id[1]"/>
+                        </div>
+                    </div>
+                    <div class="giftcard-recharge-popup">
+                        <div>Amount :</div>
+                        <div>
+                            <t t-esc="env.pos.format_currency(props.selectedCard.card_value)"/>
+                        </div>
+                    </div>
+                    <div class="giftcard-recharge-popup" id="recharge_amount_row">
+                        <div>Recharge Amount :</div>
+                        <div>
+                            <input type="text" t-model="state.RechargeAmount" t-ref="RechargeAmount"
+                                   placeholder="Enter Amount" id="RechargeAmount" name="points"
+                                   t-on-keydown="onInputKeyDownNumberVlidation"/>
+                        </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

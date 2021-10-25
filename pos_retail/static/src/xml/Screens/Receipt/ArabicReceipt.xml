@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ArabicReceipt" owl="1">
+        <div class="pos-receipt" style="color: black">
+            <t t-if="receipt.header_html or receipt.header">
+                <div t-if='receipt.header_html' class="pos-receipt-center-align">
+                    <div class="receipt-line">
+                        <span class="pos-receipt-center-align">
+                            <t t-raw="receipt.header_html"/>
+                        </span>
+                    </div>
+                </div>
+                <div t-if='!receipt.header_html and receipt.header' class="pos-receipt-center-align">
+                    <div class="receipt-line">
+                        <span class="pos-receipt-center-align">
+                            <t t-esc="receipt.header"/>
+                        </span>
+                    </div>
+                </div>
+            </t>
+            <div t-if="env.pos.config.html_receipt_design and env.pos.config.html_header">
+                <t t-raw="env.pos.config.html_header"/>
+            </div>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='40%'/>
+                    <col width='20%'/>
+                    <col width='40%'/>
+                </colgroup>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+                        <div class="barcode" style="height: 4em; width: 10em; float: left">
+                            <img id="barcode" class="footer_barcode"/>
+                            <script type="text/javascript">
+                                if ($("#barcode").length ==1) {
+                                    JsBarcode("#barcode", window.posmodel.get_order().ean13, {
+                                        format: "EAN13",
+                                        displayValue: true,
+                                        fontSize: 14
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td style="text-align: right">
+                        <t t-if="receipt.company.logo">
+                            <img class="pos-receipt-logo" style="float: right" t-att-src="receipt.company.logo" alt="Logo"/>
+                        </t>
+                    </td>
+                </tr>
+            </table>
+            <h4 style="text-align: center">
+                <t t-esc="receipt.company.name"/>
+            </h4>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='50%'/>
+                    <col width='50%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td style="text-align: center">
+                        <t t-if="receipt.contact_address">
+                            <t t-esc="receipt.contact_address"/>
+                        </t>
+                    </td>
+                    <td style="text-align: center">
+                        <t t-esc="receipt.cashier"/>
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: center">
+                        <t t-if="receipt.company.phone">
+                            <t t-esc="receipt.company.phone"/>
+                        </t>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='50%'/>
+                    <col width='50%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td>
+                        Client:
+                        <t t-if="receipt.client">
+                            <t t-esc="receipt.client.name"/>
+                        </t>
+                        <t t-else="">
+                            N/A
+                        </t>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='50%'/>
+                    <col width='50%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td>
+                        <t t-esc="receipt.date.localestring" />
+                    </td>
+                    <td>
+                        <t t-esc="receipt.name"/>
+                    </td>
+                </tr>
+            </table>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='100%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td style="text-align: center">
+                        ترجيع خلال فترة 3 ايام
+                    </td>
+                </tr>
+            </table>
+            <div class="orderlines">
+                <table class='receipt-orderlines'>
+                    <colgroup>
+                        <col width='25%'/>
+                        <col width='20%'/>
+                        <col width='10%'/>
+                        <col width='40%'/>
+                        <col width='5%'/>
+                    </colgroup>
+                    <tr class="receipt-line">
+                        <td style="text-align: center">
+                            الاجمالي
+                        </td>
+                        <td style="text-align: center">
+                            سعر الوحدة
+                        </td>
+                        <td style="text-align: center">
+                            الكمية
+                        </td>
+                        <td style="text-align: center">
+                            البيان
+                        </td>
+                        <td style="text-align: center">
+                            ر.م
+                        </td>
+                    </tr>
+                    <t t-set="noOfLine" t-value="1"/>
+                    <tr t-foreach='orderlines' t-as='line' t-key="line.id" class="receipt-line">
+                        <td style="text-align: center">
+                            <t t-esc="env.pos.format_currency_no_symbol(line.get_price_with_tax())"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="env.pos.format_currency_no_symbol(line.price)"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="env.pos.format_currency_no_symbol(line.quantity)"/>
+                            <t t-if="line.get_unit()['name'] !== 'Units'">
+                                <span> </span>
+                                <t t-esc="line.get_unit()['name']"/>
+                            </t>
+                        </td>
+                        <td style="text-align: center">
+                            <div class="receipt-line">
+                                <t t-if="line.modifiers">
+                                    <t t-foreach="line.modifiers" t-as="modifier" t-key="modifier">
+                                        <div class="product-line-name">
+                                            <span> - </span>
+                                            <t t-esc="modifier"/>
+                                            <span> : </span>
+                                            <t t-esc="line.modifiers[modifier]"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-if="line.discount">
+                                    <div class="product-line-name">
+                                        Disc: <t t-esc="line.discount"/>
+                                        %
+                                    </div>
+                                </t>
+                                <t t-if="line.price_extra">
+                                    <div class="product-line-name">
+                                        Price Extra: <t
+                                            t-esc="env.pos.format_currency_no_symbol(line.price_extra, 'Price extra')"/>
+                                    </div>
+                                </t>
+                                <t t-if="line.discount_extra">
+                                    <div class="product-line-name">
+                                        Discount Extra: <t t-esc="line.discount_extra"/>
+                                        %
+                                    </div>
+                                </t>
+                                <t t-if="env.pos.config.display_tax_receipt and line.get_tax() > 0">
+                                    <div class="product-line-name">
+                                        Taxes:
+                                        <t t-esc="env.pos.format_currency_no_symbol(line.get_tax())"/>
+                                    </div>
+                                </t>
+                                <t t-if="line.pack_lot_lines and line.pack_lot_lines.models">
+                                    <t t-foreach="line.pack_lot_lines.models" t-as="lot_model"
+                                       t-key="lot_model">
+                                        <div class="receipt-line ">
+                                            Lot: <t t-esc="lot_model.attributes.lot_name"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-if="line.combo_items">
+                                    <t t-foreach="line.combo_items" t-as="combo_item" t-key="combo_item">
+                                        <div class="product-line-name">
+                                            <t t-esc="combo_item.quantity * line.quantity"/>
+                                            <span> x </span>
+                                            <t t-esc="combo_item.product_id[1]"/>
+                                        </div>
+                                        <t t-foreach="combo_item.modifiers" t-as="modifier" t-key="modifier">
+                                            <div class="product-line-name">
+                                                <span> - </span>
+                                                <t t-esc="modifier"/>
+                                                <span> : </span>
+                                                <t t-esc="combo_item.modifiers[modifier]"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-if="line.selected_combo_items">
+                                    <t t-foreach="line.selected_combo_items" t-as="product_id"
+                                       t-key="product_id">
+                                        <t t-if="env.pos.db.product_by_id[product_id]">
+                                            <div class="product-line-name">
+                                                <t t-esc="line.selected_combo_items[product_id]"/>
+                                                <span> x </span>
+                                                <t t-esc="env.pos.db.product_by_id[product_id].display_name"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-if="line.addon_ids">
+                                    <t t-foreach="line.addon_ids" t-as="product_id" t-key="product_id">
+                                        <t t-if="env.pos.db.product_by_id[product_id]">
+                                            <div class="product-line-name">
+                                                +
+                                                <t t-esc="line.quantity"/>
+                                                <t t-esc="env.pos.db.product_by_id[product_id].display_name"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-if="line.get_line_note()">
+                                    <div class="product-line-name">
+                                        Notes :
+                                        <t t-esc="line.get_line_note()"/>
+                                    </div>
+                                </t>
+                                <div class="product-line-name" t-if="line.packaging">
+                                    Packaging :
+                                    <t t-esc="line.packaging.name"/>
+                                </div>
+                                <t t-if="line.variants">
+                                    <t t-foreach="line.variants" t-as="variant" t-key="variant">
+                                        <div class="product-line-name">
+                                            + <t t-esc="variant.value_id[1]"/>
+                                            <t t-esc="env.pos.format_currency_no_symbol(variant.price_extra, 'Price extra')"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-if="line.tags and line.tags.length">
+                                    Tags:
+                                    <t t-foreach="line.tags" t-as="tag" t-key="tag.id">
+                                        <div class="product-line-name">
+                                            <t t-esc="tag.name"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-if="line.generic_options and line.generic_options.length">
+                                    Generic Option:
+                                    <t t-foreach="line.generic_options" t-as="generic" t-key="generic">
+                                        <div class="product-line-name">
+                                            <t t-esc="generic.name"/>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                            <ProductName product="line.product"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="noOfLine"/>
+                        </td>
+                        <t t-set="noOfLine" t-value="noOfLine + 1"/>
+                    </tr>
+                </table>
+            </div>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='55%'/>
+                    <col width='45%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        <t t-esc="env.pos.format_currency(receipt.total_with_tax - receipt.total_discount)"/>
+                    </td>
+                    <td style="text-align: left">
+                        الاجمالي
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        <t t-esc="env.pos.format_currency(receipt.total_discount)"/>
+                    </td>
+                    <td style="text-align: left">
+                        الخصم
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td style="text-align: left">
+                        <t t-esc="env.pos.format_currency(receipt.total_tax)"/>
+                    </td>
+                    <td style="text-align: left">
+                        الضريبة
+                    </td>
+                </tr>
+                <tr class="receipt-line">
+                    <td class="pos-receipt-amount" style="text-align: left">
+                        <t t-esc="env.pos.format_currency(receipt.total_with_tax)"/>
+                    </td>
+                    <td class="pos-receipt-amount" style="text-align: left">
+                        الصافي
+                    </td>
+                </tr>
+            </table>
+            <div class="pos-receipt-order-data" t-if="receipt.company.website">
+                <br/>
+                <div><t t-esc="receipt.company.website" /></div>
+            </div>
+        </div>
+    </t>
+
+</templates>

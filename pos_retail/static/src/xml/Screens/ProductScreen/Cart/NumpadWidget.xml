@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NumpadWidgetRetail" owl="1">
+        <div class="numpad"
+             t-att-class="{'oe_hidden': invisibleNumpad}">
+            <button class="input-button number-char" t-on-click="sendInput('1')">1</button>
+            <button class="input-button number-char" t-on-click="sendInput('2')">2</button>
+            <button class="input-button number-char" t-on-click="sendInput('3')">3</button>
+            <button class="mode-button mode_quantity"
+                    t-att-class="{
+                        'selected-mode': props.activeMode === 'quantity',
+                        'disabled-mode': !env.pos.config.allow_qty
+                    }"
+                    t-att-disabled="!env.pos.config.allow_qty"
+                    t-on-click="changeMode('quantity')">
+                Qty (Q)
+            </button>
+            <button class="input-button number-char" t-on-click="sendInput('4')">4</button>
+            <button class="input-button number-char" t-on-click="sendInput('5')">5</button>
+            <button class="input-button number-char" t-on-click="sendInput('6')">6</button>
+            <button class="mode-button mode_discount" t-att-class="{
+                        'selected-mode': props.activeMode === 'discount',
+                        'disabled-mode': invisibleDiscountButton || (props.line and props.line.reward_id)
+                    }"
+                    t-att-disabled="invisibleDiscountButton || (props.line and props.line.reward_id)"
+                    t-on-click="changeMode('discount')">
+                Disc (D)
+            </button>
+            <button class="input-button number-char" t-on-click="sendInput('7')">7</button>
+            <button class="input-button number-char" t-on-click="sendInput('8')">8</button>
+            <button class="input-button number-char" t-on-click="sendInput('9')">9</button>
+            <button class="mode-button mode_price" t-att-class="{
+                    'selected-mode': props.activeMode === 'price',
+                    'disabled-mode': !hasPriceControlRights || !env.pos.config.allow_price || env.session.restaurant_order || blockScreen || (props.line and props.line.reward_id)
+                        }"
+                    t-att-disabled="!hasPriceControlRights || !env.pos.config.allow_price || blockScreen || (props.line and props.line.reward_id)"
+                    t-on-click="changeMode('price')">
+                Price (P)
+            </button>
+            <button class="input-button numpad-minus"
+                    t-att-class="{
+                        'disabled-mode': !env.pos.config.allow_minus or blockScreen || (props.line and props.line.reward_id)
+                    }"
+                    t-att-disabled="!env.pos.config.allow_minus or blockScreen || (props.line and props.line.reward_id)"
+                    t-on-click="sendInput('-')">+/-</button>
+            <button class="input-button number-char" t-on-click="sendInput('0')">0</button>
+            <button class="input-button number-char" t-on-click="sendInput('.')">.</button>
+            <button class="input-button numpad-backspace"
+                    style="font-size: 9px !important"
+                    t-att-class="{
+                        'disabled-mode': !env.pos.config.allow_remove_line or blockScreen
+                    }"
+                    t-att-disabled="!env.pos.config.allow_remove_line or blockScreen"
+
+                    t-on-click="sendInput('Backspace')">
+                <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png"
+                     width="16" height="16" alt="Backspace"/>
+                (Del)
+            </button>
+        </div>
+    </t>
+
+</templates>

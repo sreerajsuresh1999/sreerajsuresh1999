@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CashSession" owl="1">
+		<div class="modal-dialog">
+            <div class="popup medium-form popup-text session-popup">
+                <t t-if="props.title">
+                    <p class="title session-title"><t t-esc=" props.title || '' " /></p>
+                </t>
+                <t t-if="props.body">
+                    <p class="body"><t t-esc=" props.body || '' " /></p>
+                </t>
+                <div class="session_form">
+                    <h1>Session : <t t-esc="props.session.name"/></h1>
+                    <table class="session-group">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="session-group text1">
+                                        <tbody>
+                                            <tr><td>Responsible : </td>
+                                                <td><t t-esc="props.session.user_id[1]" /></td></tr>
+                                            <tr><td>Point of Sale : </td>
+                                                <td><t t-esc="props.session.config_id[1]" /></td></tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="session-group text2">
+                                        <tbody>
+                                            <tr>
+                                                <td>Opening Date :</td>
+                                                <td><t t-esc="props.session.start_at"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>State :</td>
+                                                <td><t t-esc="props.session.state"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color:red; font-weight: 900">Actual in Cash:</td>
+                                                <td style="color:red; font-weight: 900"><t t-esc="env.pos.format_currency(props.session.cash_register_balance_end_real)" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <t t-if="props.session.cash_control == true">
+                                <tr>
+                                    <td>
+                                       <table class="session-group text3">
+                                           <tbody>
+                                               <tr><td>Opening Balance :</td>
+                                                   <td style="font-weight: 900;"><t t-esc="env.pos.format_currency(props.session.cash_register_balance_start)" /></td></tr>
+                                               <tr><td>+ Transactions  Total:</td>
+                                                   <td style="font-weight: 900;"><t t-esc="env.pos.format_currency(props.session.cash_register_total_entry_encoding)" /></td></tr>
+                                               <tr><td>= Theoretical Closing Balance : </td>
+                                                   <td style="font-weight: 900;"><t t-esc="env.pos.format_currency(props.session.cash_register_balance_end)" /></td></tr>
+                                           </tbody>
+                                       </table>
+                                    </td>
+                                    <td>
+                                        <table class="session-group text4">
+                                            <tbody>
+                                                <t t-if="props.session.is_admin ==1">
+                                                    <tr><td> Real Closing Balance :</td>
+                                                        <td style="font-weight: 900;"><t t-esc="env.pos.format_currency(props.session.cash_register_balance_end_real)" /></td></tr>
+                                                </t>
+                                           </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <t t-if="props.session.is_admin ==1">
+                                            <table class="session-group text5">
+                                                <tbody>
+                                                    <tr><td> Difference :</td>
+                                                        <td><t t-esc="env.pos.format_currency(props.session.cash_register_difference)" /></td></tr>
+                                                </tbody>
+                                            </table>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <t t-if="props.session.cash_control !== true">
+                    <p class="body">Your pos config have not set cash control, please set cash control and close/reopen session</p>
+                </t>
+                <div class="footer" style="padding-top:20px">
+                    <t t-if="props.session.cash_control == true">
+                        <span t-attf-class="btn btn-danger #{ props.session.state !='closing_control'  ? 'display-hide' : '' }"
+                              t-on-click="closeSession">
+                            Close Session
+                        </span>
+                        <span class="btn btn-warning session-button" t-on-click="putMoneyIn">
+                            <i class='fa fa-level-down'/>
+                            Put Money In
+                        </span>
+                        <span class="btn btn-warning session-button" t-on-click="takeMoneyOut">
+                            <i class='fa fa-level-up'/>
+                            Take Money Out
+                        </span>
+                        <span class="btn btn-warning session-button" t-on-click="setClosingBalance">
+                            <i class='fa fa-money'/>
+                            Set Closing Balance
+                        </span>
+                        <span class="btn btn-default session-button" t-on-click="cancel">
+                            <i class='fa fa-money'/>
+                            Close
+                        </span>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

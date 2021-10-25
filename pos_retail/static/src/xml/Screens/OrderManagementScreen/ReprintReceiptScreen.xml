@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReprintReceiptScreen" t-inherit="point_of_sale.ReprintReceiptScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('button')]" position="inside">
+            <i class="fa fa-keyboard-o"/> (ESC)
+        </xpath>
+        <xpath expr="//div[hasclass('print')]" position="inside">
+            <i class="fa fa-keyboard-o"/> (b)
+        </xpath>
+        <xpath expr="//div[hasclass('print')]" position="after">
+            <div class="button download" t-on-click="sendReceiptViaWhatsApp" t-if="env.pos.config.whatsapp_api and env.pos.config.whatsapp_token">
+                <i class="fa fa-whatsapp"></i> Send Receipt direct WhatsApp <i class="fa fa-keyboard-o"/> (m)
+            </div>
+        </xpath>
+    </t>
+
+</templates>
+

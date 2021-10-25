@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <template id="customer_facing_display_html" name="pos_retail customer_facing_display_html"
+              inherit_id="point_of_sale.customer_facing_display_html">
+        <xpath expr="//div[hasclass('pos-total')]" position="before">
+            <div class="pos-total" style="border-bottom: 2px solid black">
+                <span id="client-name" class="client-name">Guest</span>
+            </div>
+            <div class="pos-total">
+                <div>
+                    <span class="client">Points</span>
+                </div>
+                <div>
+                    <span id="client-points" class="client-points">0.00</span>
+                </div>
+            </div>
+            <div class="pos-total">
+                <div>
+                    <span class="total-discount-formatting">DISC</span>
+                </div>
+                <div>
+                    <span id="total-discount" class="pos_total-discount">$ 00.00</span>
+                </div>
+            </div>
+            <div class="pos-total">
+                <div>
+                    <span class="total-taxes">TAXES</span>
+                </div>
+                <div>
+                    <span id="total-taxes" class="pos_total-taxes">$ 00.00</span>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('pos_orderlines_header')]" position="inside">
+            <div>Taxes</div>
+            <div>Disc</div>
+        </xpath>
+    </template>
+
+</odoo>

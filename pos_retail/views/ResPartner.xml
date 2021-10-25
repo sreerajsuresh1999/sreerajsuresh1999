@@ -1,0 +1,136 @@
+<odoo>
+    <data>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="add_barcode"
+                                string="Add Barcode"
+                                type="object"
+                                groups="point_of_sale.group_pos_manager"
+                                confirm="Auto create new barcode and replace old barcode of this customer, Are you want to do ?"/>
+                    </header>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="before">
+                    <page string="Point of sale" name="pos" groups="point_of_sale.group_pos_manager">
+                        <group>
+                            <group string="Special Name">
+                                <field name="special_name" nolabel="1"/>
+                            </group>
+                            <group string="Branch" groups="pos_retail.group_branch_manager">
+                                <field name="pos_branch_id" nolabel="1"/>
+                            </group>
+                            <group string="Type">
+                                <field name="pos_partner_type_id"/>
+                                <field name="pos_total_amount"/>
+                            </group>
+                            <group string="Promotion">
+                                <field name="birthday_date"/>
+                                <field name="group_ids" widget="many2many_tags"/>
+                            </group>
+                            <group string="Loyalty">
+                                <field name="pos_loyalty_point_import"/>
+                                <field name="pos_loyalty_point"/>
+                                <field name="pos_loyalty_type"/>
+                                <field name="pos_loyalty_point_ids" nolabel="1" colspan="4">
+                                    <tree string="Point Histories" editable="bottom">
+                                        <field name="create_uid"/>
+                                        <field name="create_date"/>
+                                        <field name="point"/>
+                                        <field name="type"/>
+                                        <field name="end_date"/>
+                                        <field name="state"/>
+                                        <field name="is_return"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="wallet"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Credit Histories">
+                                <field name="limit_debit"/>
+                                <field name="credit"/>
+                                <field name="debit"/>
+                                <field name="balance"/>
+                            </group>
+                            <group>
+                                <field name="discount_id"/>
+                            </group>
+                        </group>
+                        <group string="Transactions Histories">
+                            <field name="credit_history_ids" readonly="1" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="pos_partner_type_id"/>
+                    <field name="pos_branch_id" groups="pos_retail.group_branch_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="pos_partner_type_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='salesperson']" position="before">
+                    <filter name="pos_partner_type_id" string="Type" context="{'group_by': 'pos_partner_type_id'}"/>
+                    <filter name="pos_branch_id" string="Branch" context="{'group_by': 'pos_branch_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_member" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="display_name" string="Name"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                    <field name="email"/>
+                    <field name="wallet"/>
+                    <field name="pos_loyalty_point"/>
+                    <field name="pos_loyalty_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_partner_property_form" model="ir.ui.view">
+            <field name="name">res.partner.pos.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="point_of_sale.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="replace">
+                    <label for="barcode"/>
+                    <div class="o_row">
+                        <field name="barcode"/>
+                        <button string="Generate Barcode" class="btn btn-link" type="object" name="add_barcode" attrs="{'invisible': [('barcode', '!=', False)]}"/>
+                        <button name="%(res_partner_card_badge)d" string="Print Customer Card" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SearchBar" t-inherit="point_of_sale.SearchBar" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('search-icon')]" position="after">
+            <span class="clear-icon"
+                  t-if="props.displayClearSearch"
+                  t-on-click="clearInput"><i aria-hidden="true" class="fa fa-times"></i></span>
+        </xpath>
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-on-keyup">onKeyup</attribute>
+            <attribute name="t-on-blur">_onBlur</attribute>
+            <attribute name="t-on-click">_onClick</attribute>
+        </xpath>
+    </t>
+
+</templates>

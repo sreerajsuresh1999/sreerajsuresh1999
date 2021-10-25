@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductCheckOut" owl="1">
+        <div class="checkout">
+            <ActionpadWidget t-if="state.showButtons"/>
+            <ListFeaturesButtons controlButtons="props.controlButtons" t-if="state.showButtons"/>
+            <div class="right-checkout">
+                <button class="button open-cart"
+                        t-if="!env.isMobile and !props.openCart"
+                        style="border-radius: 3px"
+                        t-on-click="trigger('open-cart')">
+                    <span class="with-badge cart-list" t-att-badge="state.totalQuantities">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"/>
+                    </span>
+                </button>
+                <button class="button show-buttons"
+                        t-att-class="{highlight: state.showButtons}"
+                        t-on-click="trigger('show-buttons')">
+                    <t t-if="!state.showButtons">
+                        <i class="fa fa-th"/>
+                    </t>
+                    <t t-else="">
+                        <i class="fa fa-angle-double-down"/>
+                    </t>
+                </button>
+                <div class="pos-search-bar quickly-search-customer">
+                    <div class="search" style="display: inline-block;position: relative;width: 100%;">
+                        <span t-att-badge="state.countCustomers" class="with-badge search-icon"
+                              style="top: 13px; left: 10px"><i class="fa fa-search"></i></span>
+                        <span class="clear-icon"
+                              t-on-click="trigger('remove-selected-customer')">
+                            <i aria-hidden="true" class="fa fa-user-times"/>
+                        </span>
+                        <input type="text"
+                               t-on-keydown="onKeydown"
+                               t-model="state.inputCustomer"
+                               placeholder="Search Customers ..." class="search-customer-direct"/>
+                        <span class="with-badge cart-list"
+                              style="color: blue;cursor: pointer;"
+                              t-if="state.countCustomers &gt; 0 and state.countCustomers &lt; 10"
+                              t-on-click="onKeydown({'key': 'Enter'})">
+                            Click Me / Enter
+                            <i class="fa fa-user" aria-hidden="true"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="rightpane-header-extend" t-if="!state.activeExtendFilter">
+                    <span class="breadcrumb right_button"
+                          title="Total Products Displayed Screen"
+                          t-on-click="setLimitedProductsDisplayed">
+                        <i class="fa fa-laptop"/>
+                    </span>
+                    <span class="breadcrumb right_button"
+                          t-on-click="addCategory"
+                          title="Add New Category"
+                          t-if="env.pos.config.create_category_direct">
+                        <i class="fa fa-plus"/>
+                    </span>
+                    <span class="breadcrumb right_button"
+                          t-on-click="addProduct"
+                          title="Add new Product"
+                          t-if="env.pos.config.create_product_direct">
+                        <i class="fa fa-plus"/>
+                    </span>
+                    <span class="breadcrumb right_button"
+                          title="UpdateTheme"
+                          t-on-click="UpdateTheme">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </span>
+                    <span class="breadcrumb right_button"
+                          t-if="env.pos.config.update_client"
+                          title="Add new Customer"
+                          t-on-click="adNewCustomer">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <!--                    <span class="breadcrumb right_button"-->
+                    <!--                          title="Show Keyboard Shortcut Key"-->
+                    <!--                          t-att-class="{highlight: isActiveShowGuideKeyboard}"-->
+                    <!--                          t-on-click="showKeyBoardGuide">-->
+                    <!--                        <i class="fa fa-keyboard-o"/>-->
+                    <!--                    </span>-->
+                    <span class="breadcrumb right_button"
+                          title="Sort by Best Selling Products"
+                          t-on-click="getProductsTopSelling">
+                        <i class="fa fa-certificate"/>
+                    </span>
+                    <span class="breadcrumb right_button"
+                          title="Set Products View"
+                          t-on-click="setProductsView">
+                        <t t-if="env.pos.config.product_view == 'box'">
+                            <i class="fa fa-list"/>
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-th"/>
+                        </t>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

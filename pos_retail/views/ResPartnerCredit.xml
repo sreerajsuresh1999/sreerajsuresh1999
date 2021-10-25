@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="res_partner_credit_form" model="ir.ui.view">
+            <field name="name">res.partner.credit.form</field>
+            <field name="model">res.partner.credit</field>
+            <field name="arch" type="xml">
+                <form string="Customer credit">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="amount"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="pos_order_id"/>
+                                <field name="payment_id"/>
+                                <field name="move_id"/>
+                                <field name="create_date" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_partner_credit_tree" model="ir.ui.view">
+            <field name="name">res.partner.credit.tree</field>
+            <field name="model">res.partner.credit</field>
+            <field name="arch" type="xml">
+                <tree string="Customer credit">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="amount"/>
+                    <field name="active"/>
+                    <field name="partner_id"/>
+                    <field name="pos_order_id"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_partner_credit_search" model="ir.ui.view">
+            <field name="name">res.partner.credit.search</field>
+            <field name="model">res.partner.credit</field>
+            <field name="arch" type="xml">
+                <search string="Customer credit">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="amount"/>
+                    <field name="partner_id"/>
+                    <field name="create_date"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="res_partner_credit_action">
+            <field name="name">Credits</field>
+            <field name="res_model">res.partner.credit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_res_partner_credit_action"
+            action="res_partner_credit_action"
+            parent="menu_clients"
+            sequence="4"
+        />
+
+    </data>
+</odoo>

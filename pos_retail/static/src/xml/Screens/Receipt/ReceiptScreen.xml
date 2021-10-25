@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReceiptScreen" t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('buttons')]" position="inside">
+            <div class="button download" t-on-click="downloadInvoice"
+                 t-if="env.pos.config.receipt_manual_download_invoice">
+                <i class="fa fa-download"></i>
+                Download Invoice
+            </div>
+            <div class="button download" t-on-click="downloadDeliveryReport"
+                 t-if="env.pos.config.print_delivery_report">
+                <i class="fa fa-download"></i>
+                Download Delivery Report
+            </div>
+            <div class="button download" t-on-click="downloaOrderReport" t-if="env.pos.config.print_order_report">
+                <i class="fa fa-download"></i>
+                Download Order Report
+            </div>
+            <div class="button download" t-on-click="sendReceiptViaWhatsApp"
+                 t-if="env.pos.config.whatsapp_api and env.pos.config.whatsapp_token">
+                <i class="fa fa-whatsapp"></i>
+                Send Receipt direct WhatsApp
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('next')]" position="inside">
+            <span class="shortcut-keyboard" t-if="!env.isMobile" style="color: #fff">
+                <i class="fa fa-keyboard-o"/>
+                <i class="fa fa-arrow-right"/>
+            </span>
+        </xpath>
+        <xpath expr="//div[hasclass('print')]" position="inside">
+            <span class="shortcut-keyboard" t-if="!env.isMobile">
+                <i class="fa fa-keyboard-o"/>P
+            </span>
+        </xpath>
+        <xpath expr="//div[hasclass('top-content-center')]" position="replace">
+            <div class="top-content-center">
+                <h1 t-if="!env.isMobile">
+                    Total Paid Plus Tip: <t t-esc="orderAmountPlusTip"/>
+                </h1>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

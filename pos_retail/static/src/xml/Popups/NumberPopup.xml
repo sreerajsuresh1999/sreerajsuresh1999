@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NumberPopup" t-inherit="point_of_sale.NumberPopup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('popup-input')]" position="before">
+            <div t-if="props.allowScanBarcode" style="margin-bottom: 10px">
+                <span class="login-element" style="float: unset">
+                    <img src="/point_of_sale/static/img/barcode.png" class="login-barcode-img" style="width: 150px;height: 50px;"/>
+                    <div class="login-barcode-text">Scan Badge ID of your Manager for Validate or request Manager Full Fill POS Pass Pin bellow</div>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('confirm')]" position="replace">
+            <div t-if="props.allowScanBarcode" style="margin-bottom: 10px">
+                <div class="button confirm"
+                     t-if="!props.disableButtonConfirm"
+                     t-on-mousedown.prevent="confirm">
+                    <t t-esc="props.confirmText" />
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
+

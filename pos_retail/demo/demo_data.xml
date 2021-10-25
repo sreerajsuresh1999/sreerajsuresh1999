@@ -1,0 +1,49 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="quickly_payment_000" model="pos.quickly.payment">
+            <field name="name">10 USD</field>
+            <field name="amount">10</field>
+        </record>
+
+        <record id="quickly_payment_001" model="pos.quickly.payment">
+            <field name="name">20 USD</field>
+            <field name="amount">20</field>
+        </record>
+
+        <record id="quickly_payment_01" model="pos.quickly.payment">
+            <field name="name">50 USD</field>
+            <field name="amount">50</field>
+        </record>
+
+        <record id="quickly_payment_02" model="pos.quickly.payment">
+            <field name="name">100 USD</field>
+            <field name="amount">100</field>
+        </record>
+
+        <record id="pos_tag1" model="pos.tag">
+            <field name="name">Tag 1</field>
+        </record>
+
+        <record id="pos_tag2" model="pos.tag">
+            <field name="name">Tag 2</field>
+        </record>
+
+        <record id="pos_tag3" model="pos.tag">
+            <field name="name">Tag 3</field>
+        </record>
+
+        <record id="pos_note1" model="pos.note">
+            <field name="name">Note 1</field>
+        </record>
+
+        <record id="pos_note3" model="pos.note">
+            <field name="name">Note 2</field>
+        </record>
+
+        <record id="pos_note3" model="pos.note">
+            <field name="name">Note 3</field>
+        </record>
+
+    </data>
+</odoo>

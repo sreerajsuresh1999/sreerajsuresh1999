@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('rightpane')]" position="replace"/>
+        <xpath expr="//div[hasclass('leftpane')]" position="replace">
+            <t t-if="env.session.config.cart_box_style == 'left'">
+                <div class="leftpane left_01" t-if="!env.isMobile || mobile_pane === 'left' || state.cashControl"
+                     t-att-class="{
+                        'scale-mode': state.screen != 'Products',
+                        'oe_hidden': !state.openCart and !state.cashControl
+                     }">
+                    <t t-if="state.cashControl">
+                        <CashBoxOpening cashControl="state"/>
+                    </t>
+                    <t t-else="">
+                        <div id="livestream_scanner" t-if="env.isMobile">
+                            <div id="interactive" class="viewport"></div>
+                            <div class="camera_error"></div>
+                        </div>
+                        <OrderWidget t-on-click="backToCart"/>
+                        <div class="subpads" t-if="state.screen == 'Products' or env.isMobile">
+                            <NumpadWidget activeMode="state.numpadMode"/>
+                            <button class="button set-customer"
+                                    t-att-class="{
+                                        'decentered': isLongName,
+                                        'oe_hidden': env.session.restaurant_order or !env.pos.config.allow_customer,
+                                        'highlight': isCustomerSet
+                                    }"
+                                    style="border-radius: 3px"
+                                    t-on-click="trigger('click-customer')">
+                                <i class="fa fa-user" role="img" aria-label="Customer" title="Customer" style="float: left"/>
+                                <span> </span>
+                                <t t-if="client">
+                                    <t t-esc="client.name"/>
+                                    <t t-if="!env.isMobile">
+                                        <span class="shortcut-keyboard">
+                                            <i class="fa fa-keyboard-o"/>
+                                            C
+                                        </span>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    Customers Screen
+                                    <t t-if="!env.isMobile">
+                                        <span class="shortcut-keyboard">
+                                            <i class="fa fa-keyboard-o"/>
+                                            C
+                                        </span>
+                                    </t>
+                                </t>
+                                <i t-if="client and env.pos.config.update_client"
+                                   class="fa fa-edit" role="img"
+                                   aria-label="Customer" title="Customer"
+                                   t-on-click.stop="editCustomer(client)"
+                                   style="float: right"/>
+                            </button>
+                            <button class="button pay total-value"
+                                    t-att-class="payButtonClasses"
+                                    t-on-click="trigger('click-pay')">
+                                <t t-if="!env.pos.session.restaurant_order">
+                                    <t t-if="payButtonClasses['warning']">
+                                        RETURN
+                                    </t>
+                                    <t t-else="">
+                                        PAID
+                                    </t>
+                                    <span class="total-value">
+                                        <t t-esc="state.total"/>
+                                    </span>
+                                    <span class="shortcut-keyboard" t-if="!env.isMobile" style="color: #fff">
+                                        <i class="fa fa-keyboard-o"/>
+                                        <i class="fa fa-arrow-right"/>
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <i class="fa fa-check"/>
+                                    PLACE
+                                </t>
+                            </button>
+                        </div>
+                        <div class="pads" t-if="state.screen == 'Products' or env.isMobile">
+                            <button class="button footer-cart-button"
+                                    t-on-click="trigger('open-cart')">
+                                <i class="fa fa-angle-double-down" aria-hidden="true"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    id="stop_camera"
+                                    t-att-class="{
+                                        'highlight': cameraOpen
+                                    }"
+                                    t-on-click="trigger('open-camera')">
+                                <i class="fa fa-camera" aria-hidden="true"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-if="state.screen == 'Products' and env.pos.config.custom_sale and env.pos.config.custom_sale_product_id"
+                                    t-on-click="addCustomSale">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-on-click="trigger('remove-selected-order')">
+                                <i class="fa fa-trash"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-on-click="env.pos.add_new_order()">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button class="button pay total-value highlight"
+                                    t-if="!env.pos.session.restaurant_order and !env.isMobile and env.pos.config.allow_payment and state.screen != 'Products'"
+                                    style="text-align: center; padding: 0px !important; border-radius: 3px; width: 100% !important; font-size: 30px; border-top"
+                                    t-on-click="backToCart">
+                                <i class="fa fa-angle-double-left fa-fw"/>
+                                BACK to CART
+                            </button>
+                        </div>
+                        <t t-if="env.isMobile">
+                            <MobileOrderWidget pane="mobile_pane" t-on-switchpane="switchPane"/>
+                        </t>
+                    </t>
+                </div>
+                <div class="rightpane"
+                     t-if="(!env.isMobile || mobile_pane === 'right') and !state.cashControl"
+                     t-att-class="{
+                        'oe_hidden': state.cashControl
+                     }">
+                    <t t-if="state.screen == 'Products'">
+                        <ProductsWidget t-if="!state.cashControl"/>
+                        <t t-if="env.isMobile">
+                            <MobileOrderWidget pane="mobile_pane" t-on-switchpane="switchPane"/>
+                        </t>
+                        <div class="placeholder-Base"/>
+                        <div class="block-screen" t-if="blockScreen">
+                            Return Mode is [On], Locked add products to cart. If you wanted Exchange cart, Please Click to button [Return Mode] on Dock Buttons (Buttom of Page)
+                        </div>
+                        <ProductCheckOut t-if="state.displayCheckout and env.pos.showFullFeatures"
+                                         openCart="state.openCart" controlButtons="controlButtons" client="client"/>
+                    </t>
+                    <t t-if="state.screen == 'Payment'">
+                        <PaymentScreen isShown="true" singleScreen="true"/>
+                    </t>
+                    <t t-if="state.screen == 'Clients'">
+                        <ClientListScreen isShown="true" singleScreen="true"/>
+                    </t>
+                    <t t-if="state.screen == 'Receipt'">
+                        <ReprintReceiptScreen isShown="true" singleScreen="true" order="env.pos.get_order()"/>
+                    </t>
+                    <t t-if="state.screen == 'Floors'">
+                        <FloorScreen/>
+                    </t>
+                    <t t-if="state.screen == 'Split'">
+                        <SplitBillScreen/>
+                    </t>
+                    <t t-if="state.screen == 'Tickets'">
+                        <TicketScreen/>
+                    </t>
+                    <div class="placeholder-Base"/>
+                    <div id="livestream_scanner" t-if="!env.isMobile">
+                        <div id="interactive" class="viewport"></div>
+                        <div class="camera_error"></div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="rightpane"
+                     t-if="!env.isMobile || mobile_pane === 'right' || state.cashControl"
+                     t-att-class="{
+                        'oe_hidden': state.cashControl
+                     }">
+                    <!-- single screen -->
+                    <t t-if="state.screen == 'Products'">
+                        <ProductsWidget t-if="!state.cashControl"/>
+                        <t t-if="env.isMobile">
+                            <MobileOrderWidget pane="mobile_pane" t-on-switchpane="switchPane"/>
+                        </t>
+                        <div class="placeholder-Base"/>
+                        <div class="block-screen" t-if="blockScreen">
+                            Return Mode is [On], Locked add products to cart. If you wanted Exchange cart, Please Click to button [Return Mode] on Dock Buttons (Buttom of Page)
+                        </div>
+                        <ProductCheckOut t-if="state.displayCheckout and env.pos.showFullFeatures"
+                                         openCart="state.openCart" controlButtons="controlButtons" client="client"/>
+                    </t>
+                    <t t-if="state.screen == 'Payment'">
+                        <PaymentScreen isShown="true" singleScreen="true"/>
+                    </t>
+                    <t t-if="state.screen == 'Clients'">
+                        <ClientListScreen isShown="true" singleScreen="true"/>
+                    </t>
+                    <t t-if="state.screen == 'Receipt'">
+                        <ReprintReceiptScreen isShown="true" singleScreen="true" order="env.pos.get_order()"/>
+                    </t>
+                    <t t-if="state.screen == 'Floors'">
+                        <FloorScreen/>
+                    </t>
+                    <t t-if="state.screen == 'Split'">
+                        <SplitBillScreen/>
+                    </t>
+                    <t t-if="state.screen == 'Tickets'">
+                        <TicketScreen/>
+                    </t>
+                    <div class="placeholder-Base"/>
+                    <div id="livestream_scanner" t-if="!env.isMobile">
+                        <div id="interactive" class="viewport"></div>
+                        <div class="camera_error"></div>
+                    </div>
+                </div>
+                <div class="leftpane left_02" t-if="!env.isMobile || mobile_pane === 'left' || state.cashControl"
+                     t-att-class="{
+                        'scale-mode': state.screen != 'Products',
+                        'oe_hidden': !state.openCart and !state.cashControl
+                     }">
+                    <t t-if="state.cashControl">
+                        <CashBoxOpening cashControl="state"/>
+                    </t>
+                    <t t-else="">
+                        <div id="livestream_scanner" t-if="env.isMobile">
+                            <div id="interactive" class="viewport"></div>
+                            <div class="camera_error"></div>
+                        </div>
+                        <OrderWidget t-on-click="backToCart"/>
+                        <div class="subpads" t-if="state.screen == 'Products' or env.isMobile">
+                            <NumpadWidget activeMode="state.numpadMode"/>
+                            <button class="button set-customer"
+                                    t-att-class="{
+                                        'decentered': isLongName,
+                                        'oe_hidden': env.session.restaurant_order or !env.pos.config.allow_customer,
+                                        'highlight': isCustomerSet
+                                    }"
+                                    style="border-radius: 3px"
+                                    t-on-click="trigger('click-customer')">
+                                <i class="fa fa-user" role="img" aria-label="Customer" title="Customer"/>
+                                <span> </span>
+                                <t t-if="client">
+                                    <t t-esc="client.name"/>
+                                    <t t-if="!env.isMobile">
+                                        <span class="shortcut-keyboard">
+                                            <i class="fa fa-keyboard-o"/>
+                                            C
+                                        </span>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    Customers Screen
+                                    <t t-if="!env.isMobile">
+                                        <span class="shortcut-keyboard">
+                                            <i class="fa fa-keyboard-o"/>
+                                            C
+                                        </span>
+                                    </t>
+                                </t>
+                            </button>
+                            <button class="button pay total-value"
+                                    t-att-class="payButtonClasses"
+                                    t-on-click="trigger('click-pay')">
+                                <t t-if="!env.pos.session.restaurant_order">
+                                    <t t-if="payButtonClasses['warning']">
+                                        RETURN
+                                    </t>
+                                    <t t-else="">
+                                        PAID
+                                    </t>
+                                    <span class="total-value">
+                                        <t t-esc="state.total"/>
+                                    </span>
+                                    <span class="shortcut-keyboard" t-if="!env.isMobile" style="color: #fff">
+                                        <i class="fa fa-keyboard-o"/>
+                                        <i class="fa fa-arrow-right"/>
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <i class="fa fa-check"/>
+                                    PLACE
+                                </t>
+                            </button>
+                        </div>
+                        <div class="pads" t-if="state.screen == 'Products' or env.isMobile">
+                            <button class="button footer-cart-button"
+                                    t-on-click="trigger('open-cart')">
+                                <i class="fa fa-angle-double-down" aria-hidden="true"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    id="stop_camera"
+                                    t-att-class="{
+                                        'highlight': cameraOpen
+                                    }"
+                                    t-on-click="trigger('open-camera')">
+                                <i class="fa fa-camera" aria-hidden="true"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-if="state.screen == 'Products' and env.pos.config.custom_sale and env.pos.config.custom_sale_product_id"
+                                    t-on-click="addCustomSale">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-on-click="trigger('remove-selected-order')">
+                                <i class="fa fa-trash"/>
+                            </button>
+                            <button class="button footer-cart-button"
+                                    t-on-click="env.pos.add_new_order()">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button class="button pay total-value highlight"
+                                    t-if="!env.pos.session.restaurant_order and !env.isMobile and env.pos.config.allow_payment and state.screen != 'Products'"
+                                    style="text-align: center; padding: 0px !important; border-radius: 3px; width: 100% !important; font-size: 30px; border-top"
+                                    t-on-click="backToCart">
+                                <i class="fa fa-angle-double-left fa-fw"/>
+                                BACK to CART
+                            </button>
+                        </div>
+                        <t t-if="env.isMobile">
+                            <MobileOrderWidget pane="mobile_pane" t-on-switchpane="switchPane"/>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('screen-full-width')]" position="attributes">
+            <attribute name="t-att-class">{ 'display-list-features-button': allowDisplayListFeaturesButton}</attribute>
+        </xpath>
+    </t>
+
+</templates>

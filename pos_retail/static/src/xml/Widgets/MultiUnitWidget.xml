@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="MultiUnitWidget" owl="1">
+        <div class="categories uom-list">
+            <div class="category-list-scroller touch-scrollable">
+                <div class="category-list">
+                    <t t-foreach="UomItems" t-as="uom_item">
+                        <span class="category-simple-button js-category-switch service" t-att-id="uom_item.uom_id[0]">
+                            <t t-esc="uom_item.uom_id[1]"/>
+                        </span>
+                    </t>
+                    <span class="category-simple-button js-category-switch numpad-backspace">
+                        <img src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" alt="Backspace"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_epson_tree" model="ir.ui.view">
+            <field name="name">pos.epson.tree</field>
+            <field name="model">pos.epson</field>
+            <field name="arch" type="xml">
+                <tree string="Epson Printer">
+                    <field name="name"/>
+                    <field name="ip"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_epson_form" model="ir.ui.view">
+            <field name="name">pos.epson.form</field>
+            <field name="model">pos.epson</field>
+            <field name="arch" type="xml">
+                <form string="Epson Printer">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="ip"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_epson">
+            <field name="name">Epson Printers</field>
+            <field name="res_model">pos.epson</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_epson"
+                  parent="pos_retail.menu_master_data"
+                  sequence="100"
+                  action="action_pos_epson"
+        />
+
+    </data>
+</odoo>

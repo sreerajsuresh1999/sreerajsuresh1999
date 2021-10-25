@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ButtonSetDoneLines" owl="1">
+        <div class="control-button" t-att-class="addedClasses">
+            <span class="with-badge" t-att-badge="countItemsNeedDelivery">
+                <i class="fa fa-cutlery" aria-hidden="true"></i>
+            </span>
+            <span>KOT Waiting Delivery</span>
+        </div>
+    </t>
+
+</templates>

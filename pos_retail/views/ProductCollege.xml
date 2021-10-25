@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_college_form" model="ir.ui.view">
+            <field name="name">product.college.form</field>
+            <field name="model">product.college</field>
+            <field name="arch" type="xml">
+                <form string="College">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_college_tree" model="ir.ui.view">
+            <field name="name">product.college.tree</field>
+            <field name="model">product.college</field>
+            <field name="arch" type="xml">
+                <tree string="Product College">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_college_search" model="ir.ui.view">
+            <field name="name">product.college.search</field>
+            <field name="model">product.college</field>
+            <field name="arch" type="xml">
+                <search string="Product College">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="product_college_action">
+            <field name="name">Product College</field>
+            <field name="res_model">product.college</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_college"
+                  action="product_college_action"
+                  parent="menu_product_operation"
+                  sequence="9"
+        />
+
+    </data>
+</odoo>

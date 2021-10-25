@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_iot_form" model="ir.ui.view">
+            <field name="name">pos.iot.form</field>
+            <field name="model">pos.iot</field>
+            <field name="arch" type="xml">
+                <form string="IoT Box">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group name="iot_box">
+                            <group>
+                                <field name="prefix"/>
+                                <field name="proxy"/>
+                                <field name="port"/>
+                            </group>
+                        </group>
+                        <group name="kitchen" attrs="{'invisible': 1}">
+                            <group>
+                                <field name="screen_kitchen"/>
+                            </group>
+                            <group attrs="{'invisible': [('screen_kitchen', '=', False)]}">
+                                <field name="login_kitchen" attrs="{'required': [('screen_kitchen', '=', True)]}"/>
+                                <field name="password_kitchen" attrs="{'required': [('screen_kitchen', '=', True)]}"/>
+                                <field name="odoo_public_proxy" attrs="{'required': [('screen_kitchen', '=', True)]}"/>
+                                <field name="database" attrs="{'required': [('screen_kitchen', '=', True)]}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('screen_kitchen', '=', False)]}"
+                               string="Products Allow Sync">
+                            <field name="product_ids" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_iot_tree" model="ir.ui.view">
+            <field name="name">pos.iot.tree</field>
+            <field name="model">pos.iot</field>
+            <field name="arch" type="xml">
+                <tree string="IoT Boxes">
+                    <field name="name"/>
+                    <field name="proxy"/>
+                    <field name="port"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_iot_search" model="ir.ui.view">
+            <field name="name">pos.iot.filter</field>
+            <field name="model">pos.iot</field>
+            <field name="arch" type="xml">
+                <search string="IoT Boxes">
+                    <field name="name"/>
+                    <field name="proxy"/>
+                    <field name="port"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_iot">
+            <field name="name">IoT Boxes</field>
+            <field name="res_model">pos.iot</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_iot"
+                  action="action_pos_iot"
+                  parent="menu_master_data"
+                  sequence="11"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="giftCardExchangePopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <div class="giftcard-exchange-popup">
+                        <div>Current Card No :</div>
+                        <div>
+                            <t t-esc="props.selectedCard.card_no"/>
+                        </div>
+                    </div>
+                    <div class="giftcard-exchange-popup">
+                        <div>New Card No :</div>
+                        <div>
+                           <input type="text" t-model="state.NewCardNumber" t-ref="NewCardNumber"
+                                  placeholder="Enter New Card Number" id="new_card_no" name="points"
+                                  t-on-keydown="onInputKeyDownNumberVlidation"/>
+                        </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

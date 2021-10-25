@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="account_journal_pos_retail">
+            <field name="name">account.journal.pos.retail</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='advanced_settings']" position="before">
+                    <page string="Point Of Sale" name="pos">
+                        <group>
+                            <field name="pos_method_type"/>
+                            <field name="decimal_rounding"
+                                   attrs="{'invisible': [('pos_method_type', '!=', 'rounding')]}"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

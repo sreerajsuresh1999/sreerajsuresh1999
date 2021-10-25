@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="metrc_log_tree" model="ir.ui.view">
+        <field name="name">metrc.log.form</field>
+        <field name="model">metrc.log</field>
+        <field name="arch" type="xml">
+            <tree string="Logs" create="false">
+                <field name="create_date"/>
+                <field name="res_name"/>
+                <field name="res_model"/>
+                <field name="operation"/>
+                <field name="full_url"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="metrc_log_form" model="ir.ui.view">
+        <field name="name">metrc.log.form</field>
+        <field name="model">metrc.log</field>
+        <field name="arch" type="xml">
+            <form string="Log" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="create_date"/>
+                        <field name="res_name"/>
+                        <field name="res_model"/>
+                        <field name="operation"/>
+                        <field name="full_url"/>
+                        <field name="data"/>
+                        <field name="response"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

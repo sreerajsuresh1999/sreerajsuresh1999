@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="TakeAwayButton" owl="1">
+        <span class="control-button" t-att-class="addedClasses">
+            <t t-if="countItemsNeedPrint">
+                <span class="with-badge" t-att-badge="countItemsNeedPrint">
+                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                </span>
+            </t>
+            <span>Take Away</span>
+        </span>
+    </t>
+
+</templates>

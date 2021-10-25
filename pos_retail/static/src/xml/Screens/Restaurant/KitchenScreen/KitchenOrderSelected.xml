@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="KitchenOrderSelected" owl="1">
+        <div class="kitchen-box full_box">
+            <div class="ribbon">
+                <span class="kitchen_box_state" t-att-class="props.order.state">
+                    <t t-esc="props.order.state"/>
+                </span>
+            </div>
+            <div class="pos-receipt-title product-name">
+                <t t-esc="props.order.name"/>
+                <t t-if="props.order.floor and props.order.table">
+                    :
+                    <t t-esc="props.order.floor"/>
+                    /
+                    <t t-esc="props.order.table"/>
+                </t>
+            </div>
+            <div class="pos-receipt-title product-name" t-if="props.order.priority">
+                <span class="warning_box" t-if="props.order.priority">High Priority</span>
+            </div>
+            <div class="pos-receipt-title">
+                Total Items : <span class="notification"><t t-esc="props.order.total_items"/></span>
+            </div>
+            <div class="pos-receipt-title">
+                Ready Transfer Items : <span class="ready_notification"><t t-esc="props.order.ready_transfer_items"/></span>
+            </div>
+            <div class="buttons">
+                <span class="btn" t-on-click="openOrder" t-if="env.pos.config.screen_type != 'kitchen'">
+                    <i class="fa fa-shopping-cart"/> View Cart
+                </span>
+                <span class="btn highlight"
+                        t-on-click="trigger('click-deliveryAll', {order: props.order})"
+                        t-if="env.pos.config.screen_type == 'kitchen' and props.order.state != 'Done'">
+                    <i class="fa fa-cutlery "/>
+                    <t> Delivery All Items</t>
+                </span>
+                <span class="btn" t-on-click="printOrder">
+                    <i class="fa fa-print "/>
+                    Print KOT
+                </span>
+                <span class="btn"
+                        t-att-class="{oe_hidden: isHiddenTransferItems, highlight: needTransfer}"
+                        t-on-click="trigger('click-transferItems', {order: props.order})"
+                        t-if="env.pos.config.screen_type != 'kitchen' and !['Removed', 'Paid'].includes(props.order.state)">
+                    <i class="fa fa-cutlery"/>
+                    Transfer Items
+                </span>
+                <span class="btn" t-on-click="trigger('click-setPriority', {order: props.order})"
+                        t-att-class="{oe_hidden: invisiblePriority, highlight: isPriority}">
+                    <i class="fa fa-bell-o"/>
+                    Priority
+                </span>
+                <span class="btn" t-on-click="sync">
+                    <i class="fa fa-refresh"/>
+                    ReSend
+                </span>
+            </div>
+            <div class="card-content subwindow-container-fix scrollable-y" style="height: 70%">
+                <div class="summary clearfix">
+                    <table class='summary-table'>
+                        <colgroup>
+                            <col width='10%'/>
+                            <col width='10%'/>
+                            <col width='70%'/>
+                            <col width='10%'/>
+                        </colgroup>
+                        <tr class="header-colum">
+                            <th class="header-table"></th>
+                            <th class="header-table text-center">Qty</th>
+                            <th class="header-table text-left">Product</th>
+                            <th class="header-table"></th>
+                        </tr>
+                        <t t-foreach="props.order['cancelled'] || []" t-as="line" t-key="line.uid + count">
+                            <KitchenOrderLine line="line" order="props.order"/>
+                        </t>
+                        <t t-foreach="props.order['new'] || []" t-as="line" t-key="line.uid + count">
+                            <KitchenOrderLine line="line" order="props.order"/>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

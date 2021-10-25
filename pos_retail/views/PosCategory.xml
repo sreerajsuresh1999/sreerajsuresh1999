@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_pos_category_form_view" model="ir.ui.view">
+        <field name="name">pos.category.form</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="is_category_combo"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="POS Extends">
+                        <group>
+                            <group>
+                                <field name="category_type" widget="radio" groups="base.group_no_one"/>
+                                <field name="sale_limit_time"/>
+                                <field name="submit_all_pos" attrs="{'invisible': [('sale_limit_time', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="from_time"
+                                       widget="float_time"
+                                       attrs="{'invisible': [('sale_limit_time', '=', False)]}"/>
+                                <field name="to_time"
+                                       widget="float_time"
+                                       attrs="{'invisible': [('sale_limit_time', '=', False)]}"/>
+                            </group>
+                        </group>
+                        <group string="Branches Applied" attrs="{'invisible': ['|', ('sale_limit_time', '=', False), ('submit_all_pos', '=', True)]}">
+                            <field name="pos_branch_ids" nolabel="1"/>
+                        </group>
+                        <group string="Point Of Sale Applied" attrs="{'invisible': ['|', ('sale_limit_time', '=', False), ('submit_all_pos', '=', True)]}">
+                            <field name="pos_config_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_pos_category_tree_view" model="ir.ui.view">
+        <field name="name">pos.category.tree</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_tree_view"/>
+        <field name="field_parent" eval="False"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="is_category_combo"/>
+                <field name="category_type"/>
+                <field name="sale_limit_time"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

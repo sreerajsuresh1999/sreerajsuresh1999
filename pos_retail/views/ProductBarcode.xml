@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_barcode_form" model="ir.ui.view">
+            <field name="name">product.barcode.form</field>
+            <field name="model">product.barcode</field>
+            <field name="arch" type="xml">
+                <form string="Barcodes">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="barcode" class="oe_edit_only" string="Barcode"/>
+                            <h1>
+                                <field name="barcode" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="product_tmpl_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="uom_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_barcode_tree" model="ir.ui.view">
+            <field name="name">product.barcode.tree</field>
+            <field name="model">product.barcode</field>
+            <field name="arch" type="xml">
+                <tree string="Barcodes">
+                    <field name="barcode"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="product_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="uom_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_barcode_search" model="ir.ui.view">
+            <field name="name">product.barcode.search</field>
+            <field name="model">product.barcode</field>
+            <field name="arch" type="xml">
+                <search string="Barcodes">
+                    <field name="barcode"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="uom_id"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="product_barcode_action">
+            <field name="name">Barcodes</field>
+            <field name="res_model">product.barcode</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_barcode"
+                  action="product_barcode_action"
+                  parent="menu_product_operation"
+                  sequence="6"
+        />
+
+    </data>
+</odoo>

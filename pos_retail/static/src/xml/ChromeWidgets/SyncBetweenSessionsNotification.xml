@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SyncBetweenSessionsNotification" owl="1">
+        <div class="oe_status" t-on-click="onClick">
+             <span t-if="state.msg" class="js_msg">
+                <t t-esc="state.msg"/>
+            </span>
+            <div t-if="state.status === 'connected'" class="js_connected oe_icon oe_green">
+                <span> </span>
+                <i class="fa fa-sitemap" role="img" aria-label="Sync Between Sessions Connected"
+                   title="Sync Between Sessions Connected"></i>
+            </div>
+            <div t-if="state.status === 'connecting'" class="js_connecting oe_icon">
+                <span> </span>
+                <i class="fa fa-fw fa-spin fa-spinner" role="img"
+                   aria-label="Sync Between Sessions Connecting" title="Sync Between Sessions Connecting"></i>
+            </div>
+            <div t-if="state.status === 'disconnected'" class="js_disconnected oe_icon oe_red">
+                <span> </span>
+                <i class="fa fa-sitemap" role="img" aria-label="Sync Between Sessions Disconnected"
+                   title="Sync Between Sessions Disconnected"></i>
+            </div>
+            <div t-if="state.status === 'error'" class="js_error oe_icon oe_red">
+                <span> </span>
+                <i class="fa fa-sitemap" role="img" aria-label="Sync Between Sessions Error"
+                   title="Sync Between Sessions Error"></i>
+            </div>
+        </div>
+    </t>
+
+</templates>

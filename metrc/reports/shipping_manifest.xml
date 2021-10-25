@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="paperformat_shipping_manifest" model="report.paperformat">
+            <field name="name">Shipping Manifest Format Portrait</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">20</field>
+            <field name="margin_right">20</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+    </data>
+    <data>
+        <report id="report_shipping_manifest" string="Shipping manifest" model="stock.picking"
+                report_type="qweb-pdf" name="metrc.shipping_manifest" file="metrc.shipping_manifest"
+                print_report_name="'Shipping manifest - %s' % (object.name)"
+                paperformat="metrc.paperformat_shipping_manifest" menu="False"/>
+        <template id="shipping_manifest">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                        <div class="page">
+                            <style>
+                                @media print {
+                                  .avoidBreak {page-break-inside: avoid;}
+                                }
+                            </style>
+                            <h3 align="center">SHIPPING MANIFEST</h3>
+                            <p4>Please use permanent ink for all items</p4>
+                            <div class="avoidBreak">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td>Manifest Number:</td>
+                                        <td colspan="3"><t t-esc="doc.name"/></td>
+                                        <td>Actual Date and Time of Departure:</td>
+                                        <td>
+                                            <t t-if="doc.date_done" t-esc="doc.date_done.strftime('%d/%m/%Y - %I:%M:%S %p')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attached Page(s)?</td>
+                                        <td style="width:10%;"></td>
+                                        <td>Number of Attached Pages:</td>
+                                        <td style="width:10%;"></td>
+                                        <td>Estimated Date and Time of Arrival:</td>
+                                        <td>
+                                            <t t-if="doc.scheduled_date" t-esc="doc.scheduled_date.strftime('%d/%m/%Y - %I:%M:%S %p')"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="avoidBreak">
+                                <table class="table table-bordered">
+                                    <tr align="center">
+                                        <td colspan="2">Shipper Information</td>
+                                        <td colspan="2">Receiver Information</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State License Number</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.license_number"/></td>
+                                        <td>State License Number</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.license_number"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type of License</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.license_type"/></td>
+                                        <td>Type of License</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.license_type"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Business Name</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.display_name"/></td>
+                                        <td>Business Name</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.display_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Business Address</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.address"/></td>
+                                        <td>Business Address</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.display_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>City, State, ZIP Code</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.city"/></td>
+                                        <td>City, State, ZIP Code</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.display_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone Number</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.phone"/></td>
+                                        <td>Phone Number</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.display_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Name</td>
+                                        <td><t t-if="doc.shipper_facility" t-esc="doc.shipper_facility.contact_name"/></td>
+                                        <td>Contact Name</td>
+                                        <td><t t-if="doc.receiver_facility" t-esc="doc.receiver_facility.display_name"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="avoidBreak">
+                                <table class="table table-bordered">
+                                    <tr align="center">
+                                        <td colspan="4">Distributor Information</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State License Number</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.license_number"/></td>
+                                        <td>Driver's Name</td>
+                                        <td><t t-if="doc.driver_id" t-esc="doc.driver_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Business Name</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.display_name"/></td>
+                                        <td>Driver's License Number</td>
+                                        <td><t t-if="doc.driver_id" t-esc="doc.driver_id.driver_lic_num"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Street Address</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.display_name"/></td>
+                                        <td>Vehicle Make</td>
+                                        <td><t t-esc="doc.vehicle_make"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>City, State, ZIP</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.display_name"/></td>
+                                        <td>Vehicle Model</td>
+                                        <td><t t-esc="doc.vehicle_model"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone Number</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.display_name"/></td>
+                                        <td>Vehicle License Plate Number</td>
+                                        <td><t t-esc="doc.vehicle_license"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Name</td>
+                                        <td><t t-if="doc.distributor_facility" t-esc="doc.distributor_facility.display_name"/></td>
+                                        <td>Actual Date and Time of Arrival</td>
+                                        <td><t t-if="doc.date_done" t-esc="doc.date_done.strftime('%d/%m/%Y - %I:%M:%S %p')"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <table class="table table-bordered">
+                                    <tr align="center">
+                                        <td colspan="8">Product Shipped Details</td>
+                                    </tr>
+                                    <tr>
+                                        <td>UID Tag Number</td>
+                                        <td>Item Name and Product Description</td>
+                                        <td>Qty Ordered</td>
+                                        <td>Qty Received</td>
+                                        <td>Unit Cost</td>
+                                        <td>Total Cost</td>
+                                        <td>Unit Retail Value</td>
+                                        <td>Total Retail Value</td>
+                                    </tr>
+                                    <t t-foreach="doc.move_line_ids_without_package" t-as="line">
+                                        <tr>
+                                            <td><t t-if="line.lot_id" t-esc="line.lot_id.name"/></td>
+                                            <td><t t-esc="line.product_id.name"/></td>
+                                            <td style="width:60px;"><t t-esc="line.qty_done"/></td>
+                                            <td style="width:60px;"></td>
+                                            <td style="width:60px;"></td>
+                                            <td style="width:60px;"></td>
+                                            <td style="width:60px;"></td>
+                                            <td style="width:60px;"></td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                            <div class="avoidBreak">
+                                <table class="table table-bordered">
+                                    <tr align="center">
+                                        <td colspan="2">Product Rejection</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            If products are rejected, please circle the items being rejected
+                                            in the product shipped details section above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reason for Rejection:</td>
+                                        <td style="width: 80%; height: 100px;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="avoidBreak">
+                                <table class="table table-bordered">
+                                    <tr align="center">
+                                        <td colspan="4" >Product Receipt Confirmation</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            I confirm that the contents of this shipment match in weight
+                                            and count as indicated  above. <br/>
+                                            I agree to take custody of all items as indicated received above
+                                            and which are not circled. <br/>
+                                            The products circled above are rejected for delivery and remain
+                                            in the custody of the distributor for return to the shipper as
+                                            indicated on this form all attached product details sheet(s).
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name of Person Receiving or Rejecting Product:</td>
+                                        <td></td>
+                                        <td>Phone Number:</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Signature of Person Receiving or Rejecting Product:</td>
+                                        <td></td>
+                                        <td>Date Signed:</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

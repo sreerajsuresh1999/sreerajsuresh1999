@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PosOrderRow" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <tr class="receipt-line"
+            t-on-click="trigger('click-order', {id: props.order.id})"
+            t-on-mouseover.stop="_autoSyncBackend">
+            <td style="text-align: center">
+                <t t-esc="props.number"/>
+            </td>
+            <td style="text-align: center">
+                <span class="product-line-name">
+                    <t t-esc="order.pos_reference"/>
+                </span>
+                <span t-if="state.refresh != 'done'" class="js_connecting oe_icon">
+                    <i class="fa fa-fw fa-spin fa-spinner" role="img"
+                       aria-label="Sync Order" title="Sync Order"/>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <span class="product-line-name">
+                    <t t-esc="order.name"/>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.date_order"/>
+            </td>
+            <td style="text-align: center">
+                <t t-if="order.partner_id">
+                    <t t-esc="order.partner_id[1]"/>
+                </t>
+                <t t-else="">
+                    N/A
+                </t>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(order.amount_total)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(order.amount_paid)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(order.amount_tax)"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(order.amount_total - order.amount_paid)"/>
+            </td>
+            <td style="text-align: center">
+                <a t-on-click.stop="showMore" style="display: block; color: #3f51b5">
+                    <t t-if="order.state == 'draft'">Draft</t>
+                    <t t-if="order.state == 'cancel'">Cancelled</t>
+                    <t t-if="order.state == 'paid'">Paid</t>
+                    <t t-if="order.state == 'done'">Posted</t>
+                    <t t-if="order.state == 'invoiced'">Invoiced</t>
+                    <t t-if="order.state == 'quotation'">Quotation (Assigned)</t>
+                    <t t-if="order.state == 'washed'">Washed</t>
+                    <t t-if="order.state == 'delivery'">Delivery</t>
+                    <t t-if="order.state == 'delivered'">Delivered</t>
+                    <t t-if="order.state == 'received'">Received</t>
+                    (CLICK)
+                </a>
+            </td>
+        </tr>
+    </t>
+</templates>

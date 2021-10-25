@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_order_log_form" model="ir.ui.view">
+            <field name="name">pos.order.log.form</field>
+            <field name="model">pos.order.log</field>
+            <field name="arch" type="xml">
+                <form string="Global Discount">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="create_date"/>
+                                <field name="write_date"/>
+                                <field name="name"/>
+                                <field name="config_id"/>
+                                <field name="session_id"/>
+                            </group>
+                            <group>
+                                <field name="action"/>
+                                <field name="order_json"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_order_log_tree" model="ir.ui.view">
+            <field name="name">pos.order.log.tree</field>
+            <field name="model">pos.order.log</field>
+            <field name="arch" type="xml">
+                <tree string="Tracking Logs of Order">
+                    <field name="create_date"/>
+                    <field name="write_date"/>
+                    <field name="name"/>
+                    <field name="config_id"/>
+                    <field name="session_id"/>
+                    <field name="action"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_order_log_search" model="ir.ui.view">
+            <field name="name">pos.order.log.search</field>
+            <field name="model">pos.order.log</field>
+            <field name="arch" type="xml">
+                <search string="Tracking Logs of Order">
+                    <field name="name"/>
+                    <field name="config_id"/>
+                    <field name="session_id"/>
+                    <field name="action"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_order_log">
+            <field name="name">Tracking Logs of Order</field>
+            <field name="res_model">pos.order.log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_order_log"
+                  action="action_pos_order_log"
+                  parent="menu_master_data"
+        />
+
+    </data>
+</odoo>

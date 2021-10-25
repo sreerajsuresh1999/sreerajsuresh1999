@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RetailTicketScreen" owl="1" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('buttons')]/button[hasclass('highlight')]" position="replace">
+            <t t-if="env.pos.config.allow_add_order">
+                <button t-if="showNewTicketButton" class="highlight" t-on-click="createNewOrder">
+                    New Order
+                </button>
+                <button class="highlight btn-warning" t-on-click="removeAllOrders" t-if="env.pos.config.allow_remove_order">
+                    <i class="fa fa-trash"/>
+                    Remove All Orders
+                </button>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('orders')]" position="replace">
+            <table class='summary-table'>
+                <colgroup>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                    <col width='10%'/>
+                </colgroup>
+                <tr class="receipt-line">
+                    <td style="text-align: center">
+                        Date
+                    </td>
+                    <td style="text-align: center">
+                        Receipt Number
+                    </td>
+                    <td style="text-align: center">
+                        Customer
+                    </td>
+                    <td style="text-align: center" t-if="showCardholderName()">
+                        Cardholder Name
+                    </td>
+                    <td style="text-align: center">
+                        Employee
+                    </td>
+                    <td style="text-align: center">
+                        Total
+                    </td>
+                    <td style="text-align: center">
+                        Status
+                    </td>
+                    <td style="text-align: center">
+                        Remove
+                    </td>
+                    <td style="text-align: center" t-if="env.pos.config.sync_multi_session">
+                        Session Created
+                    </td>
+                    <td style="text-align: center" t-if="env.pos.config.pos_orders_management">
+                        Save Draft
+                    </td>
+                </tr>
+                <t t-foreach="filteredOrderList" t-as="order" t-key="order.cid">
+                    <tr class="receipt-line" t-on-click="selectOrder(order)">
+                        <td style="text-align: center">
+                            <t t-esc="getDate(order)"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="order.name"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="getCustomer(order)"/>
+                        </td>
+                        <td style="text-align: center" t-if="showCardholderName()">
+                            <t t-esc="getCardholderName(order)"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="getEmployee(order)"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="getTotal(order)"/>
+                        </td>
+                        <td style="text-align: center">
+                            <t t-esc="getStatus(order)"/>
+                        </td>
+                        <td style="text-align: center" t-if="!hideDeleteButton(order)">
+                            <i class="fa fa-trash" aria-hidden="true" t-on-click.stop="deleteOrder(order)"/>
+                        </td>
+                        <td style="text-align: center" t-if="env.pos.config.sync_multi_session">
+                            <t t-esc="order.session_info.user.name"/>
+                        </td>
+                        <td style="text-align: center" t-if="env.pos.config.pos_orders_management">
+                            <i class="fa fa-save" aria-hidden="true" t-on-click.stop="saveToPartialOrder(order)"/>
+                        </td>
+                    </tr>
+                </t>
+            </table>
+        </xpath>
+    </t>
+
+</templates>

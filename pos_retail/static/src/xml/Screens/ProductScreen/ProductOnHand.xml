@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductOnHand" owl="1">
+        <t t-if="props.product['type'] == 'product'">
+            <span class="qty_available"
+                  t-on-mouseover.stop="reloadStock"
+                  t-att-class="{'price-down': state.out_stock}"
+                  title="Available Quantity in Stock">
+                <span style="font-size: 13px">
+                    <t t-if="state.refreshStock == 'connecting'">
+                        Reload Stock <i class="fa fa-spin fa-spinner fa-pulse"/>
+                    </t>
+                    <t t-if="state.refreshStock == 'fail'">
+                        Stock not found <i class="fa fa-exclamation-triangle" style="color: red"/>
+                    </t>
+                    <t t-if="state.qty_available &lt;=0">
+                        <span style="color: red; border-radius: 65%; background: #eee; padding: 5px">
+                            <t t-esc="env.pos.format_currency_no_symbol(state.qty_available)"/>
+                        </span>
+                    </t>
+                    <t t-if="state.qty_available &gt;=1 and state.qty_available &lt;=10">
+                        <span style="color: #ff9800; border-radius: 65%; background: #eee; padding: 5px">
+                            <t t-esc="env.pos.format_currency_no_symbol(state.qty_available)"/>
+                        </span>
+                    </t>
+                    <t t-if="state.qty_available &gt;=11">
+                        <span style="color: black; border-radius: 65%; background: #eee; padding: 5px">
+                            <t t-esc="env.pos.format_currency_no_symbol(state.qty_available)"/>
+                        </span>
+                    </t>
+                </span>
+            </span>
+        </t>
+        <t t-else="">
+            <span></span>
+        </t>
+    </t>
+
+</templates>

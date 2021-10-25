@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_metrc_sync_item,access.metrc.sync.item,model_metrc_sync_item,,1,1,1,1
+access_metrc_package_split,access.metrc.package.split,model_metrc_package_split,,1,1,1,1
+access_metrc_message_wizard,access.metrc.message.wizard,model_metrc_message_wizard,,1,1,1,1
+access_metrc_account,access.metrc.account,model_metrc_account,,1,1,1,1
+access_metrc_facility,access.metrc.facility,model_metrc_facility,,1,1,1,1
+access_metrc_customer_type,access.metrc.model_metrc_customer.type,model_metrc_customer_type,,1,1,1,1
+access_metrc_patient,access.metrc.patient,model_metrc_patient,,1,1,1,1
+access_metrc_transporter,access.metrc.transporter,model_metrc_transporter,,1,1,1,1
+access_metrc_strain,access.metrc.strain,model_metrc_strain,,1,1,1,1
+access_metrc_transfer_type,access.metrc_transfer_type,model_metrc_transfer_type,,1,1,1,1
+access_metrc_log,access.metrc.log,model_metrc_log,,1,1,1,1
+access_metrc_location_type,access.metrc_location_type,model_metrc_location_type,,1,1,1,1
+access_stock_location,access.stock.location,model_stock_location,,1,1,1,1

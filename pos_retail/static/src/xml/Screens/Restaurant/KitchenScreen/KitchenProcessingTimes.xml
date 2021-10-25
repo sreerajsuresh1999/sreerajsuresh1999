@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="KitchenProcessingTimes" owl="1">
+        <span class="product-name" t-att-class="{warning_box: warningWaitingTime}">
+            Delayed: <i class="fa fa-clock-o"></i> <span> </span><t t-esc="getProcessingTime"/>
+        </span>
+    </t>
+
+</templates>

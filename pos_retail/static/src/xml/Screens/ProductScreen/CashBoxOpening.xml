@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CashBoxOpening" t-inherit="point_of_sale.CashBoxOpening" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[1]" position="attributes">
+            <attribute name="style">margin-top: 0px; background: #eee;height: 100%;overflow: hidden;overflow-y: auto;</attribute>
+        </xpath>
+        <xpath expr="//h1[1]" position="replace">
+            <h4 style="color: #6EC89B">
+                <span >
+                    Set a Cash Opening
+                </span>
+            </h4>
+        </xpath>
+        <xpath expr="//br" position="replace"/>
+        <xpath expr="//h1[2]" position="replace"/>
+        <xpath expr="//textarea" position="replace"/>
+        <xpath expr="//span[hasclass('control-button')]" position="attributes">
+            <attribute name="style">background: #6EC89B;height: 55px; font-size: 25px !important;line-height: 50px;font-weight: 900;padding: 10px;float: unset;min-width: 50%; color: #fff</attribute>
+        </xpath>
+        <xpath expr="//input[@name='cashBoxValue']" position="replace">
+            <input name="cashBoxValue" class="cashbox-input" t-on-change="captureChange" t-att-value="state.buffer"/>
+        </xpath>
+        <xpath expr="//span[hasclass('currencyCashBox')]" position="after">
+            <div class="popup-numpad cashbox" style="display: inline-block; width: 50% !important; float: right; max-width: 325px">
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('1')">1</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('2')">2</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('3')">3</button>
+                <t t-if="props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+1')">+1</button>
+                </t>
+                <t t-if="!props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+10')">+10</button>
+                </t>
+                <br />
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('4')">4</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('5')">5</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('6')">6</button>
+                <t t-if="props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+2')">+2</button>
+                </t>
+                <t t-if="!props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+20')">+20</button>
+                </t>
+                <br />
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('7')">7</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('8')">8</button>
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('9')">9</button>
+                <t t-if="props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+5')">+5</button>
+                </t>
+                <t t-if="!props.cheap">
+                    <button class="mode-button add" t-on-mousedown.prevent="sendInput('+50')">+50</button>
+                </t>
+                <br />
+                <button class="input-button number-char" t-on-mousedown.prevent="sendInput('0')" style="float: left">0</button>
+                <button class="input-button number-char dot" t-on-mousedown.prevent="sendInput(decimalSeparator)" style="float: left">
+                    <t t-esc="decimalSeparator" /></button>
+                <button class="input-button numpad-backspace" t-on-mousedown.prevent="sendInput('Backspace')" style="float: right">
+                    <img style="pointer-events: none;"
+                         src="/point_of_sale/static/src/img/backspace.png" width="24"
+                         height="21" alt="Backspace" />
+                </button>
+            </div>
+            <div class="cash-notes">
+                <textarea name="notes" style="text-align: center; padding: 10px; min-height: 170px" placeholder="Notes Here ..." t-on-change="captureChange"/><br/><br/>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

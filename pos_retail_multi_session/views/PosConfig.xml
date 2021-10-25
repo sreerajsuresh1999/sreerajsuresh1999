@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="pos_hr_config_form_view" model="ir.ui.view">
+            <field name="name">pos.config.form.view.inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_hr.pos_config_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pos_config_retail">
+            <field name="name">pos.config.retail</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="pos_retail.pos_config_retail"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='multi_session']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

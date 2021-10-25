@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pos_sale_report_form_view" model="ir.ui.view">
+            <field name="name">pos.sale.report.form.view</field>
+            <field name="model">pos.sale.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="session_ids" widget="many2many_tags" required="1"/>
+                    </group>
+                    <group>
+                        <field name="report_type" required="1"/>
+                    </group>
+                    <footer>
+                        <button type="object" id="main_print_button" name="print_receipt"
+                                string="Print" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pos_sale_report" model="ir.actions.act_window">
+            <field name="name">Z Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.sale.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <record id="report_pos_sales_pdf" model="ir.actions.report">
+            <field name="name">Z Report Report</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_retail.pos_sale_report_template</field>
+            <field name="report_file">pos_retail.pos_sale_report_template</field>
+            <field name="print_report_name">object.name</field>
+            <field name="binding_model_id" ref="point_of_sale.model_pos_session"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paperformat_session_receipt_pdf" model="report.paperformat">
+            <field name="name">Session Receipt PDF</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+            <field name="report_ids" eval="[(6, 0, [ref('pos_retail.report_pos_sales_pdf')])]"/>
+        </record>
+
+        <menuitem action="action_pos_sale_report" id="menu_action_pos_sale_report"
+                  name="Z Report" parent="point_of_sale.menu_point_rep" sequence='21'/>
+
+    </data>
+</odoo>

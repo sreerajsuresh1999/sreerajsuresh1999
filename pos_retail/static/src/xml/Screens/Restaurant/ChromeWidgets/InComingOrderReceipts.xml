@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="InComingOrderReceipts" owl="1">
+        <div class="oe_status" t-on-click="onClick" style="min-width: 80px">
+            <span t-if="state.msg" class="js_msg oe_red">
+                <span class="notification"><t t-esc="count" /></span>
+                <span> </span>
+            </span>
+            <div t-if="state.status === 'connected'" class="js_connected oe_icon oe_green">
+                <i class="fa fa-bell-o" role="img" aria-label="New Kitchen Receipts"
+                   title="New Kitchen Receipts Connected"></i>
+            </div>
+            <div t-if="state.status === 'connecting'" class="js_connecting oe_icon">
+                <i class="fa fa-fw fa-spin fa-spinner" role="img"
+                   aria-label="New Kitchen Receipts Connecting" title="New Kitchen Receipts Connecting"></i>
+            </div>
+            <div t-if="state.status === 'disconnected'" class="js_disconnected oe_icon oe_red">
+                <i class="fa fa-bell-o" role="img" aria-label="New Kitchen Receipts Disconnected"
+                   title="New Kitchen Receipts Disconnected"></i>
+            </div>
+            <div t-if="state.status === 'error'" class="js_error oe_icon oe_red">
+                <i class="fa fa-bell-o" role="img" aria-label="New Kitchen Receipts Error"
+                   title="New Kitchen Receipts Error"></i>
+            </div>
+        </div>
+    </t>
+
+</templates>

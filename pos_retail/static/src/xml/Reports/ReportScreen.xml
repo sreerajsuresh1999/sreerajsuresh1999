@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReportScreen" owl="1">
+        <div class="receipt-screen screen">
+            <div class="screen-content">
+                <div class="top-content">
+                    <div class="button next" t-att-class="{ highlight: !locked }"
+                        t-on-click="back">
+                        <t t-if="props.closeScreen">
+                            Close Screen
+                            <i class="fa fa-times"/>
+                        </t>
+                        <t t-else="">
+                            Back
+                            <i class="fa fa-angle-double-left"/>
+                        </t>
+                    </div>
+                </div>
+                <div class="default-view">
+                    <div class="pos-receipt-container">
+
+                    </div>
+                    <div class="actions">
+                        <h1 t-if="orderUiState">How would you like to receive your receipt?</h1>
+                        <div class="buttons">
+                            <div class="button print" t-on-click="printReceipt">
+                                <i class="fa fa-print"></i> Print Receipt
+                            </div>
+                            <div class="button download" t-on-click="sendReceiptViaWhatsApp" t-if="orderUiState and env.pos.config.whatsapp_api and env.pos.config.whatsapp_token">
+                                <i class="fa fa-whatsapp"></i> Send Document to WhatsApp
+                            </div>
+                        </div>
+                        <form t-on-submit.prevent="onSendEmail" class="send-email" t-if="orderUiState">
+                            <div class="email-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                            <div class="input-email">
+                                <input type="email" placeholder="Email Receipt" t-model="orderUiState.inputEmail" />
+                                <button class="send" t-att-class="{ highlight: is_email(orderUiState.inputEmail) }" type="submit">Send</button>
+                            </div>
+                        </form>
+                        <t t-if="orderUiState and orderUiState.emailSuccessful !== null">
+                            <div class="notice" t-attf-class="{{ orderUiState.emailSuccessful ? 'successful' : 'failed' }}">
+                                <t t-esc="orderUiState.emailNotice"></t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

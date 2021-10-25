@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="metrc_location_type_tree" model="ir.ui.view">
+        <field name="name">metrc.location.type.tree</field>
+        <field name="model">metrc.location.type</field>
+        <field name="arch" type="xml">
+            <tree string="Location Types" create="false">
+                <field name="metrc_id"/>
+                <field name="name"/>
+                <field name="for_plant_batches"/>
+                <field name="for_plants"/>
+                <field name="for_harvests"/>
+                <field name="for_packages"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="metrc_location_type_form" model="ir.ui.view">
+        <field name="name">metrc.location.type.form</field>
+        <field name="model">metrc.location.type</field>
+        <field name="arch" type="xml">
+            <form string="Location Types" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="metrc_id"/>
+                        <field name="name"/>
+                        <field name="for_plant_batches"/>
+                        <field name="for_plants"/>
+                        <field name="for_harvests"/>
+                        <field name="for_packages"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_service_charge_tree" model="ir.ui.view">
+            <field name="name">pos.service.charge.tree</field>
+            <field name="model">pos.service.charge</field>
+            <field name="arch" type="xml">
+                <tree string="Services Charge" editable="bottom">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="type"/>
+                    <field name="amount"/>
+                    <field name="distance_from"/>
+                    <field name="distance_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_service_charge_search" model="ir.ui.view">
+            <field name="name">pos.service.charge.filter</field>
+            <field name="model">pos.service.charge</field>
+            <field name="arch" type="xml">
+                <search string="Service Charge Filter">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="type"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_service_charge">
+            <field name="name">Services Charge</field>
+            <field name="res_model">pos.service.charge</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_action_pos_service_charge"
+                  parent="menu_master_data"
+                  sequence="102"
+                  action="action_pos_service_charge"
+        />
+
+    </data>
+</odoo>

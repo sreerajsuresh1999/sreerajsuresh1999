@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="metrc_sandbox_test_account" model="metrc.account">
+            <field name="name">TEST Sandbox</field>
+            <field name="api_version">v1</field>
+            <field name="url">https://sandbox-api-ca.metrc.com</field>
+            <field name="password1">Kvv3lbhPMksU76J6l3IB6PRxtOG2JW0fIT93QjP5Ww4-nwI9</field>
+            <field name="password2">FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_tag_form" model="ir.ui.view">
+            <field name="name">pos.tag.form</field>
+            <field name="model">pos.tag</field>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color"/>
+                            <field name="is_return_reason"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_tag_tree" model="ir.ui.view">
+            <field name="name">pos.tag.tree</field>
+            <field name="model">pos.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                    <field name="color"/>
+                    <field name="is_return_reason"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_tag_search" model="ir.ui.view">
+            <field name="name">pos.tag.filter</field>
+            <field name="model">pos.tag</field>
+            <field name="arch" type="xml">
+                <search string="Tag">
+                    <field name="name"/>
+                    <field name="color" widget="color"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_tag1">
+            <field name="name">Tags</field>
+            <field name="res_model">pos.tag</field>
+            <field name="domain">[('is_return_reason', '=', False)]</field>
+            <field name="context">{'default_is_return_reason': False}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_tag2">
+            <field name="name">Return Reasons</field>
+            <field name="res_model">pos.tag</field>
+            <field name="domain">[('is_return_reason', '=', True)]</field>
+            <field name="context">{'default_is_return_reason': True}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_tag1"
+                  action="action_pos_tag1"
+                  parent="menu_master_data"
+                  sequence="15"
+        />
+
+        <menuitem id="menu_action_pos_tag2"
+                  action="action_pos_tag2"
+                  parent="menu_master_data"
+                  sequence="16"
+        />
+
+    </data>
+</odoo>

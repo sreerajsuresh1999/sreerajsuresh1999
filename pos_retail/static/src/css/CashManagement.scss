@@ -1,0 +1,164 @@
+.pos .SessionButton:hover {
+    color: $secondary_color;
+}
+
+.pos .endsessionbutton {
+    font-size: 13px;
+    text-align: center;
+    height: 40px;
+    padding: 0;
+    background: $primary_color;
+    color: #fff;
+    width: 15%;
+}
+
+.pos .validate {
+    width: 35%;
+}
+
+.pos .modal-dialog .popup.session-popup {
+    width: 80% !important;
+}
+
+.pos .popup .session-title {
+    background: #999999
+}
+
+.pos .cashbox-add {
+    cursor: pointer;
+    background: $primary_color;
+    color: white;
+}
+.pos .session_form {
+    background: #ffff;
+}
+.session-group > thead > tr > th,
+.session-group > tbody > tr > th,
+.session-group > tfoot > tr > th,
+.session-group > thead > tr > td,
+.session-group > tbody > tr > td,
+.session-group > tfoot > tr > td,
+.session-group {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: normal;
+    border-spacing: 10px;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    vertical-align: top;
+}
+
+.text1 > tbody > tr > td:first-child,
+.text2 > tbody > tr > td:first-child,
+.text3 > tbody > tr > td:first-child,
+.text4 > tbody > tr > td:first-child,
+.text5 > tbody > tr > td:first-child {
+    font-weight: bold;
+}
+
+.text3 > tbody > tr > td,
+.text4 > tbody > tr > td,
+.text5 > tbody > tr > td {
+    text-align: right;
+}
+
+.text3 tr:first-child td,
+.text4 tr:first-child td,
+.text5 tr:first-child td {
+    font-weight: bold;
+}
+
+.pos .modal-dialog .session-button {
+    font-size: 13px;
+    text-align: left;
+    height: 40px;
+}
+
+.pos_button_box {
+    text-align: right;
+    float: left;
+    padding-right: 20px;
+}
+
+.pos .modal-dialog .session-button:hover {
+    background: $secondary_color;
+}
+.pos .cashbox-delete {
+    background: $primary_color;
+    color: white !important;
+    height: 20px;
+    width: 50px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.box {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.pos .modal-dialog .popup.balance-popup {
+    width: 80% !important;
+    height: 600px;
+}
+.pos .lots-list {
+    width: 100%;
+}
+.pos .lot_input {
+    margin-left: 0px !important;
+    height: 40px;
+    min-height: 40px !important;
+}
+.pos .popup .session-balance {
+    overflow: auto;
+    height: 450px;
+    margin: 10px;
+}
+
+.pos .popup .session-balance .client-list td {
+    padding: 0px !important;
+}
+
+.pos .modal-dialog .popup.balance-popup input {
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+    background: white;
+    min-height: 34px;
+    font-family: $font_family_pos;
+    font-size: 18px;
+    color: #444;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 0px 0px 1px rgb(220, 220, 220) inset;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.display-hide {
+    display: none !important;
+}
+.overlap {
+    page-break-inside: avoid;
+}
+
+.thborder {
+    border-top: 1px solid black;
+}
+
+.table-footer {
+    width: 100%;
+    min-width: 100%;
+    cellspacing: 10;
+    border-spacing: 10px;
+    margin-left: 40px;
+}
+
+.table-footer td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

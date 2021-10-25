@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SaleOrderRow" owl="1">
+        <t t-set="order" t-value="props.order"/>
+        <tr class="receipt-line"
+            t-on-mouseover.stop="_autoSyncBackend"
+            t-on-click="trigger('click-order', {order: order})">
+            <td style="text-align: center">
+                <t t-esc="props.number"/>
+            </td>
+            <td style="text-align: center">
+                <span class="product-line-name">
+                    <t t-esc="order.name"/>
+                </span>
+                <span t-if="state.refresh != 'done'" class="js_connecting oe_icon">
+                    <i class="fa fa-fw fa-spin fa-spinner" role="img"
+                       aria-label="Sync Order" title="Sync Order"/>
+                </span>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.ean13 or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.date_order or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.reserve_from or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.reserve_to or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-if="order.reserve_table_id">
+                    <t t-esc="order.reserve_table_id[1]"/>
+                </t>
+                <t t-else="">
+                    N/A
+                </t>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.reserve_no_of_guests or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.reserve_mobile or 'N/A'"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.partner_id[1]"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="order.user_id[1]"/>
+            </td>
+            <td style="text-align: center">
+                <t t-esc="env.pos.format_currency(order.amount_total)"/>
+            </td>
+            <td style="text-align: center">
+                <a t-on-click.stop="showMore" style="color: #6EC89B">
+                    <t t-if="order.state == 'draft'">
+                        <t t-if="order.reserve_order">
+                            Reserved
+                        </t>
+                        <t t-else="">
+                            Quotation
+                        </t>
+                    </t>
+                    <t t-if="order.state == 'sent'">Quotation Sent</t>
+                    <t t-if="order.state == 'sale'">Sales Order</t>
+                    <t t-if="order.state == 'done'">Locked</t>
+                    <t t-if="order.state == 'cancel'">Cancelled</t>
+                    <t t-if="order.state == 'booked'">Booked</t>
+                    (CLICK)
+                </a>
+            </td>
+        </tr>
+    </t>
+</templates>

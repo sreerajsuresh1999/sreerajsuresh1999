@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="pos_retail_offline_index" name="index pos ui" inherit_id="point_of_sale.index">
+        <xpath expr="//head" position="inside">
+            <link rel="manifest" href="/pos/manifest.webmanifest" crossorigin="use-credentials"/>
+            <script type="text/javascript">
+                var odoo =<t t-raw="json.dumps({
+                    'csrf_token': request.csrf_token(None),
+                    'session_info': session_info,
+                    'login_number': login_number,
+                    'debug': debug,
+                    'pos_session_id': pos_session_id,
+                })"/>;
+            </script>
+        </xpath>
+    </template>
+
+    <template id="pos_retail_offline_backend" name="pos_retail_offline assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script>
+                function remove_pos_database() {
+                    localStorage.clear();
+                    var database_template = this.odoo.session_info.db;
+                    for (var i = 0; i &lt; 100; i++) {
+                    indexedDB.deleteDatabase(database_template + '_' + i);
+                    console.log('removed db: ' + database_template + '_' + i);
+                    }
+                }
+            </script>
+        </xpath>
+    </template>
+
+    <template id="pos_retail_offline_asset_assets_backend" name="pos_retail_offline_asset assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/idb-keyval.js"></script>
+        </xpath>
+    </template>
+
+    <template id="pos_retail_offline_asset" name="pos_retail_offline assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/idb-keyval.js"/>
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/PosIDB.js"></script>
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/Models.js"></script>
+            <!-- POS Start register worker , worker will loading file pos-service-worker.js to POS-->
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/PosWebClient.js"></script>
+        </xpath>
+    </template>
+
+    <template id="assets_backend" name="pos_retail_offline backend_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/idb-keyval.js"/>
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/PosIDB.js"></script>
+            <!-- POS Start register worker , worker will loading file pos-service-worker.js to POS-->
+            <script type="text/javascript" src="/pos_retail_offline/static/src/js/PosWebClient.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

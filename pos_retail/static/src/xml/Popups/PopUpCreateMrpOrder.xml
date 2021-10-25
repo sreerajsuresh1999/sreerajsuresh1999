@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PopUpCreateMrpOrder" owl="1">
+        <div class="modal-dialog">
+            <div class="popup medium-form touch-scrollable scrollable-y" style="width: 80%; min-height: 500px">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="card-title"><t t-esc="props.title || '' " /></h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="max-height: 500px !important; width: 100%">
+                                <tbody>
+                                    <t t-set="count" t-value="1"/>
+                                    <tr style="border-bottom: 1px solid">
+                                        <td class="text-left"></td>
+                                        <td class="text-left">Product</td>
+                                        <td class="text-right">Bom Quantity</td>
+                                        <td class="text-center"><i class="fa fa-plus"/></td>
+                                        <td class="text-center"><i class="fa fa-minus"/></td>
+                                    </tr>
+                                    <t t-foreach="props.items || []" t-as="bom_line" t-key="bom_line.id">
+                                        <tr t-att-data-id="bom_line.id">
+                                            <td class="text-left"><t t-esc="count"/></td>
+                                            <td class="text-left"><t t-esc="bom_line.product_id[1]"/></td>
+                                            <td class="text-right"><t t-esc="bom_line.quantity"/></td>
+                                            <td class="text-center add_quantity"
+                                                t-att-data-id="bom_line.id"
+                                                t-value="bom_line.quantity"
+                                                t-on-click="onClickPlus(bom_line)"
+                                                style="font-weight: 900">
+                                                <t t-esc="bom_line.quantity"/>
+                                            </td>
+                                            <td class="text-center remove_quantity"
+                                                t-att-data-id="bom_line.id"
+                                                t-value="bom_line.quantity"
+                                                t-on-click="onClickMinus(bom_line)"
+                                                style="font-weight: 900">
+                                                <i class="fa fa-minus"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="count" t-value="count + 1"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-issue"/>
+                <div class="form-footer text-center">
+                    <div class="btn btn-success pull-right" t-on-click="confirm">
+                        Confirm
+                        <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> Enter </span></span>
+                    </div>
+                    <div class="btn btn-danger pull-right" t-on-click="cancel">
+                        Close
+                        <span t-if="!env.isMobile"><i class="fa fa-keyboard-o"/><span> ESC </span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

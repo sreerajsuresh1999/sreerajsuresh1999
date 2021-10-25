@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductSaleCategories" owl="1">
+        <div class="navigation">
+            <ul>
+                <li class="has-sub">
+                    <a style="font-weight: 900; font-size: 13px" href="#" t-on-click="setSaleCategory(0)">
+                        <t t-if="state.selectedSaleCategoryId == 0">
+                            <i class="fa fa fa-sitemap"/>
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-arrow-left"/>
+                        </t>
+                        <span>  </span>
+                        <t t-esc="state.selectedSaleCategory"/>
+                    </a>
+                    <ul>
+                        <t t-foreach='env.pos.product_categories' t-as='categ' t-key="categ.id">
+                            <li>
+                                <a href="#" t-on-click="setSaleCategory(categ.id)" style="font-weight: 900; font-size: 11px">
+                                    <t t-esc="categ['name']" style="float: right"/>
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </t>
+
+</templates>

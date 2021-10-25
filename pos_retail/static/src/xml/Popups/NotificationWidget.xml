@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NotificationWidget" owl="1">
+        <div class="popup-notification" t-att-class="{ oe_hidden: !state.isShow}">
+            <span class="popup-title" t-if="state.title">
+                <t t-esc="state.title"/>
+            </span>
+            <span t-if="state.message"> - </span>
+            <span t-if="state.message">
+                <t t-esc="state.message"/>
+            </span>
+            <span style="color:red; float: right; top; 0px"><i class="fa fa-times"/></span>
+        </div>
+    </t>
+
+</templates>

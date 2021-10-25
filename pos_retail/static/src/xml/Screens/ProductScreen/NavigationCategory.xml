@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="NavigationCategory" owl="1">
+        <div class="navigation">
+            <ul>
+                <li class="has-sub">
+                    <a href="#" t-on-click="setCategory(0)">
+                        <i class="fa fa-home" style="font-weight: 400; font-size: 18px"/>
+                        <span>  </span>
+                        <span t-if="state.selectedCategory"  style="font-weight: 900; font-size: 13px; padding: 5px">
+                            <t t-esc="state.selectedCategory"/>
+                        </span>
+                    </a>
+                    <ul>
+                        <t t-foreach='env.pos.db.get_category_childs_ids(0)' t-as='category_id' t-key="category_id">
+                            <!-- level 1-->
+                            <li t-att-class="{'has-sub': env.pos.db.get_category_childs_ids(category_id).length != 0}">
+                                <a href="#" t-on-click="setCategory(category_id)">
+                                    <i class="fa fa-hand-o-right"/>
+                                    <span> </span>
+                                    <t t-esc="env.pos.db.category_by_id[category_id]['name']"/>
+                                    <span class="notification">
+                                        <t t-esc="getCountProduct(category_id)"/>
+                                    </span>
+                                </a>
+                                <ul>
+                                    <!-- level 2-->
+                                    <t t-foreach='env.pos.db.get_category_childs_ids(category_id)' t-as='category_id' t-key="category_id">
+                                        <NavigationSubCategory category_id="category_id"/>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </t>
+
+</templates>

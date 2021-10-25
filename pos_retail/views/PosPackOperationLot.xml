@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_pack_operation_lot_form" model="ir.ui.view">
+            <field name="name">pos.pack.operation.lot.form</field>
+            <field name="model">pos.pack.operation.lot</field>
+            <field name="arch" type="xml">
+                <form string="Pack Operation Lot">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="lot_name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="order_id"/>
+                                <field name="pos_order_line_id"/>
+                            </group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="lot_id"/>
+                                <field name="quantity"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_pack_operation_lot_tree" model="ir.ui.view">
+            <field name="name">pos.pack.operation.lot.tree</field>
+            <field name="model">pos.pack.operation.lot</field>
+            <field name="arch" type="xml">
+                <tree string="Pack Operation Lots">
+                    <field name="lot_name"/>
+                    <field name="order_id"/>
+                    <field name="pos_order_line_id"/>
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+                    <field name="quantity"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_pack_operation_lot_search" model="ir.ui.view">
+            <field name="name">pos.pack.operation.lot.filter</field>
+            <field name="model">pos.pack.operation.lot</field>
+            <field name="arch" type="xml">
+                <search string="Pack Operation Lots">
+                    <field name="lot_name"/>
+                    <field name="order_id"/>
+                    <field name="pos_order_line_id"/>
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+                    <field name="quantity"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_pack_operation_lot">
+            <field name="name">Pack Operation Lots</field>
+            <field name="res_model">pos.pack.operation.lot</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_pack_operation_lot"
+                  action="action_pos_pack_operation_lot"
+                  parent="menu_product_operation"
+                  groups="point_of_sale.group_pos_manager"
+                  sequence="8"
+        />
+
+    </data>
+</odoo>

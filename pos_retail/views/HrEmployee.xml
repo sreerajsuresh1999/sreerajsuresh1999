@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="inside">
+                    <group string="Security POS Screen">
+                        <group string="Security on Order Lines">
+                            <field name="allow_discount"/>
+                            <field name="allow_qty"/>
+                            <field name="allow_price"/>
+                            <field name="allow_remove_line"/>
+                            <field name="allow_minus"/>
+                        </group>
+                        <group string="Security on Actions">
+                            <field name="allow_add_product"/>
+                            <field name="allow_customer"/>
+                            <field name="allow_payment"/>
+                            <field name="allow_add_order"/>
+                            <field name="allow_remove_order"/>
+                            <field name="allow_payment_zero"/>
+                            <field name="allow_offline_mode"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

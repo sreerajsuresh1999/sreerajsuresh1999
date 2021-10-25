@@ -1,0 +1,13 @@
+<odoo>
+    <record id="product_uom_form_inherit" model="ir.ui.view">
+        <field name="name">uom.uom.inherited</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="metrc_name"/>
+                <field name="metrc_qty_type"/>
+            </field>
+        </field>
+    </record>
+</odoo>

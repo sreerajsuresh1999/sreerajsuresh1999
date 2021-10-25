@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_loyalty"
+                  name="Loyalties"
+                  parent="point_of_sale.menu_point_root"
+                  sequence="17"/>
+
+        <record id="pos_loyalty_category_form" model="ir.ui.view">
+            <field name="name">pos.loyalty.category.form</field>
+            <field name="model">pos.loyalty.category</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Category">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="from_point"/>
+                            <field name="to_point"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_category_tree" model="ir.ui.view">
+            <field name="name">pos.loyalty.category.tree</field>
+            <field name="model">pos.loyalty.category</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalties Category">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="from_point"/>
+                    <field name="to_point"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_category_search" model="ir.ui.view">
+            <field name="name">pos.loyalty.category.filter</field>
+            <field name="model">pos.loyalty.category</field>
+            <field name="arch" type="xml">
+                <search string="Loyalty filter">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_loyalty_category">
+            <field name="name">Loyalty Type</field>
+            <field name="res_model">pos.loyalty.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_loyalty_category"
+                  action="action_pos_loyalty_category"
+                  parent="menu_loyalty"
+                  sequence="1"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <record id="pos_loyalty_from" model="ir.ui.view">
+            <field name="name">pos.loyalty.form</field>
+            <field name="model">pos.loyalty</field>
+            <field name="arch" type="xml">
+                <form string="Loyalties">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="true"/>
+                        <button name="active_all_pos" string="Active all pos" type="object"
+                                groups="point_of_sale.group_pos_manager" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <a type="open">
+                                <field name="name"/>
+                            </a>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="product_loyalty_id"/>
+                                <field name="period_expired"/>
+                            </group>
+                            <group>
+                                <field name="rounding_down"/>
+                                <field name="rounding" attrs="{'invisible': [('rounding_down', '=', True)]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Rules Plus a Points">
+                                <field name="rule_ids" nolabel="1">
+                                    <tree string="Rule">
+                                        <field name="name"/>
+                                        <field name="type"/>
+                                        <field name="coefficient"/>
+                                        <field name="min_amount"/>
+                                    </tree>
+                                    <form string="Loyalty Rules">
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <label for="name" class="oe_edit_only"/>
+                                                <h1>
+                                                    <field name="name" class="oe_inline"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="type"/>
+                                                </group>
+                                                <group>
+                                                    <field name="coefficient"/>
+                                                    <field name="min_amount"/>
+                                                    <field name="coefficient_note" nolabel="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <field name="product_ids" colspan="4"
+                                                       attrs="{'required': [('type', '=', 'products')], 'invisible': [('type', '!=', 'products')]}"/>
+                                                <field name="category_ids" colspan="4"
+                                                       attrs="{'required': [('type', '=', 'categories')], 'invisible': [('type', '!=', 'categories')]}"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Rewards Redeem a Points">
+                                <field name="reward_ids" nolabel="1">
+                                    <tree string="Rewards">
+                                        <field name="name"/>
+                                        <field name="type"/>
+                                        <field name="coefficient"/>
+                                        <field name="min_amount"/>
+                                    </tree>
+                                    <form string="Reward">
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <label for="name" class="oe_edit_only" string="Name of reward"/>
+                                                <h1>
+                                                    <field name="name" class="oe_inline"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="type"/>
+                                                </group>
+                                                <group>
+                                                    <field name="min_amount"/>
+                                                    <field name="coefficient_note" nolabel="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <field name="coefficient"
+                                                       attrs="{'invisible': [('type', 'not in', ['discount_products', 'discount_categories', 'use_point_payment', 'gift', 'resale'])], 'required': [('type', 'in', ['discount_products', 'discount_categories', 'use_point_payment', 'gift', 'resale'])]}"/>
+                                                <field name="discount"
+                                                       attrs="{'invisible': [('type', 'not in', ['discount_products', 'discount_categories'])], 'required': [('type', 'in', ['discount_products', 'discount_categories'])]}"/>
+                                                <field name="price_resale"
+                                                       attrs="{'invisible': [('type', '!=', 'resale')], 'required': [('type', '=', 'resale')]}"/>
+                                                <field name="gift_product_ids"
+                                                       attrs="{'invisible': [('type', '!=', 'gift')], 'required': [('type', '=', 'gift')]}"/>
+                                                <field name="discount_product_ids"
+                                                       attrs="{'invisible': [('type', '!=', 'discount_products')], 'required': [('type', '=', 'discount_products')]}"/>
+                                                <field name="discount_category_ids"
+                                                       attrs="{'invisible': [('type', '!=', 'discount_categories')], 'required': [('type', '=', 'discount_categories')]}"/>
+                                                <field name="resale_product_ids"
+                                                       attrs="{'invisible': [('type', '!=', 'resale')], 'required': [('type', '=', 'resale')]}"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Point Of Sale Applied">
+                                <field name="config_ids" nolabel="1" readonly="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_tree" model="ir.ui.view">
+            <field name="name">pos.loyalty.tree</field>
+            <field name="model">pos.loyalty</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalties">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_search" model="ir.ui.view">
+            <field name="name">pos.loyalty.filter</field>
+            <field name="model">pos.loyalty</field>
+            <field name="arch" type="xml">
+                <search string="Loyalties">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_loyalty">
+            <field name="name">Loyalty Programs</field>
+            <field name="res_model">pos.loyalty</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_loyalty"
+                  action="action_pos_loyalty"
+                  parent="menu_loyalty"
+                  sequence="3"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <record id="pos_loyalty_rule_tree" model="ir.ui.view">
+            <field name="name">pos.loyalty.rule.tree</field>
+            <field name="model">pos.loyalty.rule</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalties Rule">
+                    <field name="name"/>
+                    <field name="loyalty_id"/>
+                    <field name="type"/>
+                    <field name="coefficient"/>
+                    <field name="min_amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_rule_form" model="ir.ui.view">
+            <field name="name">pos.loyalty.rule.form</field>
+            <field name="model">pos.loyalty.rule</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Rules">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="true"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="loyalty_id"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="coefficient"/>
+                                <field name="min_amount"/>
+                                <field name="active"/>
+                                <field name="coefficient_note" nolabel="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="product_ids" colspan="4"
+                                   attrs="{'required': [('type', '=', 'products')], 'invisible': [('type', '!=', 'products')]}"/>
+                            <field name="category_ids" colspan="4"
+                                   attrs="{'required': [('type', '=', 'categories')], 'invisible': [('type', '!=', 'categories')]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_rule_search" model="ir.ui.view">
+            <field name="name">pos.loyalty.rule.filter</field>
+            <field name="model">pos.loyalty.rule</field>
+            <field name="arch" type="xml">
+                <search string="Rules">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_loyalty_rule">
+            <field name="name">Loyalty Rules</field>
+            <field name="res_model">pos.loyalty.rule</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_loyalty_rule"
+                  action="action_pos_loyalty_rule"
+                  parent="menu_loyalty"
+                  sequence="4"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <record id="pos_loyalty_reward_tree" model="ir.ui.view">
+            <field name="name">pos.loyalty.reward.tree</field>
+            <field name="priority">1</field>
+            <field name="model">pos.loyalty.reward</field>
+            <field name="arch" type="xml">
+                <tree string="Rewards">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="min_amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_reward_form" model="ir.ui.view">
+            <field name="name">pos.loyalty.reward.form</field>
+            <field name="model">pos.loyalty.reward</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Reward">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="true"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Name of reward"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="loyalty_id"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="min_amount"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="coefficient"/>
+                            <field name="coefficient_note" nolabel="1"/>
+                            <field name="discount"
+                                   attrs="{'invisible': [('type', 'not in', ['discount_products', 'discount_categories'])], 'required': [('type', 'in', ['discount_products', 'discount_categories'])]}"/>
+                            <field name="price_resale"
+                                   attrs="{'invisible': [('type', '!=', 'resale')], 'required': [('type', '=', 'resale')]}"/>
+                            <field name="gift_product_ids"
+                                   nolabel="1"
+                                   attrs="{'invisible': [('type', '!=', 'gift')], 'required': [('type', '=', 'gift')]}"/>
+                            <field name="discount_product_ids"
+                                   nolabel="1"
+                                   attrs="{'invisible': [('type', '!=', 'discount_products')], 'required': [('type', '=', 'discount_products')]}"/>
+                            <field name="discount_category_ids"
+                                   nolabel="1"
+                                   attrs="{'invisible': [('type', '!=', 'discount_categories')], 'required': [('type', '=', 'discount_categories')]}"/>
+                            <field name="resale_product_ids"
+                                   nolabel="1"
+                                   attrs="{'invisible': [('type', '!=', 'resale')], 'required': [('type', '=', 'resale')]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_reward_search" model="ir.ui.view">
+            <field name="name">pos.loyalty.reward.filter</field>
+            <field name="model">pos.loyalty.reward</field>
+            <field name="arch" type="xml">
+                <search string="Rewards">
+                    <field name="name"/>
+                    <field name="loyalty_id"/>
+                    <field name="type"/>
+                    <field name="min_amount"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_loyalty_reward">
+            <field name="name">Loyalty Rewards</field>
+            <field name="res_model">pos.loyalty.reward</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_loyalty_reward"
+                  action="action_pos_loyalty_reward"
+                  parent="menu_loyalty"
+                  sequence="5"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+        <record id="view_pos_pos_form_loyalty" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lines']/tree/field[@name='price_subtotal_incl']" position="after">
+                    <field name="plus_point" readonly="1" optional="hide"/>
+                    <field name="redeem_point" readonly="1" optional="hide"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+
+                </xpath>
+                <xpath expr="//page[@name='extra']" position="after">
+                    <page string="Loyalty Points" name="loyalty">
+                        <group>
+                            <field name="plus_point" readonly="1"/>
+                            <field name="redeem_point" readonly="1"/>
+                            <field name="point_ids" nolabel="1" colspan="4"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_point_tree" model="ir.ui.view">
+            <field name="name">pos.loyalty.point.tree</field>
+            <field name="model">pos.loyalty.point</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Loyalty Points">
+                    <field name="loyalty_id"/>
+                    <field name="order_id"/>
+                    <field name="type"/>
+                    <field name="partner_id"/>
+                    <field name="end_date"/>
+                    <field name="point"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_point_form" model="ir.ui.view">
+            <field name="name">pos.loyalty.point.form</field>
+            <field name="model">pos.loyalty.point</field>
+            <field name="arch" type="xml">
+                <form string="Loyalty Point">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="true"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="loyalty_id" class="oe_edit_only"/>
+                            <h1>
+                                <field name="loyalty_id" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="order_id"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                                <field name="point"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_loyalty_point_search" model="ir.ui.view">
+            <field name="name">pos.loyalty.point.filter</field>
+            <field name="model">pos.loyalty.point</field>
+            <field name="arch" type="xml">
+                <search string="Loyalty Points Filter">
+                    <field name="loyalty_id"/>
+                    <field name="order_id"/>
+                    <field name="type"/>
+                    <field name="partner_id"/>
+                    <field name="end_date"/>
+                    <field name="point"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" name="groupby_partner" domain="[]"
+                                context="{'group_by': 'partner_id'}"/>
+                        <filter string="Type" name="groupby_type" domain="[]" context="{'group_by': 'type'}"/>
+                        <filter string="State" name="groupby_state" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_loyalty_point">
+            <field name="name">Loyalty Points</field>
+            <field name="res_model">pos.loyalty.point</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_loyalty_point"
+                  action="action_pos_loyalty_point"
+                  parent="menu_loyalty"
+                  sequence="6"
+                  groups="point_of_sale.group_pos_manager"
+        />
+
+    </data>
+</odoo>

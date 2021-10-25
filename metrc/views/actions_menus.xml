@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_metrc_accounts" model="ir.actions.act_window">
+        <field name="name">Accounts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.account</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_facilities" model="ir.actions.act_window">
+        <field name="name">Facilities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.facility</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_customer_types" model="ir.actions.act_window">
+        <field name="name">Customer Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.customer.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_log" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_strains" model="ir.actions.act_window">
+        <field name="name">Strains</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.strain</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_transfer_types" model="ir.actions.act_window">
+        <field name="name">Transfer Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.transfer.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_location_types" model="ir.actions.act_window">
+        <field name="name">Location Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metrc.location.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_metrc_crons" model="ir.actions.act_window">
+        <field name="name">Crons</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.cron</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_metrc','=',True)]</field>
+    </record>
+
+    <menuitem id="menu_metric" name="METRC" sequence="1" groups="metrc.metrc_user_group"/>
+        <menuitem name="Accounts" parent="menu_metric" id="metrc_accounts"
+                  action="action_metrc_accounts" sequence="1"/>
+        <menuitem name="Facilities" parent="menu_metric" id="metrc_facilities"
+                  action="action_metrc_facilities" sequence="1"/>
+        <menuitem name="Customer Types" parent="menu_metric" id="metrc_customer_types"
+                  action="action_metrc_customer_types" sequence="1"/>
+        <menuitem name="Crons" parent="menu_metric" id="metrc_cron"
+                  action="action_metrc_crons" sequence="1"/>
+        <menuitem name="Location Types" parent="menu_metric" id="metrc_location_types"
+                  action="action_metrc_location_types" sequence="1"/>
+</odoo>

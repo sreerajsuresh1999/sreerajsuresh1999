@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Chrome" t-inherit="point_of_sale.Chrome" t-inherit-mode="extension" owl="1">
+<!--        <xpath expr="//div[hasclass('pos-topheader')]" position="attributes">-->
+        <!--            <attribute name="t-att-class">{ oe_hidden: isHidden}</attribute>-->
+        <!--        </xpath>-->
+        <!--        <xpath expr="//div[hasclass('pos-content')]" position="attributes">-->
+        <!--            <attribute name="t-att-class">{ full_screen: isHidden}</attribute>-->
+        <!--        </xpath>-->
+        <xpath expr="//img[hasclass('pos-logo')]" position="replace">
+            <img class="pos-logo" t-on-click="showAppInformation"
+                 t-att-src="'/web/image?model=pos.config&amp;field=logo&amp;id=' + env.session.config.id" alt="Logo"/>
+        </xpath>
+        <xpath expr="//div[hasclass('pos')]" position="inside">
+            <NotificationWidget/>
+            <div id="canvas-holder"/>
+            <img id="barcode" class="oe_hidden"
+                 style="display: none"/>
+            <img id="booking_barcode"
+                 class="oe_hidden"
+                 style="display: none"/>
+        </xpath>
+        <xpath expr="//h1[hasclass('message')]" position="before">
+            <img src="/pos_retail/static/description/app_logo.png" alt="POS TL Technology" height="100" width="100"
+                 style="border-radius: 65%;margin-bottom: 20px" t-on-click="openApplication"/>
+            <div class="o_loader">
+                <i class="fa fa-spin fa-spinner fa-pulse" style="font-size: 3em;"></i>
+            </div>
+        </xpath>
+        <xpath expr="//ProxyStatus" position="replace"/>
+        <xpath expr="//CashierName" position="replace"/>
+        <xpath expr="//SyncNotification" position="replace"/>
+        <xpath expr="//OrderManagementButton" position="replace">
+            <GiftCardsWidget
+                    t-if="env and env.pos and env.pos.config and env.pos.config.enable_gift_card"/>
+            <SaleOrderScreenWidget
+                    t-if="env and env.pos and env.pos.config and env.pos.config.booking_orders"/>
+            <PosOrderScreenWidget
+                    t-if="env and env.pos and env.pos.config and env.pos.config.pos_orders_management"/>
+            <InvoiceScreenWidget
+                    t-if="env and env.pos and env.pos.config and env.pos.config.management_invoice"/>
+            <QrCodeOrders t-if="env and env.pos and !env.session.restaurant_order"/>
+            <KitchenTickets t-if="env and env.pos and !env.session.restaurant_order"/>
+            <CustomerFacingScreenWiget
+                    t-if="!env.isMobile and env.pos and env.pos.config and env.pos.config.customer_facing_screen"/>
+            <OrderManagementButton t-if="env.pos.config.manage_orders and !env.session.restaurant_order"/>
+            <SyncNotification t-if="!env.session.restaurant_order"/>
+            <ProxyStatus t-if="env.pos.config.use_proxy and !env.session.restaurant_order"/>
+            <NetworkPrinterStatus
+                    t-if="!env.isMobile and !env.session.restaurant_order and env.pos.epson_printers and env.pos.epson_printers.length != 0"/>
+            <LocalPrinterNetwork
+                    t-if="!env.isMobile and !env.session.restaurant_order and env.pos.config.local_network_printer and env.pos.config.local_network_printer_ip_address"/>
+            <SyncBetweenSessionsNotification
+                    t-if="!env.isMobile and env.pos.iot_connections and env.pos.iot_connections.length and !env.session.restaurant_order"/>
+            <SessionInformation t-if="env and env.pos and env.pos.config and env.pos.config.show_session_information"/>
+            <MobileMode/>
+            <LanguageSelection/>
+            <PosProfiles
+                    t-if="env and env.pos and env.pos.config and env.pos.config.allow_change_pos_profile"/>
+            <CopyRight/>
+        </xpath>
+        <xpath expr="//SaleDetailsButton" position="replace">
+            <SaleDetailsButton t-if="env.pos.proxy.printer and !env.session.restaurant_order"/>
+        </xpath>
+        <xpath expr="//ClientScreenButton" position="replace">
+            <ClientScreenButton t-if="clientScreenButtonIsShown and !env.session.restaurant_order"/>
+        </xpath>
+        <xpath expr="//HeaderButton" position="replace">
+            <HeaderButton t-if="!env.session.restaurant_order"/>
+            <CashierName t-if="!env.session.restaurant_order"/>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-rightheader')]//TicketButton" position="replace">
+            <TicketButton isTicketScreenShown="isTicketScreenShown"
+                          t-if="env.isMobile and !env.session.restaurant_order and env.pos and env.pos.get_order()"/>
+        </xpath>
+        <xpath expr="//DebugWidget" position="replace">
+            <DebugWidget t-if="env.isDebug() and state.debugWidgetIsShown and !env.session.restaurant_order"
+                         t-transition="fade"/>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-topheader')]" position="after">
+            <t t-if="state.uiState === 'LOCKED'">
+                <div class="loader-feedback">
+                    <h1 class="message">
+                        <t t-esc="loading.message"/>
+                    </h1>
+                    <div class="progressbar">
+                        <div class="progress" t-ref="progressbar"></div>
+                    </div>
+                    <div t-if="loading.skipButtonIsShown" class="button skip"
+                         t-on-click="trigger('loading-skip-callback')">
+                        Skip
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
+

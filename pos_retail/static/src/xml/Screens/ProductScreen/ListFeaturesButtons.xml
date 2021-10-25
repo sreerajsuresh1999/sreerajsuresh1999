@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ListFeaturesButtons" owl="1">
+        <div class="button-extend" t-att-class="{oe_hidden: env.session.restaurant_order}">
+            <span t-on-click="saveToDraftOrder"
+                  t-if="env.pos.config.pos_orders_management"
+                  title="Save to Draft Order"
+                  class="control-button">
+                <i class="fa fa-save"/>
+                <span class="button-label">Save to Draft Order</span>
+            </span>
+            <span t-on-click="trigger('remove-selected-customer')"
+                  title="Deselected Customer"
+                  class="control-button">
+                <i class="fa fa-user-times"/>
+                <span class="button-label">Deselected Customer</span>
+            </span>
+            <span t-on-click="setAutoPrint"
+                  title="Set Auto Print"
+                  t-att-class="{'highlight': orderAutoPrint}"
+                  class="control-button">
+                <i class="fa fa-print"/>
+                <span class="button-label"><t t-esc="orderAutoPrintText"/></span>
+            </span>
+            <span t-on-click="selectLoyaltyReward"
+                  t-if="env.pos.rewards"
+                  title="Loyalty Program"
+                  class="control-button">
+                <i class="fa fa-gift"/>
+                <span class="button-label">
+                    Loyalty Rewards
+                </span>
+            </span>
+            <span t-if="(env.pos.config.report_product_summary || env.pos.config.report_order_summary || env.pos.config.report_payment_summary || env.pos.config.report_sale_summary)"
+                  t-on-click="showReports"
+                  title="Reports"
+                  class="control-button">
+                <i class="fa fa-line-chart"/>
+                <span class="button-label">Reports</span>
+            </span>
+            <span t-if="env.pos.config.whatsapp_api and env.pos.config.whatsapp_token"
+                  t-on-click="sendReceiptViaWhatsApp"
+                  title="Send Receipt via WhatsApp"
+                  class="control-button">
+                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                <span class="button-label"> WhatsApp</span>
+            </span>
+            <span t-if="env.pos.config.load_coupon_program and env.pos.couponPrograms"
+                  t-on-click="addCoupon"
+                  title="Add Coupon Code"
+                  class="control-button">
+                <i class="fa fa-barcode"/>
+                <span class="button-label">Gift/Coupon Code</span>
+            </span>
+            <span t-if="env.pos.config.load_coupon_program and env.pos.config.coupon_program_apply_type == 'manual' and env.pos.couponProgramsAutomatic and env.pos.couponProgramsAutomatic.length != 0"
+                  t-on-click="manualAddCouponPrograms"
+                  title="Coupon Programs"
+                  class="control-button">
+                <i class="fa fa-gift"/>
+                <span class="button-label">Coupon Programs</span>
+            </span>
+            <span t-if="env.pos.services_charge"
+                  t-on-click="setServicesOrder"
+                  title="Set Services"
+                  class="control-button">
+                <i class="fa fa-plus"/>
+                <span class="button-label">Add Services</span>
+                <span class="shortcut-keyboard" t-if="!env.isMobile">
+                    <i class="fa fa-keyboard-o"/>
+                    F8
+                </span>
+            </span>
+            <span t-if="env.pos.config.signature_order"
+                  t-on-click="signatureOrder"
+                  title="Signature to Order"
+                  class="control-button">
+                <i class="fa fa-check-square-o"/>
+                <span class="button-label">Signature</span>
+            </span>
+            <span t-if="env.pos.tables and env.pos.config.allow_lock_table"
+                  t-on-click="lockTable"
+                  title="Lock Table"
+                  class="control-button">
+                <i class="fa fa-lock"/>
+                <span class="button-label">Lock Table</span>
+            </span>
+            <span t-if="env.pos.tables and env.pos.config.allow_split_table"
+                  t-on-click="transferItemsToAnotherTable"
+                  title="Transfer Items to another Table"
+                  class="control-button">
+                <i class="fa fa-arrow-right"/>
+                <span class="button-label">Transfer Items</span>
+            </span>
+            <t t-foreach="props.controlButtons" t-as="cb" t-key="cb.name">
+                <t t-component="cb.component" t-key="cb.name"/>
+            </t>
+        </div>
+    </t>
+
+</templates>

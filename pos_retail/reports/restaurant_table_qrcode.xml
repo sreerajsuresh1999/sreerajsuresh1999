@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_restaurant_qrcode">
+            <div style="width: 32%; display: inline-table; height: 8rem;">
+                <table class="table table-bordered mb-0" style="border: 2px solid black;">
+                    <tr>
+                        <th class="table-active text-center" style="height: 1rem;">
+                            Table: <strong t-field="o.name"/><br/>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="text-center align-middle" style="height: 6rem;">
+                            <t t-if="o.barcode_url">
+                                <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', quote_plus(o.barcode_url or ''), 200, 200)" style="width:100%;height:20rem;"/>
+                            </t>
+                            <t t-else=""><span class="text-muted">No barcode available</span></t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+        <template id="report_restaurants_qrcode">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="pos_retail.report_restaurant_qrcode"/>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+
+        <record id="report_print_restaurant_table_qrcode" model="ir.actions.report">
+            <field name="name">Table QR-Code (PDF)</field>
+            <field name="model">restaurant.table</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_retail.report_restaurants_qrcode</field>
+            <field name="report_file">pos_retail.report_restaurants_qrcode</field>
+            <field name="print_report_name">object.name + ' QRCode '</field>
+            <field name="binding_model_id" ref="pos_restaurant.model_restaurant_table"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

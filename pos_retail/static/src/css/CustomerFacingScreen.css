@@ -1,0 +1,37 @@
+body .pos-customer_facing_display:before {
+    height: 0px !important;
+}
+body .pos-customer_facing_display .pos-customer_products {
+    padding-top: 0px !important;
+}
+
+body .pos-customer_facing_display .pos-payment_info .pos-company_logo >img {
+    width: 100%;
+    margin: 1vh;
+    left: 1vh;
+    max-height: 18vh;
+    max-width: 37vh;
+    margin-left: -1.8vh;
+}
+body .pos-customer_facing_display .pos-payment_info .pos-payment_info_details .pos-odoo_logo_container {
+    display: none;
+}
+body .pos-customer_facing_display .pos-payment_info {
+    background: #3c4858;
+    width: 35%;
+}
+
+body .pos-customer_facing_display .pos_orderlines .pos_orderlines_item > div {
+    margin-right: unset;
+    text-align: right;
+}
+body .pos-customer_facing_display .pos-customer_products .pos_orderlines .pos_orderlines_item > div:nth-child(2) {
+    text-align: left !important;
+    font-size: 100%;
+}
+body .pos-customer_facing_display .pos-payment_info .pos-payment_info_details .pos-total, body .pos-customer_facing_display .pos-payment_info .pos-payment_info_details .pos-paymentlines {
+    display: block !important;
+}
+body .pos-customer_facing_display .pos_orderlines .pos_orderlines_item.pos_orderlines_header > div:last-child {
+    text-align: center;
+}

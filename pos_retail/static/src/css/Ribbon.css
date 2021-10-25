@@ -1,0 +1,117 @@
+.pos .ribbon {
+    position: initial;
+    left: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    text-align: right;
+}
+
+.pos .ribbon .out_stock span {
+    background: #6EC89B !important;
+}
+
+.pos .ribbon .limit_stock span {
+    background: orange !important;
+}
+
+.pos .ribbon span {
+    color: black;
+    text-align: center;
+    width: 100%;
+    height: 20px;
+    left: 0px;
+    padding-left: 5px;
+    text-transform: uppercase;
+    line-height: 20px;
+    font-size: 13px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    font-weight: 500;
+}
+.pos .subwindow .subwindow-container-fix .ribbon span {
+    background: #6EC89B;
+}
+.pos .ribbon span::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+.pos .ribbon span::after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+
+.pos .trial {
+    position: initial;
+    left: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    text-align: right;
+}
+
+.pos .trial span {
+    background: red;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    bottom: 0px;
+    font-size: 18px;
+    display: flex;
+    padding-left: 100px;
+    position: absolute;
+    font-weight: 900;
+    line-height: 50px;
+    height: 45px;
+    cursor: pointer;
+}
+
+.pos .trial span::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid #6EC89B;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #6EC89B;
+}
+
+.pos .trial span::after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #6EC89B;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #6EC89B;
+}
+
+.screen .screen-content .ribbon span {
+    right: 0px;
+    /*height: 40px;*/
+    left: unset !important;
+    font-weight: 900;
+    text-transform: uppercase;
+    width: 200px;
+    padding: 5px 10px;
+}

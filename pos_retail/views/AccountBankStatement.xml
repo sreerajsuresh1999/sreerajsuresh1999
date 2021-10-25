@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.branch</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="before">
+                    <field name="pos_branch_id"/>
+                </field>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+                    <field name='pos_branch_id'/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

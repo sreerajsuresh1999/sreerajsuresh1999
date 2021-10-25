@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_production_lot_form" model="ir.ui.view">
+        <field name="name">stock.production.lot.inherited</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="uom_id" readonly="1"/>
+                <field name="metrc_id" readonly="1"/>
+                <label for="metrc_qty"/>
+                <div class="o_row">
+                    <field name="metrc_qty" readonly="1"/>
+                    <field name="product_uom_id" readonly="1"/>
+                    <button name="split_metrc_package" type="object" class="oe_highlight"
+                            style="margin-right: 20px;">
+                        Split METRC Package
+                    </button>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+
+.loyalty-points{
+    margin-left: 20px;
+    float: left;
+    padding: 10px;
+    max-width: 216px;
+    text-align: left !important;
+    color: black !important;
+    background: rgb(206 222 214);
+    border-radius: 3px;
+}
+.pos .order .summary .loyalty-points.negative{
+    color: #C86E6E;
+    background: rgba(200, 110, 110, 0.17);
+}
+.pos .order .summary .loyalty-points-total {
+    border-color: rgb(209, 209, 209) !important;
+    text-align: left !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+    font-weight: 400;
+}
+
+.loyalty .subtitle{
+    text-align: center;
+}
+
+.loyalty .title {
+    font-size: 16px;
+    text-align: center;
+}
+.pos .loyalty-points-title {
+    font-weight: 400;
+}

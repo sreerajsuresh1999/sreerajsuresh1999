@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+     <t t-name="ProductCountInCart" owl="1">
+        <span class="with-badge" t-att-badge="itemInCart" t-att-class="{'oe_hidden': itemInCart == 0}">
+            <i class="oe_link_icon fa fa-shopping-cart oe_icon line-icon" aria-hidden="true"></i>
+        </span>
+    </t>
+
+</templates>

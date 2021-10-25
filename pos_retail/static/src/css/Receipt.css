@@ -1,0 +1,185 @@
+/*================= Receipt design ==============*/
+.pos-receipt-print {
+    width: 512px;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: left;
+    direction: ltr;
+    font-size: 28px;
+    color: #000000;
+    font-family: "Montserrat", "Odoo Unicode Support Noto", sans-serif;
+}
+.pos-receipt .receipt-line td {
+    max-width: 139px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 90% !important;
+    padding: 3px !important;
+    color: black !important;
+}
+
+.pos .product-line-name {
+    color: black;
+    padding: 3px;
+    padding-right: 0px !important;
+}
+
+.pos .receipt-row {
+    display: flex;
+    font-size: 0.9em;
+    line-height: 0.5em;
+}
+.pos .product-unit-name {
+    display: inline-block;
+    width: 100%;
+    font-size: 90%;
+    margin-left: 5px;
+}
+.pos .receipt-cell {
+    flex: 1;
+    color: black;
+    font-size: 0.85em;
+
+}
+.pos .receipt-orderlines {
+    width: 100% !important;
+}
+.pos-receipt .receipt-line {
+    color: black;
+    line-height: unset !important;
+    font-size: 90%;
+    line-height: 150%;
+}
+.pos-receipt >h3, .h3 {
+    margin: 0px !important;
+}
+.pos-receipt .product-line-name {
+    font-size: 90% !important;
+    color: black;
+}
+
+.pos-receipt .pos-receipt-right-align {
+    float: right;
+    text-align: right;
+    margin-left: 5px;
+}
+
+.pos-receipt .pos-receipt-center-align {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.pos-receipt .text-center {
+    text-align: center !important;
+}
+
+.pos-receipt .text-left {
+    text-align: left !important;
+}
+
+.pos-receipt .text-right {
+    text-align: right !important;
+}
+
+.pos-receipt .text-bold {
+    font-weight: 900 !important;
+}
+
+.pos-receipt .receipt-line {
+    cursor: unset !important;
+}
+
+.pos-receipt .receipt-line:hover {
+    background: unset !important;
+}
+
+.pos-receipt .pos-receipt-left-padding {
+    padding-left: 0em;
+    line-height: 1.5em;
+}
+
+.pos-receipt .orderline-product-name {
+    line-height: 1.5em;
+    font-size: 0.9em;
+}
+
+.pos-receipt .pos-receipt-logo {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    height: 2.5em;
+}
+
+.pos-receipt .pos-receipt-contact {
+    margin-top: 0em;
+    font-size: 100% !important;
+    text-align: left;
+}
+
+.pos-receipt .pos-receipt-order-data {
+    display: inline-block;
+    width: 100%;
+}
+
+.pos-receipt .pos-receipt-amount {
+    font-size: 100% !important;
+    padding-top: 10px !important;
+    font-weight: 900 !important;
+}
+
+.pos-receipt .pos-receipt-title {
+    font-weight: bold;
+    font-size: 125%;
+    text-align: center;
+}
+
+.pos-receipt .pos-receipt-header {
+    font-size: 125%;
+    text-align: center;
+}
+.pos .qrcode {
+    width: 100%;
+    display: flex;
+}
+.pos .qrcode > img {
+    justify-content: center;
+    margin: auto;
+    padding-bottom: 10px;
+}
+.pos-receipt .pos-order-receipt-cancel {
+    color: black;
+}
+
+.pos-payment-terminal-receipt {
+    text-align: center;
+    font-size: 90%;
+}
+
+.pos-receipt .amount_total {
+    font-size: 125%;
+}
+
+.pos-receipt .header_barcode {
+    text-align: center;
+    height: 5em;
+    width: 15em;
+    margin-left: -5em;
+}
+
+.pos-receipt .footer_barcode {
+    display: block;
+    height: 20mm;
+    width: 40mm;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.pos-receipt .receipt_line_image {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 65%;
+}

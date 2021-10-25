@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pos_sale_analytic_search" model="ir.ui.view">
+            <field name="name">pos.sale.analytic.search</field>
+            <field name="model">pos.sale.analytic</field>
+            <field name="arch"  type="xml">
+                <search string="POS orders and Sale orders aggregated analytic">
+                    <field name="user_id"/>
+                    <field name="origin"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="product_id"/>
+                    <field name="pos_branch_id"/>
+                    <filter name="today" string="Today"
+                        domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter name="yesterday" string="Yesterday"
+                        domain="[('date', '=', (context_today() + datetime.timedelta(days=-1)).strftime('%Y-%m-%d'))]"/>
+                    <filter name="only_sale_order" string="Sale Order Only" domain="[('origin', '=', 'Sale Order')]"/>
+                    <filter name="only_pos_order" string="POS Order Only" domain="[('origin', '=', 'Point of Sale')]"/>
+                    <group string="Group By" name="groupby">
+                        <filter name="origin" string="Origin" context="{'group_by': 'origin'}"/>
+                        <filter name="branch" string="Branch" context="{'group_by': 'pos_branch_id'}"/>
+                        <filter name="sale_man" string="Sale person" context="{'group_by': 'user_id'}"/>
+                        <filter name="date_groupby" string="Date" context="{'group_by': 'date'}"/>
+                        <filter name="product_tmpl_groupby" string="Product" context="{'group_by': 'product_tmpl_id'}"/>
+                        <filter name="product_groupby" string="Product Variants" context="{'group_by': 'product_id'}"/>
+                        <filter name="product_categ_groupby" string="Product Categories" context="{'group_by': 'product_categ_id'}"/>
+                        <filter name="pos_categ_groupby" string="Point of Sale Categories" context="{'group_by': 'pos_categ_id'}"/>
+                        <filter name="company_groupby" string="Company" context="{'group_by': 'company_id'}"/>
+                        <filter name="month"  string="Month" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="pos_sale_analytic_pivot" model="ir.ui.view">
+            <field name="name">pos.sale.analytic.pivot</field>
+            <field name="model">pos.sale.analytic</field>
+            <field name="arch"  type="xml">
+                <pivot string="POS orders and Sale Orders">
+                    <field name="pos_branch_id" type="col"/>
+                    <field name="origin" type="col"/>
+                    <field name="date" type="row" interval="month"/>
+                    <field name="qty" type="measure"/>
+                    <field name="sale_total" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="pos_sale_analytic_graph" model="ir.ui.view">
+            <field name="name">pos.sale.analytic.graph</field>
+            <field name="model">pos.sale.analytic</field>
+            <field name="arch" type="xml">
+                <graph string="POS orders and Sale Orders">
+                    <field name="pos_branch_id" type="col"/>
+                    <field name="date" type="col"/>
+                    <field name="origin" type="col"/>
+                    <field name="qty" type="measure"/>
+                    <field name="sale_total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="pos_sale_analytic_action" model="ir.actions.act_window">
+            <field name="name">Sale Summary Analysis</field>
+            <field name="res_model">pos.sale.analytic</field>
+            <field name="view_mode">graph,pivot</field>
+        </record>
+
+        <menuitem id="menu_pos_sale_analytic_action"
+                  action="pos_sale_analytic_action"
+                  parent="point_of_sale.menu_point_rep"
+                  sequence="20"/>
+
+    </data>
+</odoo>

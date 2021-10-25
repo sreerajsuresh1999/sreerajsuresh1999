@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+
+        <record id="report_stock_excel_form_view" model="ir.ui.view">
+            <field name="name">report.stock.excel.form</field>
+            <field name="model">report.stock.excel</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Stock Report to Excel">
+                    <group string="Stock Locations Report">
+                        <field name="location_ids"
+                               domain="[('usage','=','internal')]"
+                               nolabel="1"
+                               options="{'no_create':True, 'no_open':True}"/>
+                    </group>
+                    <group string="POS Categories Report">
+                        <field name="categ_ids"
+                               nolabel="1"
+                               options="{'no_create':True, 'no_open':True}"/>
+                    </group>
+                    <group string="Products Report">
+                        <field name="product_ids"
+                               nolabel="1"
+                               options="{'no_create':True, 'no_open':True}"/>
+                    </group>
+                    <footer>
+                        <button name="print_excel_report" string="Download Excel(xlsx) Report" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Close" class="oe_link" special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="act_report_stock_excel" model="ir.actions.act_window">
+            <field name="name">Stock Report to Excel (xlsx)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.stock.excel</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_stock_excel_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_of_ms_action_report_stock_xlsx"
+                  action="act_report_stock_excel"
+                  parent="point_of_sale.menu_point_rep" sequence="110"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="coupon_view_search" model="ir.ui.view">
+        <field name="name">coupon.coupon.search</field>
+        <field name="model">coupon.coupon</field>
+        <field name="arch" type="xml">
+            <search string="Coupons">
+                <field name="code"/>
+                <field name="origin"/>
+                <field name="expiration_date"/>
+                <field name="program_id"/>
+                <field name="partner_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="coupon_view_tree" model="ir.ui.view">
+        <field name="name">coupon.coupon.tree</field>
+        <field name="model">coupon.coupon</field>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <tree string="Gift Cards" create="false" edit="false" delete="true" class="o_sale_order">
+                <field name="code"/>
+                <field name="origin"/>
+                <field name="expiration_date"/>
+                <field name="program_id" optional="hide"/>
+                <field name="partner_id"/>
+                <field name="pos_create_date" optional="hide"/>
+                <field name="pos_create_uid" optional="hide"/>
+                <field name="pos_config_id" optional="hide"/>
+                <field name="pos_orderline_id" optional="hide"/>
+                <field name="base_amount"/>
+                <field name="redeem_amount"/>
+                <field name="balance_amount"/>
+                <field name="state" decoration-success="state == 'valid'" decoration-info="state == 'sent'"
+                       decoration-warning="state == 'cancel'" widget="badge" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="coupon_program_view_coupon_program_form" model="ir.ui.view">
+        <field name="name">coupon.program.form</field>
+        <field name="model">coupon.program</field>
+        <field name="inherit_id" ref="coupon.coupon_program_view_coupon_program_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coupon_count']/.." position="before">
+                <button class="oe_stat_button" type="object" icon="fa-usd" name="action_view_pos_orders">
+                    <field name="pos_order_count" string="POS Orders" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="is_gift_card"/>
+                <field name="gift_product_id"
+                       attrs="{'invisible': [('is_gift_card', '=', False)], 'required': [('is_gift_card', '=', True)]}"/>
+                <field name="maximum_cards_create"
+                       attrs="{'invisible': [('is_gift_card', '=', False)], 'required': [('is_gift_card', '=', True)]}"/>
+                <span class="oe_grey" attrs="{'invisible': [('is_gift_card', '=', False)]}">if smaller or equal 0, no
+                    limit
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="coupon_program_view_promo_program_form" model="ir.ui.view">
+        <field name="name">coupon.program.form</field>
+        <field name="model">coupon.program</field>
+        <field name="inherit_id" ref="coupon.coupon_program_view_promo_program_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coupon_count']/.." position="before">
+                <button class="oe_stat_button" type="object" icon="fa-usd" name="action_view_pos_orders">
+                    <field name="pos_order_count" string="POS Orders" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//sheet/group[2]" position="after">
+                <field name="description"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_coupon_program_kanban" model="ir.ui.view">
+        <field name="name">coupon.program.kanban</field>
+        <field name="model">coupon.program</field>
+        <field name="inherit_id" ref="coupon.view_coupon_program_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('coupon-count-label')]" position="after">
+                <div class="col-4 text-center">
+                    <strong>POS Orders</strong>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('coupon-count-value')]" position="after">
+                <div class="col-4 text-center">
+                    <field name="pos_order_count"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="coupon_view_form" model="ir.ui.view">
+        <field name="name">coupon.coupon.form</field>
+        <field name="model">coupon.coupon</field>
+        <field name="inherit_id" ref="coupon.coupon_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="pos_order_id" groups="point_of_sale.group_pos_manager"/>
+                <field name="origin" groups="point_of_sale.group_pos_manager"/>
+            </xpath>
+            <xpath expr="//sheet/group" position="after">
+                <field name="is_gift_card" readonly="1" groups="point_of_sale.group_pos_manager"/>
+                <field name="is_returned_order" readonly="1" groups="point_of_sale.group_pos_manager"/>
+                <group string="Detail Information (Only for POS)" groups="point_of_sale.group_pos_manager">
+                    <group>
+                        <field name="pos_create_date"/>
+                        <field name="pos_create_uid"/>
+                        <field name="pos_config_id"/>
+                        <field name="pos_orderline_id"/>
+                    </group>
+                    <group>
+                        <field name="base_amount"/>
+                        <field name="redeem_amount"/>
+                        <field name="balance_amount"/>
+                    </group>
+                </group>
+                <group string="Redeem Histories (Only for POS)" groups="point_of_sale.group_pos_manager">
+                    <field name="redeem_history_ids" nolabel="1" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="coupon_program_action_coupon_program" model="ir.actions.act_window">
+        <field name="name">Coupon Programs</field>
+        <field name="res_model">coupon.program</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="coupon.coupon_program_view_search"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('coupon.coupon_program_view_coupon_program_form')})]"/>
+        <field name="domain">[('program_type','=', 'coupon_program'), ('is_gift_card','=', True)]</field>
+        <field name="context">{
+            'default_program_type': 'coupon_program',
+            'default_is_gift_card': True,
+            'default_validity_duration': 365,
+            'promo_code_usage': 'code_needed',
+            'search_default_opened': 1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Gift Card Template
+            </p>
+            <p>
+                Generate and share coupon codes with your customers to get discounts.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_giftcard" model="ir.actions.act_window">
+        <field name="name">Coupon Cards</field>
+        <field name="res_model">coupon.coupon</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_gift_card','=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                This is list gift cards of customer
+            </p>
+        </field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('pos_retail.coupon_view_tree')}),
+            (0, 0, {'view_mode': 'form'})]"/>
+    </record>
+
+    <menuitem
+            id="menu_coupon_program_action_coupon_program"
+            action="coupon_program_action_coupon_program"
+            parent="pos_retail.menu_sale_coupon"
+            name="Coupon Cards Template"
+            sequence="3"
+    />
+
+    <menuitem
+            id="menu_action_giftcard"
+            action="action_giftcard"
+            parent="pos_retail.menu_sale_coupon"
+            name="Gift Cards"
+            sequence="4"
+    />
+
+</odoo>

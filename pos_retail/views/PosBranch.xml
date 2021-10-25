@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="pos_branch_tree" model="ir.ui.view">
+            <field name="name">pos.branch.tree</field>
+            <field name="model">pos.branch</field>
+            <field name="arch" type="xml">
+                <tree string="Branch">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_branch_form" model="ir.ui.view">
+            <field name="name">pos.branch.form</field>
+            <field name="model">pos.branch</field>
+            <field name="arch" type="xml">
+                <form string="Branch">
+                    <header>
+                        <button name="assign_branch_to_users"
+                                string="Assign Branch to Users"
+                                type="object"
+                                confirm="Are you want assign this branch to all Users added in bellow ?"
+                                class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="user_id"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="config_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_branch">
+            <field name="name">Multi Branch/Store</field>
+            <field name="res_model">pos.branch</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_action_pos_branch"
+                  parent="base.menu_users"
+                  sequence="100"
+                  action="action_pos_branch"
+        />
+
+    </data>
+</odoo>
