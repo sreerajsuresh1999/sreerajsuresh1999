@@ -11,6 +11,8 @@
     'data': [
         'security/ir.model.access.csv',
 
+        'views/error_template.xml',
+
 
     ],
     'installable': True,

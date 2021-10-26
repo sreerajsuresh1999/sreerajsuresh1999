@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="payment" inherit_id="website_sale.cart">
+        <t t-call="website.layout">
+            <div class="alert alert-danger">
+                <strong>Wraning!</strong>
+                You can't buy product !!!!!!!
+            </div>
+        </t>
+    </template>
+</odoo>
